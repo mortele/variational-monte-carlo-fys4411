@@ -17,6 +17,9 @@ double SimpleGaussian::evaluate(Particle* particle) {
     /* You need to implement a Gaussian wave function here. The positions of
      * the particles are accessible through the particle[i].getPosition()
      * function.
+     *
+     * For the actual expression, use exp(-alpha * r^2), with alpha being the
+     * (only) variational parameter.
      */
     return 0;
 }
