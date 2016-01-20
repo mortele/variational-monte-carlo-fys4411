@@ -4,13 +4,13 @@ Particle::Particle() {
 }
 
 void Particle::setPosition(double* position) {
-    this->position = position;
+    m_position = position;
 }
 
 void Particle::adjustPosition(double change, int dimension) {
-    this->position[dimension] += change;
+    m_position[dimension] += change;
 }
 
 void Particle::setNumberOfDimensions(int numberOfDimensions) {
-    this->numberOfDimensions = numberOfDimensions;
+    m_numberOfDimensions = numberOfDimensions;
 }

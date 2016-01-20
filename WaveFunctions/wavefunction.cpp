@@ -2,5 +2,5 @@
 
 
 WaveFunction::WaveFunction(System* system) {
-    this->system = system;
+    m_system = system;
 }

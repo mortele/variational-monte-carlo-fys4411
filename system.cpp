@@ -11,18 +11,18 @@ System::System() {
 }
 
 bool System::metropolisStep() {
-    int     particle        = Random::nextInt(this->numberOfParticles);
-    int     dimension       = Random::nextInt(this->numberOfDimensions);
-    double  proposedChange  = (Random::nextDouble()*2-1) * this->stepLength;
-    double  waveFunctionOld = this->waveFunction->evaluate(particles);
-    this->particles[particle].adjustPosition(proposedChange, dimension);
-    double waveFunctionNew  = this->waveFunction->evaluate(particles);
+    int     particle        = Random::nextInt(m_numberOfParticles);
+    int     dimension       = Random::nextInt(m_numberOfDimensions);
+    double  proposedChange  = (Random::nextDouble()*2-1) * m_stepLength;
+    double  waveFunctionOld = m_waveFunction->evaluate(m_particles);
+    m_particles[particle].adjustPosition(proposedChange, dimension);
+    double waveFunctionNew  = m_waveFunction->evaluate(m_particles);
 
     double waveFunctionSquaredRatio =  waveFunctionNew * waveFunctionNew /
                                       (waveFunctionOld * waveFunctionOld);
     if (waveFunctionSquaredRatio < 1.0) {
         if (waveFunctionSquaredRatio < Random::nextDouble()) {
-            this->particles[particle].adjustPosition(-proposedChange, dimension);
+            m_particles[particle].adjustPosition(-proposedChange, dimension);
             return false;
         }
     } else {
@@ -31,48 +31,48 @@ bool System::metropolisStep() {
 }
 
 void System::runMetropolisSteps(int numberOfMetropolisSteps) {
-    this->particles                 = this->initialState->getParticles();
-    this->sampler                   = new Sampler(this);
-    this->numberOfMetropolisSteps   = numberOfMetropolisSteps;
-    this->sampler->setNumberOfMetropolisSteps(numberOfMetropolisSteps);
+    m_particles                 = m_initialState->getParticles();
+    m_sampler                   = new Sampler(this);
+    m_numberOfMetropolisSteps   = numberOfMetropolisSteps;
+    m_sampler->setNumberOfMetropolisSteps(numberOfMetropolisSteps);
 
     for (int i=0; i < numberOfMetropolisSteps; i++) {
-        bool acceptedStep = this->metropolisStep();
+        bool acceptedStep = metropolisStep();
 
-        if (i > this->equilibrationFraction * numberOfMetropolisSteps) {
-            sampler->sample(acceptedStep);
+        if (i > m_equilibrationFraction * numberOfMetropolisSteps) {
+            m_sampler->sample(acceptedStep);
         }
     }
-    this->sampler->computeAverages();
-    this->sampler->printOutputToTerminal();
+    m_sampler->computeAverages();
+    m_sampler->printOutputToTerminal();
 }
 
 void System::setNumberOfParticles(int numberOfParticles) {
-    this->numberOfParticles = numberOfParticles;
+    m_numberOfParticles = numberOfParticles;
 }
 
 void System::setNumberOfDimensions(int numberOfDimensions) {
-    this->numberOfDimensions = numberOfDimensions;
+    m_numberOfDimensions = numberOfDimensions;
 }
 
 void System::setStepLength(double stepLength) {
-    this->stepLength = stepLength;
+    m_stepLength = stepLength;
 }
 
 void System::setEquilibrationFraction(double equilibrationFraction) {
-    this->equilibrationFraction = equilibrationFraction;
+    m_equilibrationFraction = equilibrationFraction;
 }
 
 void System::setHamiltonian(Hamiltonian* hamiltonian) {
-    this->hamiltonian = hamiltonian;
+    m_hamiltonian = hamiltonian;
 }
 
 void System::setWaveFunction(WaveFunction* waveFunction) {
-    this->waveFunction = waveFunction;
+    m_waveFunction = waveFunction;
 }
 
 void System::setInitialState(InitialState* initialState) {
-    this->initialState = initialState;
+    m_initialState = initialState;
 }
 
 

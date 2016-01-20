@@ -12,12 +12,12 @@ SOURCES += main.cpp \
     Hamiltonians/harmonicoscillator.cpp \
     particle.cpp \
     WaveFunctions/wavefunction.cpp \
-    WaveFunctions/simpleexponential.cpp \
     InitialStates/initialstate.cpp \
     InitialStates/randomuniform.cpp \
     Math/random.cpp \
     sampler.cpp \
-    WaveFunctions/simplegaussian.cpp
+    WaveFunctions/simplegaussian.cpp \
+    WaveFunctions/gaussian4.cpp
 
 HEADERS += \
     system.h \
@@ -25,10 +25,10 @@ HEADERS += \
     Hamiltonians/harmonicoscillator.h \
     particle.h \
     WaveFunctions/wavefunction.h \
-    WaveFunctions/simpleexponential.h \
     InitialStates/initialstate.h \
     InitialStates/randomuniform.h \
     Math/random.h \
     sampler.h \
-    WaveFunctions/simplegaussian.h
+    WaveFunctions/simplegaussian.h \
+    WaveFunctions/gaussian4.h
 

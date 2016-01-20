@@ -7,17 +7,17 @@ public:
     void sample(bool acceptedStep);
     void printOutputToTerminal();
     void computeAverages();
-    double getEnergy()          { return this->energy; }
-    double getEnergyVariance()  { return this->energyVariance; }
+    double getEnergy()          { return m_energy; }
+    double getEnergyVariance()  { return m_energyVariance; }
 
 private:
-    int     numberOfMetropolisSteps;
-    int     stepNumber;
-    double  energy;
-    double  energyVariance;
-    double  acceptanceRate;
-    double  cumulativeEnergy;
-    double  cumulativeEnergy2;
-    double  cumulativeAcceptanceRate;
-    class System* system;
+    int     m_numberOfMetropolisSteps;
+    int     m_stepNumber;
+    double  m_energy;
+    double  m_energyVariance;
+    double  m_acceptanceRate;
+    double  m_cumulativeEnergy;
+    double  m_cumulativeEnergy2;
+    double  m_cumulativeAcceptanceRate;
+    class System* m_system;
 };

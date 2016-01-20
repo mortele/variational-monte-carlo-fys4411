@@ -6,10 +6,10 @@ public:
     void setPosition(double* position);
     void adjustPosition(double change, int dimension);
     void setNumberOfDimensions(int numberOfDimensions);
-    double* getPosition() { return this->position; }
+    double* getPosition() { return m_position; }
 
 private:
-    int     numberOfDimensions;
-    double* position;
+    int     m_numberOfDimensions;
+    double* m_position;
 };
 

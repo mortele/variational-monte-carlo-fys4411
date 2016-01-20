@@ -4,14 +4,14 @@
 class WaveFunction {
 public:
     WaveFunction(class System* system);
-    int     getNumberOfParameters() { return this->numberOfParameters; }
-    double* getParameters()         { return this->parameters; }
+    int     getNumberOfParameters() { return m_numberOfParameters; }
+    double* getParameters()         { return m_parameters; }
     virtual double evaluate(class Particle* particles) = 0;
     virtual double computeDoubleDerivative(class Particle* particles) = 0;
 
 protected:
-    int     numberOfParameters;
-    double* parameters;
-    class System* system;
+    int     m_numberOfParameters;
+    double* m_parameters;
+    class System* m_system;
 };
 

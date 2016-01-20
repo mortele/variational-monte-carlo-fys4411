@@ -7,7 +7,7 @@ public:
     double computeLocalEnergy(Particle* particles);
 
 private:
-    double omega;
-    double omega2;
+    double m_omega;
+    double m_omega2;
 };
 

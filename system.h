@@ -12,25 +12,25 @@ public:
     void setHamiltonian             (class Hamiltonian* hamiltonian);
     void setWaveFunction            (class WaveFunction* waveFunction);
     void setInitialState            (class InitialState* initialState);
-    class WaveFunction* getWaveFunction() { return this->waveFunction; }
-    class Hamiltonian*  getHamiltonian()  { return this->hamiltonian; }
-    class Particle*     getParticles()    { return this->particles; }
-    class Sampler*      getSampler()      { return this->sampler; }
-    int getNumberOfParticles()            { return this->numberOfParticles; }
-    int getNumberOfDimensions()           { return this->numberOfDimensions; }
-    int getNumberOfMetropolisSteps()      { return this->numberOfMetropolisSteps; }
-    double getEquilibrationFraction()     { return this->equilibrationFraction; }
+    class WaveFunction* getWaveFunction() { return m_waveFunction; }
+    class Hamiltonian*  getHamiltonian()  { return m_hamiltonian; }
+    class Particle*     getParticles()    { return m_particles; }
+    class Sampler*      getSampler()      { return m_sampler; }
+    int getNumberOfParticles()            { return m_numberOfParticles; }
+    int getNumberOfDimensions()           { return m_numberOfDimensions; }
+    int getNumberOfMetropolisSteps()      { return m_numberOfMetropolisSteps; }
+    double getEquilibrationFraction()     { return m_equilibrationFraction; }
 
 private:
-    int                     numberOfParticles;
-    int                     numberOfDimensions;
-    int                     numberOfMetropolisSteps;
-    double                  equilibrationFraction = 0.0;
-    double                  stepLength = 0.1;
-    class WaveFunction*     waveFunction;
-    class Hamiltonian*      hamiltonian;
-    class Particle*         particles;
-    class InitialState*     initialState;
-    class Sampler*          sampler;
+    int                     m_numberOfParticles;
+    int                     m_numberOfDimensions;
+    int                     m_numberOfMetropolisSteps;
+    double                  m_equilibrationFraction = 0.0;
+    double                  m_stepLength = 0.1;
+    class WaveFunction*     m_waveFunction;
+    class Hamiltonian*      m_hamiltonian;
+    class Particle*         m_particles;
+    class InitialState*     m_initialState;
+    class Sampler*          m_sampler;
 };
 

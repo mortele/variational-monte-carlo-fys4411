@@ -1,11 +1,15 @@
 #include "hamiltonian.h"
 
 Hamiltonian::Hamiltonian(System* system) {
-    this->system = system;
+    m_system = system;
 }
 
 void Hamiltonian::setWaveFunction(WaveFunction* waveFunction) {
-    this->waveFunction = waveFunction;
+    m_waveFunction = waveFunction;
+}
+
+double Hamiltonian::getExactEnergy() {
+    return m_exactEnergy;
 }
 
 double Hamiltonian::computeKineticEnergy(Particle* particles) {

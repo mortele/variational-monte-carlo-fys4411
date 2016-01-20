@@ -8,22 +8,22 @@ RandomUniform::RandomUniform(System*    system,
                              int        numberOfDimensions,
                              int        numberOfParticles)  :
         InitialState(system) {
-    this->numberOfDimensions = numberOfDimensions;
-    this->numberOfParticles  = numberOfParticles;
-    this->system->setNumberOfDimensions(numberOfDimensions);
-    this->system->setNumberOfParticles(numberOfParticles);
-    this->setupInitialState();
+    m_numberOfDimensions = numberOfDimensions;
+    m_numberOfParticles  = numberOfParticles;
+    m_system->setNumberOfDimensions(numberOfDimensions);
+    m_system->setNumberOfParticles(numberOfParticles);
+    setupInitialState();
 }
 
 void RandomUniform::setupInitialState() {
-    this->particles = new Particle[this->numberOfParticles];
+    m_particles = new Particle[m_numberOfParticles];
 
-    for (int i=0; i < this->numberOfParticles; i++) {
-        double* position = new double[this->numberOfDimensions];
-        for (int j=0; j < this->numberOfDimensions; j++) {
+    for (int i=0; i < m_numberOfParticles; i++) {
+        double* position = new double[m_numberOfDimensions];
+        for (int j=0; j < m_numberOfDimensions; j++) {
             position[j] = Random::nextDouble()*2-1;
         }
-        this->particles[i].setNumberOfDimensions(this->numberOfDimensions);
-        this->particles[i].setPosition(position);
+        m_particles[i].setNumberOfDimensions(m_numberOfDimensions);
+        m_particles[i].setPosition(position);
     }
 }
