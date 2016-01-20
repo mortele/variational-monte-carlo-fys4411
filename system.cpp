@@ -7,23 +7,6 @@
 #include "Math/random.h"
 
 bool System::metropolisStep() {
-    int     particle        = Random::nextInt(m_numberOfParticles);
-    int     dimension       = Random::nextInt(m_numberOfDimensions);
-    double  proposedChange  = (Random::nextDouble()*2-1) * m_stepLength;
-
-    double  waveFunctionOld = m_waveFunction->evaluate(m_particles);
-    m_particles[particle].adjustPosition(proposedChange, dimension);
-    double waveFunctionNew  = m_waveFunction->evaluate(m_particles);
-
-    double waveFunctionSquaredRatio =  waveFunctionNew * waveFunctionNew /
-                                      (waveFunctionOld * waveFunctionOld);
-    if (waveFunctionSquaredRatio < 1.0) {
-        if (waveFunctionSquaredRatio < Random::nextDouble()) {
-            m_particles[particle].adjustPosition(-proposedChange, dimension);
-            return false;
-        }
-    }
-    return true;
 }
 
 void System::runMetropolisSteps(int numberOfMetropolisSteps) {
