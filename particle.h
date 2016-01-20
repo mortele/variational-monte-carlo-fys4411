@@ -9,7 +9,7 @@ public:
     double* getPosition() { return m_position; }
 
 private:
-    int     m_numberOfDimensions;
-    double* m_position;
+    int     m_numberOfDimensions = 0;
+    double* m_position = nullptr;
 };
 
