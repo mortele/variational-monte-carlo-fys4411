@@ -6,14 +6,11 @@
 #include "InitialStates/initialstate.h"
 #include "Math/random.h"
 
-
-System::System() {
-}
-
 bool System::metropolisStep() {
     int     particle        = Random::nextInt(m_numberOfParticles);
     int     dimension       = Random::nextInt(m_numberOfDimensions);
     double  proposedChange  = (Random::nextDouble()*2-1) * m_stepLength;
+
     double  waveFunctionOld = m_waveFunction->evaluate(m_particles);
     m_particles[particle].adjustPosition(proposedChange, dimension);
     double waveFunctionNew  = m_waveFunction->evaluate(m_particles);
@@ -25,9 +22,8 @@ bool System::metropolisStep() {
             m_particles[particle].adjustPosition(-proposedChange, dimension);
             return false;
         }
-    } else {
-        return true;
     }
+    return true;
 }
 
 void System::runMetropolisSteps(int numberOfMetropolisSteps) {

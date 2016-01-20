@@ -5,7 +5,7 @@ CONFIG  -= qt
 @LIBS   += -L/usr/lib@
 LIBS    += -lblas -llapack
 INCLUDEPATH += /usr/local/Cellar/armadillo/6.200.4/include
-
+QMAKE_CXXFLAGS += -O3
 SOURCES += main.cpp \
     system.cpp \
     Hamiltonians/hamiltonian.cpp \

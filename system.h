@@ -2,7 +2,6 @@
 
 class System {
 public:
-    System();
     bool metropolisStep             ();
     void runMetropolisSteps         (int numberOfMetropolisSteps);
     void setNumberOfParticles       (int numberOfParticles);
@@ -22,15 +21,15 @@ public:
     double getEquilibrationFraction()     { return m_equilibrationFraction; }
 
 private:
-    int                     m_numberOfParticles;
-    int                     m_numberOfDimensions;
-    int                     m_numberOfMetropolisSteps;
+    int                     m_numberOfParticles = 0;
+    int                     m_numberOfDimensions = 0;
+    int                     m_numberOfMetropolisSteps = 0;
     double                  m_equilibrationFraction = 0.0;
     double                  m_stepLength = 0.1;
-    class WaveFunction*     m_waveFunction;
-    class Hamiltonian*      m_hamiltonian;
-    class Particle*         m_particles;
-    class InitialState*     m_initialState;
-    class Sampler*          m_sampler;
+    class WaveFunction*     m_waveFunction = nullptr;
+    class Hamiltonian*      m_hamiltonian = nullptr;
+    class Particle*         m_particles = nullptr;
+    class InitialState*     m_initialState = nullptr;
+    class Sampler*          m_sampler = nullptr;
 };
 
