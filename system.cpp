@@ -1,4 +1,5 @@
 #include "system.h"
+#include <cassert>
 #include "sampler.h"
 #include "particle.h"
 #include "WaveFunctions/wavefunction.h"
@@ -45,10 +46,12 @@ void System::setNumberOfDimensions(int numberOfDimensions) {
 }
 
 void System::setStepLength(double stepLength) {
+    assert(stepLength >= 0);
     m_stepLength = stepLength;
 }
 
 void System::setEquilibrationFraction(double equilibrationFraction) {
+    assert(equilibrationFraction >= 0);
     m_equilibrationFraction = equilibrationFraction;
 }
 

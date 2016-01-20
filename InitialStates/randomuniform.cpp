@@ -1,5 +1,6 @@
 #include "randomuniform.h"
 #include <iostream>
+#include <cassert>
 #include "Math/random.h"
 #include "../particle.h"
 #include "../system.h"
@@ -9,6 +10,7 @@ RandomUniform::RandomUniform(System*    system,
                              int        numberOfDimensions,
                              int        numberOfParticles)  :
         InitialState(system) {
+    assert(numberOfDimensions > 0 && numberOfParticles > 0);
     m_numberOfDimensions = numberOfDimensions;
     m_numberOfParticles  = numberOfParticles;
 
@@ -26,7 +28,7 @@ void RandomUniform::setupInitialState() {
     m_particles.reserve(m_numberOfParticles);
 
     for (int i=0; i < m_numberOfParticles; i++) {
-        std::vector<double> position = std::vector<double>(m_numberOfDimensions);
+        std::vector<double> position = std::vector<double>();
 
         for (int j=0; j < m_numberOfDimensions; j++) {
             /* This is where you should actually place the particles in
@@ -43,7 +45,7 @@ void RandomUniform::setupInitialState() {
             position.push_back(i);
         }
         m_particles[i] = new Particle();
-        m_particles[i]->setPosition(position);
         m_particles[i]->setNumberOfDimensions(m_numberOfDimensions);
+        m_particles[i]->setPosition(position);
     }
 }

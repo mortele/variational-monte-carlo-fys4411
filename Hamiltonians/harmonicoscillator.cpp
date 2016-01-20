@@ -1,10 +1,12 @@
 #include "harmonicoscillator.h"
+#include <cassert>
 #include "../system.h"
 #include "../particle.h"
 #include "../WaveFunctions/wavefunction.h"
 
 HarmonicOscillator::HarmonicOscillator(System* system, double omega) :
         Hamiltonian(system) {
+    assert(omega > 0);
     m_omega  = omega;
 }
 
