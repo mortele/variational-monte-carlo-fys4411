@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
 #include "sampler.h"
 #include "system.h"
 #include "particle.h"
@@ -37,7 +38,7 @@ void Sampler::printOutputToTerminal() {
     int     ms = m_system->getNumberOfMetropolisSteps();
     int     p  = m_system->getWaveFunction()->getNumberOfParameters();
     double  ef = m_system->getEquilibrationFraction();
-    double* pa = m_system->getWaveFunction()->getParameters();
+    std::vector<double> pa = m_system->getWaveFunction()->getParameters();
 
     cout << endl;
     cout << "  -- System info -- " << endl;
@@ -49,7 +50,7 @@ void Sampler::printOutputToTerminal() {
     cout << "  -- Wave function parameters -- " << endl;
     cout << " Number of parameters : " << p << endl;
     for (int i=0; i < p; i++) {
-        cout << " Parameter " << i+1 << " : " << pa[i] << endl;
+        cout << " Parameter " << i+1 << " : " << pa.at(i) << endl;
     }
     cout << endl;
     cout << "  -- Reults -- " << endl;

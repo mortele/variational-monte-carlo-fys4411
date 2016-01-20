@@ -7,8 +7,8 @@
 SimpleGaussian::SimpleGaussian(System* system, double alpha) :
         WaveFunction(system) {
     m_numberOfParameters = 1;
-    m_parameters = new double[m_numberOfParameters];
-    m_parameters[0] = alpha;
+    m_parameters.reserve(1);
+    m_parameters.push_back(alpha);
 }
 
 double SimpleGaussian::evaluate(Particle* particle) {

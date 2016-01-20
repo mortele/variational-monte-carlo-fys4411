@@ -1,4 +1,5 @@
 #include "randomuniform.h"
+#include <iostream>
 #include "Math/random.h"
 #include "../particle.h"
 #include "../system.h"
@@ -22,12 +23,12 @@ RandomUniform::RandomUniform(System*    system,
 }
 
 void RandomUniform::setupInitialState() {
-    m_particles = new Particle[m_numberOfParticles];
+    m_particles.reserve(m_numberOfParticles);
 
     for (int i=0; i < m_numberOfParticles; i++) {
-        double* position = new double[m_numberOfDimensions];
-        for (int j=0; j < m_numberOfDimensions; j++) {
+        std::vector<double> position = std::vector<double>(m_numberOfDimensions);
 
+        for (int j=0; j < m_numberOfDimensions; j++) {
             /* This is where you should actually place the particles in
              * some positions, according to some rule. Since this class is
              * called random uniform, they should be placed randomly according
@@ -39,9 +40,10 @@ void RandomUniform::setupInitialState() {
              * according to their index in the particles list (this is
              * obviously NOT a good idea).
              */
-            position[j] = i;
+            position.push_back(i);
         }
-        m_particles[i].setNumberOfDimensions(m_numberOfDimensions);
-        m_particles[i].setPosition(position);
+        m_particles[i] = new Particle();
+        m_particles[i]->setPosition(position);
+        m_particles[i]->setNumberOfDimensions(m_numberOfDimensions);
     }
 }
