@@ -1,3 +1,17 @@
+/*
+ This is based on the ran1-generator from lib.cpp (see http://www.uio.no/studier/emner/matnat/fys/FYS3150/h14/index.html )
+     ** The function
+     **           ran1()
+     ** is an "Minimal" random number generator of Park and Miller
+     ** (see Numerical recipe page 280) with Bays-Durham shuffle and
+     ** added safeguards. Call with idum a negative integer to initialize;
+     ** thereafter, do not alter idum between sucessive deviates in a
+     ** sequence. RNMX should approximate the largest floating point value
+     ** that is less than 1.
+     ** The function returns a uniform deviate between 0.0 and 1.0
+     ** (exclusive of end-point values).
+*/
+
 #pragma once
 
 #define IA 16807
