@@ -6,25 +6,21 @@
 HarmonicOscillator::HarmonicOscillator(System* system, double omega) :
         Hamiltonian(system) {
     m_omega  = omega;
-    m_omega2 = omega*omega;
-    m_exactGroundStateEnergyKnown = true;
-    m_exactEnergy = omega / 2.0;
 }
 
 double HarmonicOscillator::computeLocalEnergy(Particle* particles) {
-    double potentialEnergy = 0;
-    for (int i=0; i < m_system->getNumberOfParticles(); i++) {
-        double* position = particles[i].getPosition();
-        double  r2       = 0;
+    /* Here, you need to compute the kinetic and potential energies. Note that
+     * when using numerical differentiation, the computation of the kinetic
+     * energy becomes the same for all Hamiltonians, and thus the code for
+     * doing this should be moved up to the super-class, Hamiltonian.
+     *
+     * You may access the wave function currently used through the
+     * m_waveFunction variable in the super-class in order to compute the
+     * kinetic energy here.
+     */
 
-        for (int j=0; j < m_system->getNumberOfDimensions(); j++) {
-            r2 += position[j]*position[j];
-        }
-        potentialEnergy += 0.5 * m_omega2 * r2;
-    }
-    WaveFunction* waveFunction = m_system->getWaveFunction();
-    double kineticEnergy = - waveFunction->computeDoubleDerivative(particles) /
-                             (2 * waveFunction->evaluate(particles));
+    double potentialEnergy = 0;
+    double kineticEnergy   = 0;
     return kineticEnergy + potentialEnergy;
 }
 

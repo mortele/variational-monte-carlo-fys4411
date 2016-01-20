@@ -20,17 +20,14 @@ void Sampler::setNumberOfMetropolisSteps(int steps) {
 }
 
 void Sampler::sample(bool acceptedStep) {
+    // Make sure the sampling variable(s) are initialized at the first step.
     if (m_stepNumber == 0) {
-        m_cumulativeEnergy          = 0;
-        m_cumulativeEnergy2         = 0;
-        m_cumulativeAcceptanceRate  = 0;
+        m_cumulativeEnergy = 0;
     }
 
     double localEnergy = m_system->getHamiltonian()->
                          computeLocalEnergy(m_system->getParticles());
     m_cumulativeEnergy  += localEnergy;
-    m_cumulativeEnergy2 += localEnergy * localEnergy;
-    m_cumulativeAcceptanceRate += acceptedStep;
     m_stepNumber++;
 }
 
@@ -41,8 +38,6 @@ void Sampler::printOutputToTerminal() {
     int     p  = m_system->getWaveFunction()->getNumberOfParameters();
     double  ef = m_system->getEquilibrationFraction();
     double* pa = m_system->getWaveFunction()->getParameters();
-    bool    ek = m_system->getHamiltonian()->getExactGroundStateEnergyKnown();
-    double  ee = m_system->getHamiltonian()->getExactEnergy();
 
     cout << endl;
     cout << "  -- System info -- " << endl;
@@ -58,21 +53,10 @@ void Sampler::printOutputToTerminal() {
     }
     cout << endl;
     cout << "  -- Reults -- " << endl;
-    if (ek) {
-        cout << " Exact energy    : " << ee << endl;
-    }
-    cout << " Energy          : " << m_energy << endl;
-    cout << " Variance        : " << m_energyVariance << endl;
-    cout << " Acceptance rate : " << m_acceptanceRate << endl;
+    cout << " Energy : " << m_energy << endl;
     cout << endl;
 }
 
 void Sampler::computeAverages() {
-    double  equilibrationFraction = m_system->getEquilibrationFraction();
-    int     numberOfStepsSampled = m_numberOfMetropolisSteps *
-                                   (1.0 - equilibrationFraction) - 1;
-    double energy2 = m_cumulativeEnergy2 / ((double) numberOfStepsSampled);
-    m_energy         = m_cumulativeEnergy  / ((double) numberOfStepsSampled);
-    m_energyVariance = energy2 - m_energy * m_energy;
-    m_acceptanceRate = m_cumulativeAcceptanceRate / ((double) numberOfStepsSampled);
+    m_energy = m_cumulativeEnergy / m_system->getNumberOfMetropolisSteps();
 }

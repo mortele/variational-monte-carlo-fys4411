@@ -17,7 +17,6 @@ SOURCES += main.cpp \
     Math/random.cpp \
     sampler.cpp \
     WaveFunctions/simplegaussian.cpp \
-    WaveFunctions/gaussian4.cpp
 
 HEADERS += \
     system.h \
@@ -30,5 +29,4 @@ HEADERS += \
     Math/random.h \
     sampler.h \
     WaveFunctions/simplegaussian.h \
-    WaveFunctions/gaussian4.h
 

@@ -15,12 +15,11 @@ using namespace std;
 int main() {
     System* system = new System();
     system->setHamiltonian(new HarmonicOscillator(system, 1));
-    //system->setWaveFunction(new SimpleGaussian(system, 1));
-    system->setWaveFunction(new Gaussian4(system, 6.));
+    system->setWaveFunction(new SimpleGaussian(system, 1));
     system->setInitialState(new RandomUniform(system, 1, 1));
     system->setEquilibrationFraction(0.1);
     system->setStepLength(0.1);
-    system->runMetropolisSteps((int) 1e6);
+    system->runMetropolisSteps(1e6);
     return 0;
 }
 

@@ -7,6 +7,12 @@
 #include "Math/random.h"
 
 bool System::metropolisStep() {
+    /* Perform the actual Metropolis step: Choose a particle at random and
+     * change it's position by a random amount, and check if the step is
+     * accepted by the Metropolis test (compare the wave function evaluated
+     * at this new position with the one at the old position).
+     */
+    return false;
 }
 
 void System::runMetropolisSteps(int numberOfMetropolisSteps) {
@@ -18,9 +24,13 @@ void System::runMetropolisSteps(int numberOfMetropolisSteps) {
     for (int i=0; i < numberOfMetropolisSteps; i++) {
         bool acceptedStep = metropolisStep();
 
-        if (i > m_equilibrationFraction * numberOfMetropolisSteps) {
-            m_sampler->sample(acceptedStep);
-        }
+        /* Here you should sample the energy (and maybe other things using
+         * the m_sampler instance of the Sampler class. Make sure, though,
+         * to only begin sampling after you have let the system equilibrate
+         * for a while. You may handle this using the fraction of steps which
+         * are equilibration steps; m_equilibrationFraction.
+         */
+        m_sampler->sample(acceptedStep);
     }
     m_sampler->computeAverages();
     m_sampler->printOutputToTerminal();

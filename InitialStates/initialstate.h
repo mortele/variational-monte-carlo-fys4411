@@ -7,9 +7,9 @@ public:
     class Particle* getParticles() { return m_particles; }
 
 protected:
-    class System* m_system;
-    class Particle* m_particles;
-    int m_numberOfDimensions;
-    int m_numberOfParticles;
+    class System* m_system = nullptr;
+    class Particle* m_particles = nullptr;
+    int m_numberOfDimensions = 0;
+    int m_numberOfParticles = 0;
 };
 

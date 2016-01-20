@@ -10,8 +10,8 @@ public:
     virtual double computeDoubleDerivative(class Particle* particles) = 0;
 
 protected:
-    int     m_numberOfParameters;
-    double* m_parameters;
-    class System* m_system;
+    int     m_numberOfParameters = 0;
+    double* m_parameters = nullptr;
+    class System* m_system = nullptr;
 };
 
