@@ -5,6 +5,8 @@
 #include "../particle.h"
 #include "../system.h"
 
+using std::cout;
+using std::endl;
 
 RandomUniform::RandomUniform(System*    system,
                              int        numberOfDimensions,
@@ -25,8 +27,6 @@ RandomUniform::RandomUniform(System*    system,
 }
 
 void RandomUniform::setupInitialState() {
-    m_particles.reserve(m_numberOfParticles);
-
     for (int i=0; i < m_numberOfParticles; i++) {
         std::vector<double> position = std::vector<double>();
 
@@ -44,8 +44,8 @@ void RandomUniform::setupInitialState() {
              */
             position.push_back(i);
         }
-        m_particles[i] = new Particle();
-        m_particles[i]->setNumberOfDimensions(m_numberOfDimensions);
-        m_particles[i]->setPosition(position);
+        m_particles.push_back(new Particle());
+        m_particles.at(i)->setNumberOfDimensions(m_numberOfDimensions);
+        m_particles.at(i)->setPosition(position);
     }
 }

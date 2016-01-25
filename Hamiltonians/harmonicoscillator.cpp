@@ -1,8 +1,12 @@
 #include "harmonicoscillator.h"
 #include <cassert>
+#include <iostream>
 #include "../system.h"
 #include "../particle.h"
 #include "../WaveFunctions/wavefunction.h"
+
+using std::cout;
+using std::endl;
 
 HarmonicOscillator::HarmonicOscillator(System* system, double omega) :
         Hamiltonian(system) {
@@ -17,8 +21,8 @@ double HarmonicOscillator::computeLocalEnergy(std::vector<Particle*> particles) 
      * doing this should be moved up to the super-class, Hamiltonian.
      *
      * You may access the wave function currently used through the
-     * m_waveFunction variable in the super-class in order to compute the
-     * kinetic energy here.
+     * getWaveFunction method in the m_system object in the super-class, i.e.
+     * m_system->getWaveFunction()...
      */
 
     double potentialEnergy = 0;

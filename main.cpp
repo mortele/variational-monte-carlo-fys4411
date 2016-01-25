@@ -11,6 +11,7 @@
 
 using namespace std;
 
+
 int main() {
     int numberOfDimensions  = 1;
     int numberOfParticles   = 1;
@@ -19,7 +20,7 @@ int main() {
     double alpha            = 0.5;          // Variational parameter.
     double stepLength       = 0.1;          // Metropolis step length.
     double equilibration    = 0.1;          // Amount of the total steps used
-                                            // for equilibration.
+    // for equilibration.
 
     System* system = new System();
     system->setHamiltonian              (new HarmonicOscillator(system, omega));
@@ -30,4 +31,3 @@ int main() {
     system->runMetropolisSteps          (numberOfSteps);
     return 0;
 }
-

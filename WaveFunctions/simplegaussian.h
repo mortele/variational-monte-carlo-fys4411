@@ -4,6 +4,6 @@
 class SimpleGaussian : public WaveFunction {
 public:
     SimpleGaussian(class System* system, double alpha);
-    double evaluate(class Particle* particle);
-    double computeDoubleDerivative(class Particle* particles);
+    double evaluate(std::vector<class Particle*> particles);
+    double computeDoubleDerivative(std::vector<class Particle*> particles);
 };
