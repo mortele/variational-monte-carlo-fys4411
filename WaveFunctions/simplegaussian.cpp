@@ -17,8 +17,8 @@ double SimpleGaussian::evaluate(Particle* particle) {
     return std::exp(- a * x*x / 2.0);
 }
 
-double SimpleGaussian::computeDoubleDerivative(Particle* particles) {
+double SimpleGaussian::computeKineticEnergy(Particle* particles) {
     double x = particles->getPosition()[0];
     double a = m_parameters[0];
-    return a * std::exp(- a * x*x / 2.0) * (a * x*x - 1);
+    return (a * std::exp(- a * x*x / 2.0) * (a * x*x - 1)) / evaluate(particles);
 }

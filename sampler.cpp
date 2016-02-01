@@ -43,13 +43,20 @@ void Sampler::printOutputToTerminal() {
     double* pa = m_system->getWaveFunction()->getParameters();
     bool    ek = m_system->getHamiltonian()->getExactGroundStateEnergyKnown();
     double  ee = m_system->getHamiltonian()->getExactEnergy();
+    double  eq = (std::round(ms*ef));
+    eq = (eq!=0 ? std::log10(eq) : -1);
+
 
     cout << endl;
     cout << "  -- System info -- " << endl;
     cout << " Number of particles  : " << np << endl;
     cout << " Number of dimensions : " << nd << endl;
     cout << " Number of Metropolis steps run : 10^" << std::log10(ms) << endl;
-    cout << " Number of equilibration steps  : 10^" << std::log10(std::round(ms*ef)) << endl;
+    if (eq == -1) {
+        cout << " Number of equilibration steps : 0" << endl;
+    } else {
+        cout << " Number of equilibration steps : 10^" << eq << endl;
+    }
     cout << endl;
     cout << "  -- Wave function parameters -- " << endl;
     cout << " Number of parameters : " << p << endl;

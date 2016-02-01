@@ -10,24 +10,12 @@
 #include "InitialStates/initialstate.h"
 #include "InitialStates/randomuniform.h"
 #include "Math/random.h"
+#include "examples.h"
 
 using namespace std;
 
 int main() {
-    System* system = new System();
-    /*system->setHamiltonian(new HarmonicOscillator(system, 1));
-    system->setWaveFunction(new SimpleGaussian(system, 1));
-    system->setInitialState(new RandomUniform(system, 1, 1));
-    system->setEquilibrationFraction(0.1);
-    system->setStepLength(0.1);
-    system->runMetropolisSteps((int) 1e6);*/
-
-    system->setInitialState(new RandomUniform(system, 3, 10)); // dim, part
-    system->setHamiltonian(new HarmonicOscillator(system, 1));
-    system->setWaveFunction(new MultiparticleHO(system, 0.5));
-    system->setEquilibrationFraction(0.1);
-    system->setStepLength(0.1);
-    system->runMetropolisSteps((int) 1e6);
+    System* system = NonInteractingHO(3,100); // (dimensions, particles).
     return 0;
 }
 

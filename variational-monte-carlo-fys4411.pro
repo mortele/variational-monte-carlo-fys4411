@@ -32,5 +32,6 @@ HEADERS += \
     sampler.h \
     WaveFunctions/simplegaussian.h \
     WaveFunctions/gaussian4.h \
-    WaveFunctions/multiparticleho.h
+    WaveFunctions/multiparticleho.h \
+    examples.h
 

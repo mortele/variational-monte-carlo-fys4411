@@ -6,5 +6,5 @@ class Gaussian4 : public WaveFunction {
 public:
     Gaussian4(class System* system, double alpha);
     double evaluate(Particle *particles);
-    double computeDoubleDerivative(Particle *particles);
+    double computeKineticEnergy(Particle *particles);
 };

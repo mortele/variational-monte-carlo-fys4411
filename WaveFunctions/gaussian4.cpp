@@ -15,10 +15,11 @@ double Gaussian4::evaluate(Particle* particles) {
     return std::exp(- a * x*x*x*x);
 }
 
-double Gaussian4::computeDoubleDerivative(Particle* particles) {
+double Gaussian4::computeKineticEnergy(Particle* particles) {
     double x = particles[0].getPosition()[0];
     double a = m_parameters[0];
-    return 4 * a * x*x * std::exp(- a * x*x*x*x) * (4 * a * x*x*x*x - 3);
+    return (4 * a * x*x * std::exp(- a * x*x*x*x) * (4 * a * x*x*x*x - 3)) /
+            evaluate(particles);
 }
 
 

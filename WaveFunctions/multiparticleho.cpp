@@ -23,7 +23,7 @@ double MultiparticleHO::evaluate(Particle* particles) {
     return std::exp(exponentSum);
 }
 
-double MultiparticleHO::computeDoubleDerivative(Particle* particles) {
+double MultiparticleHO::computeKineticEnergy(Particle* particles) {
     double kineticEnergy = 0;
     for (int i=0; i < m_numberOfParticles; i++) {
         double r2 = 0;

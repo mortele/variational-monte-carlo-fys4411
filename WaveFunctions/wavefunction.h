@@ -7,7 +7,7 @@ public:
     int     getNumberOfParameters() { return m_numberOfParameters; }
     double* getParameters()         { return m_parameters; }
     virtual double evaluate(class Particle* particles) = 0;
-    virtual double computeDoubleDerivative(class Particle* particles) = 0;
+    virtual double computeKineticEnergy(class Particle* particles) = 0;
 
 protected:
     int     m_numberOfParameters = 0;
