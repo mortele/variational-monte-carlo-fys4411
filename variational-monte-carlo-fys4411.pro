@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     Math/random.cpp \
     sampler.cpp \
     WaveFunctions/simplegaussian.cpp \
-    WaveFunctions/gaussian4.cpp
+    WaveFunctions/gaussian4.cpp \
+    WaveFunctions/multiparticleho.cpp
 
 HEADERS += \
     system.h \
@@ -30,5 +31,6 @@ HEADERS += \
     Math/random.h \
     sampler.h \
     WaveFunctions/simplegaussian.h \
-    WaveFunctions/gaussian4.h
+    WaveFunctions/gaussian4.h \
+    WaveFunctions/multiparticleho.h
 

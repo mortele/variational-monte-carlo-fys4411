@@ -8,7 +8,8 @@ HarmonicOscillator::HarmonicOscillator(System* system, double omega) :
     m_omega  = omega;
     m_omega2 = omega*omega;
     m_exactGroundStateEnergyKnown = true;
-    m_exactEnergy = omega / 2.0;
+    m_exactEnergy = (omega / 2.0) * system->getNumberOfDimensions() *
+                                    system->getNumberOfParticles();
 }
 
 double HarmonicOscillator::computeLocalEnergy(Particle* particles) {
@@ -23,8 +24,7 @@ double HarmonicOscillator::computeLocalEnergy(Particle* particles) {
         potentialEnergy += 0.5 * m_omega2 * r2;
     }
     WaveFunction* waveFunction = m_system->getWaveFunction();
-    double kineticEnergy = - waveFunction->computeDoubleDerivative(particles) /
-                             (2 * waveFunction->evaluate(particles));
+    double kineticEnergy = waveFunction->computeDoubleDerivative(particles);
     return kineticEnergy + potentialEnergy;
 }
 
