@@ -10,12 +10,10 @@ public:
 
 protected:
     class System* m_system = nullptr;
-    bool    m_exactGroundStateEnergyKnown = 0;
+    class WaveFunction* m_waveFunction = nullptr;
+    bool    m_exactGroundStateEnergyKnown = false;
     double  m_exactEnergy = 0;
 
-    double computeKineticEnergy(class Particle* particles);
-
-private:
-    class WaveFunction* m_waveFunction = nullptr;
+    virtual double computeKineticEnergy(class Particle* particles);
 };
 

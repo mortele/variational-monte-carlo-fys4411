@@ -3,6 +3,7 @@
 #include "../system.h"
 #include "../particle.h"
 
+
 MultiparticleHO::MultiparticleHO(System* system, double alpha) :
         WaveFunction(system) {
 
@@ -36,4 +37,3 @@ double MultiparticleHO::computeKineticEnergy(Particle* particles) {
     }
     return kineticEnergy;
 }
-

@@ -1,7 +1,14 @@
 #include "harmonicoscillator.h"
+#include <cmath>
+#include <iostream>
 #include "../system.h"
 #include "../particle.h"
 #include "../WaveFunctions/wavefunction.h"
+
+
+using std::cout;
+using std::endl;
+
 
 HarmonicOscillator::HarmonicOscillator(System* system, double omega) :
         Hamiltonian(system) {
@@ -23,8 +30,8 @@ double HarmonicOscillator::computeLocalEnergy(Particle* particles) {
         }
         potentialEnergy += 0.5 * m_omega2 * r2;
     }
-    WaveFunction* waveFunction = m_system->getWaveFunction();
-    double kineticEnergy = waveFunction->computeKineticEnergy(particles);
-    return kineticEnergy + potentialEnergy;
+    //double kineticEnergy = m_waveFunction->computeKineticEnergy(particles);
+    double kineticEnergyNumerical = Hamiltonian::computeKineticEnergy(particles);
+    return kineticEnergyNumerical + potentialEnergy;
 }
 

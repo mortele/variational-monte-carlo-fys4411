@@ -1,10 +1,14 @@
 #include "system.h"
+#include <iostream>
 #include "sampler.h"
 #include "particle.h"
 #include "WaveFunctions/wavefunction.h"
 #include "Hamiltonians/hamiltonian.h"
 #include "InitialStates/initialstate.h"
 #include "Math/random.h"
+
+using std::cout;
+using std::endl;
 
 bool System::metropolisStep() {
     int     particle        = Random::nextInt(m_numberOfParticles);
@@ -31,6 +35,7 @@ void System::runMetropolisSteps(int numberOfMetropolisSteps) {
     m_sampler                   = new Sampler(this);
     m_numberOfMetropolisSteps   = numberOfMetropolisSteps;
     m_sampler->setNumberOfMetropolisSteps(numberOfMetropolisSteps);
+    m_hamiltonian->setWaveFunction(m_waveFunction);
 
     for (int i=0; i < numberOfMetropolisSteps; i++) {
         bool acceptedStep = metropolisStep();

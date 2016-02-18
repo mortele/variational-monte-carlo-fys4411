@@ -15,7 +15,8 @@
 using namespace std;
 
 int main() {
-    System* system = NonInteractingHO(3,100); // (dimensions, particles).
+    //System* system = NonInteractingHO(3,20); // (dimensions, particles).
+    System* system = InteractingHO(3,20); // (dimensions, particles).
     return 0;
 }
 

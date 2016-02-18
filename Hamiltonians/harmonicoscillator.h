@@ -4,9 +4,9 @@
 class HarmonicOscillator : public Hamiltonian {
 public:
     HarmonicOscillator(System* system, double omega);
-    double computeLocalEnergy(Particle* particles);
+    virtual double computeLocalEnergy(Particle* particles);
 
-private:
+protected:
     double m_omega  = 0;
     double m_omega2 = 0;
 };

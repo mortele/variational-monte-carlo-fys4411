@@ -18,7 +18,9 @@ SOURCES += main.cpp \
     sampler.cpp \
     WaveFunctions/simplegaussian.cpp \
     WaveFunctions/gaussian4.cpp \
-    WaveFunctions/multiparticleho.cpp
+    WaveFunctions/multiparticleho.cpp \
+    WaveFunctions/multiparticlehointeracting.cpp \
+    Hamiltonians/harmonicoscillatorinteracting.cpp
 
 HEADERS += \
     system.h \
@@ -33,5 +35,7 @@ HEADERS += \
     WaveFunctions/simplegaussian.h \
     WaveFunctions/gaussian4.h \
     WaveFunctions/multiparticleho.h \
-    examples.h
+    examples.h \
+    WaveFunctions/multiparticlehointeracting.h \
+    Hamiltonians/harmonicoscillatorinteracting.h
 
