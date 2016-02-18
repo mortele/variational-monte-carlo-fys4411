@@ -9,10 +9,10 @@ public:
     bool getExactGroundStateEnergyKnown() { return m_exactGroundStateEnergyKnown; }
 
 protected:
-    class System* m_system = nullptr;
-    class WaveFunction* m_waveFunction = nullptr;
-    bool    m_exactGroundStateEnergyKnown = false;
-    double  m_exactEnergy = 0;
+    class System*       m_system                        = nullptr;
+    class WaveFunction* m_waveFunction                  = nullptr;
+    bool                m_exactGroundStateEnergyKnown   = false;
+    double              m_exactEnergy                   = 0;
 
     virtual double computeKineticEnergy(class Particle* particles);
 };
