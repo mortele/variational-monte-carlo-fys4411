@@ -7,9 +7,11 @@
 #include "WaveFunctions/gaussian4.h"
 #include "WaveFunctions/multiparticleho.h"
 #include "WaveFunctions/multiparticlehointeracting.h"
+#include "WaveFunctions/hydrogenlike.h"
 #include "Hamiltonians/hamiltonian.h"
 #include "Hamiltonians/harmonicoscillator.h"
 #include "Hamiltonians/harmonicoscillatorinteracting.h"
+#include "Hamiltonians/heliumatom.h"
 #include "InitialStates/initialstate.h"
 #include "InitialStates/randomuniform.h"
 #include "Math/random.h"
@@ -47,3 +49,21 @@ System* InteractingHO(int numberOfDimensions, int numberOfParticles) {
     system->runMetropolisSteps((int) 1e2);
     return system;
 }
+
+System* HeliumAtomInteracting(int numberOfDimensions, bool interaction) {
+    int     numberOfParticles       = 2;
+    double  alpha                   = (interaction ? 1.843 : 2.0);
+    double  beta                    = (interaction ? 0.3465 : 10000);
+    double  stepLength              = 1.3;
+    double  equilibrationFraction   = 0.0;
+
+    System* system = new System();
+    system->setInitialState(new RandomUniform(system, numberOfDimensions, numberOfParticles));
+    system->setHamiltonian(new HeliumAtom(system, interaction));
+    system->setWaveFunction(new HydrogenLike(system, alpha, beta));
+    system->setEquilibrationFraction(equilibrationFraction);
+    system->setStepLength(stepLength);
+    system->runMetropolisSteps((int) 1e6);
+    return system;
+}
+

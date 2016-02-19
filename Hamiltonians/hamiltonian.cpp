@@ -1,7 +1,12 @@
 #include "hamiltonian.h"
+#include <iostream>
 #include "system.h"
 #include "WaveFunctions/wavefunction.h"
 #include "particle.h"
+
+using std::cout;
+using std::endl;
+
 
 Hamiltonian::Hamiltonian(System* system) {
     m_system = system;

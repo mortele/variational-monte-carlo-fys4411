@@ -20,7 +20,9 @@ SOURCES += main.cpp \
     WaveFunctions/gaussian4.cpp \
     WaveFunctions/multiparticleho.cpp \
     WaveFunctions/multiparticlehointeracting.cpp \
-    Hamiltonians/harmonicoscillatorinteracting.cpp
+    Hamiltonians/harmonicoscillatorinteracting.cpp \
+    Hamiltonians/heliumatom.cpp \
+    WaveFunctions/hydrogenlike.cpp
 
 HEADERS += \
     system.h \
@@ -37,5 +39,7 @@ HEADERS += \
     WaveFunctions/multiparticleho.h \
     examples.h \
     WaveFunctions/multiparticlehointeracting.h \
-    Hamiltonians/harmonicoscillatorinteracting.h
+    Hamiltonians/harmonicoscillatorinteracting.h \
+    Hamiltonians/heliumatom.h \
+    WaveFunctions/hydrogenlike.h
 
