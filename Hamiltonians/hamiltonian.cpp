@@ -33,6 +33,7 @@ double Hamiltonian::computeKineticEnergy(Particle* particles) {
             const double waveFunctionMinus = m_waveFunction->evaluate(particles);
             particles[i].adjustPosition(dx, j);
             doubleDerivative += waveFunctionPlus - WaveFunction + waveFunctionMinus;
+
         }
     }
     doubleDerivative /= (dx*dx);

@@ -15,9 +15,9 @@
 using namespace std;
 
 int main() {
-    //System* system = NonInteractingHO(3,20); // (dimensions, particles).
-    //System* system = InteractingHO(3,20); // (dimensions, particles).
-    System* system = HeliumAtomInteracting(3, true); // (dimensions).
+    //System* system = NonInteractingHO(3,5); // (dimensions, particles).
+    System* system = InteractingHO(3,10); // (dimensions, particles).
+    //System* system = HeliumAtomInteracting(3, false); // (dimensions).
     return 0;
 }
 

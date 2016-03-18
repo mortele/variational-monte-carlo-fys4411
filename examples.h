@@ -17,10 +17,10 @@
 #include "Math/random.h"
 
 System* NonInteractingHO(int numberOfDimensions, int numberOfParticles) {
-    double omega            = 2.0;
-    double alpha            = 0.5*omega;
-    double stepLength       = 0.5;
-    double equilibrationFraction = 0.0;
+    double omega            = 1.0;
+    double alpha            = 0.5;
+    double stepLength       = 1.5;
+    double equilibrationFraction = 0.01;
 
     System* system = new System();
     system->setInitialState(new RandomUniform(system, numberOfDimensions, numberOfParticles));
@@ -28,25 +28,24 @@ System* NonInteractingHO(int numberOfDimensions, int numberOfParticles) {
     system->setWaveFunction(new MultiparticleHO(system, alpha));
     system->setEquilibrationFraction(equilibrationFraction);
     system->setStepLength(stepLength);
-    system->runMetropolisSteps((int) 1e5);
+    system->runMetropolisSteps((int) 1e6);
     return system;
 }
 
 
 System* InteractingHO(int numberOfDimensions, int numberOfParticles) {
-    double omega            = 1.0;
-    double gamma            = 1.0;
-    double alpha            = 0.5*omega;
-    double stepLength       = 0.5;
-    double equilibrationFraction = 0.0;
+    double gamma            = 2.82843;
+    double alpha            = 0.5;
+    double stepLength       = 1.5;
+    double equilibrationFraction = 0.05;
 
     System* system = new System();
     system->setInitialState(new RandomUniform(system, numberOfDimensions, numberOfParticles));
     system->setHamiltonian(new HarmonicOscillatorInteracting(system, gamma));
-    system->setWaveFunction(new MultiparticleHOInteracting(system, alpha));
+    system->setWaveFunction(new MultiparticleHOInteracting(system, alpha, gamma));
     system->setEquilibrationFraction(equilibrationFraction);
     system->setStepLength(stepLength);
-    system->runMetropolisSteps((int) 1e2);
+    system->runMetropolisSteps((int) 1e5);
     return system;
 }
 

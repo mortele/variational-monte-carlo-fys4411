@@ -4,6 +4,7 @@
 class MultiparticleHO : public WaveFunction {
 public:
     MultiparticleHO(class System* system, double alpha);
+    MultiparticleHO(class System* system, double alpha, double beta);
     virtual double evaluate(class Particle* particles);
     virtual double computeKineticEnergy(class Particle* particles);
 

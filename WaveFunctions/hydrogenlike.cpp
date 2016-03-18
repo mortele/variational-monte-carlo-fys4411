@@ -15,9 +15,9 @@ HydrogenLike::HydrogenLike(System* system,
 }
 
 double HydrogenLike::evaluate(Particle* particles) {
-    double r1 = 0;
-    double r2 = 0;
-    double r12 = 0;
+    double r1   = 0;
+    double r2   = 0;
+    double r12  = 0;
 
     for (int k=0; k<m_system->getNumberOfDimensions(); k++) {
         const double x1  = particles[0].getPosition()[k];
@@ -32,7 +32,7 @@ double HydrogenLike::evaluate(Particle* particles) {
     r12 = sqrt(r12);
 
     const double interaction = m_parameters[1] < 1000 ? exp((0.5 * r12) / (1.0 + m_parameters[1] * r12)) : 1.0;
-    const double single = exp(-m_parameters[0] * (r1 + r2));
+    const double single      = exp(-m_parameters[0] * (r1 + r2));
     return single * interaction;
 }
 
