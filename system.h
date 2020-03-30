@@ -1,8 +1,11 @@
 #pragma once
 #include <vector>
+#include <Math/random.h>
 
 class System {
 public:
+    System();
+    System(int seed);
     bool metropolisStep             ();
     void runMetropolisSteps         (int numberOfMetropolisSteps);
     void setNumberOfParticles       (int numberOfParticles);
@@ -16,6 +19,7 @@ public:
     class Hamiltonian*              getHamiltonian()    { return m_hamiltonian; }
     class Sampler*                  getSampler()        { return m_sampler; }
     std::vector<class Particle*>    getParticles()      { return m_particles; }
+    class Random*                   getRandomEngine()   { return m_random; }
     int getNumberOfParticles()          { return m_numberOfParticles; }
     int getNumberOfDimensions()         { return m_numberOfDimensions; }
     int getNumberOfMetropolisSteps()    { return m_numberOfMetropolisSteps; }
@@ -32,5 +36,6 @@ private:
     class InitialState*             m_initialState = nullptr;
     class Sampler*                  m_sampler = nullptr;
     std::vector<class Particle*>    m_particles = std::vector<class Particle*>();
+    class Random*                   m_random = nullptr;
 };
 

@@ -7,6 +7,15 @@
 #include "InitialStates/initialstate.h"
 #include "Math/random.h"
 
+
+System::System() {
+    m_random = new Random();
+}
+
+System::System(int seed) {
+    m_random = new Random(seed);
+}
+
 bool System::metropolisStep() {
     /* Perform the actual Metropolis step: Choose a particle at random and
      * change it's position by a random amount, and check if the step is

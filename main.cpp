@@ -13,6 +13,9 @@ using namespace std;
 
 
 int main() {
+    // Seed for the random number generator
+    int seed = 2020;
+
     int numberOfDimensions  = 1;
     int numberOfParticles   = 1;
     int numberOfSteps       = (int) 1e6;
@@ -22,7 +25,7 @@ int main() {
     double equilibration    = 0.1;          // Amount of the total steps used
     // for equilibration.
 
-    System* system = new System();
+    System* system = new System(seed);
     system->setHamiltonian              (new HarmonicOscillator(system, omega));
     system->setWaveFunction             (new SimpleGaussian(system, alpha));
     system->setInitialState             (new RandomUniform(system, numberOfDimensions, numberOfParticles));
