@@ -56,7 +56,7 @@ void Sampler::printOutputToTerminal() {
         cout << " Parameter " << i+1 << " : " << pa.at(i) << endl;
     }
     cout << endl;
-    cout << "  -- Reults -- " << endl;
+    cout << "  -- Results -- " << endl;
     cout << " Energy : " << m_energy << endl;
     cout << endl;
 }
