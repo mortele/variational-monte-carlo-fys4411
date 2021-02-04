@@ -22,7 +22,8 @@ double SimpleGaussian::evaluate(std::vector<class Particle*> particles) {
      * (only) variational parameter.
      */
 	double r2 = std::pow(particles[0]->getPosition()[0], 2);
-	return std::exp( -m_parameters[0]*r2 );
+	return -m_parameters[0]*r2;
+	//return std::exp( -m_parameters[0]*r2 );
 	//return 0;
 }
 

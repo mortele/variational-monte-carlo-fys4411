@@ -1,5 +1,6 @@
 #include "system.h"
 #include <cassert>
+#include <cmath>
 #include "sampler.h"
 #include "particle.h"
 #include "WaveFunctions/wavefunction.h"
@@ -14,7 +15,26 @@ bool System::metropolisStep() {
      * at this new position with the one at the old position).
      */
 
-    return false;
+	//double positionNew = m_particles[0]->getPosition()[0] +
+	//	m_stepLength*(Random::nextDouble() - .5);
+	
+	double wfold = m_waveFunction->evaluate(m_particles);
+
+	double step = m_stepLength*(Random::nextDouble() - .5);
+	m_particles[0]->adjustPosition(step, 0);
+	double wfnew = m_waveFunction->evaluate(m_particles);
+
+	if( Random::nextDouble() <= std::exp(2*(wfnew - wfold)) )
+	{
+		return true;
+	}
+	else
+	{
+		m_particles[0]->adjustPosition(-step, 0);
+		return false;
+	}
+
+    //return false;
 }
 
 void System::runMetropolisSteps(int numberOfMetropolisSteps) {
