@@ -13,15 +13,22 @@ bool System::metropolisStep() {
      * change it's position by a random amount, and check if the step is
      * accepted by the Metropolis test (compare the wave function evaluated
      * at this new position with the one at the old position).
+	 *
+	 * double positionNew = m_particles[0]->getPosition()[0] +
+	 * m_stepLength*(Random::nextDouble() - .5);
+	 * std::vector<double> step(m_numberOfDimensions);
+	 * for( dim = 0; dim < m_numberOfDimensions; dim++ )
+	 * {
+	 * step[dim] = m_stepLength*2*(Random::nextDouble() - .5);
+	 * m_particles[]
+	 * }
      */
 
-	//double positionNew = m_particles[0]->getPosition()[0] +
-	//	m_stepLength*(Random::nextDouble() - .5);
-	
 	double wfold = m_waveFunction->evaluate(m_particles);
-
 	double step = m_stepLength*(Random::nextDouble() - .5);
+
 	m_particles[0]->adjustPosition(step, 0);
+
 	double wfnew = m_waveFunction->evaluate(m_particles);
 
 	if( Random::nextDouble() <= std::exp(2*(wfnew - wfold)) )
