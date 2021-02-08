@@ -8,7 +8,7 @@ cd build
 
 # Run CMake to create a Makefile
 # Might have to delete files in build first
-#cmake.exe -G "MinGW Makefiles" ..
+# cmake.exe -G "MinGW Makefiles" ..
 cmake ../
 
 # Make the Makefile using two threads
