@@ -16,13 +16,13 @@ bool System::metropolisStep() {
 	 * double step = m_stepLength*(Random::nextDouble() - .5);
      */
 
-std::vector<double> step(m_numberOfDimensions);
+    std::vector<double> step(m_numberOfDimensions);
 
-for( int dim = 0; dim < m_numberOfDimensions; dim++ )
-{
-	step[dim] = m_stepLength*2*(Random::nextDouble() - .5);
-	m_particles[0]->adjustPosition(step[dim], dim);
-}
+    for( int dim = 0; dim < m_numberOfDimensions; dim++ )
+    {
+        step[dim] = m_stepLength*2*(Random::nextDouble() - .5);
+        m_particles[0]->adjustPosition(step[dim], dim);
+    }
 
 	double wfold = m_waveFunction->evaluate(m_particles);
 
@@ -64,7 +64,9 @@ void System::runMetropolisSteps(int numberOfMetropolisSteps) {
         m_sampler->sample(acceptedStep);
     }
     m_sampler->computeAverages();
+    m_sampler->getOutput();
     m_sampler->printOutputToTerminal();
+    m_sampler->printOutputToFile();
 }
 
 void System::setNumberOfParticles(int numberOfParticles) {

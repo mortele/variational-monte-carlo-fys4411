@@ -1,12 +1,15 @@
 #include <iostream>
+#include <fstream>
 #include <cmath>
 #include <vector>
+#include <string>
 #include "sampler.h"
 #include "system.h"
 #include "particle.h"
 #include "Hamiltonians/hamiltonian.h"
 #include "WaveFunctions/wavefunction.h"
 
+using namespace std;
 using std::cout;
 using std::endl;
 
@@ -35,15 +38,36 @@ void Sampler::sample(bool acceptedStep) {
     m_stepNumber++;
 }
 
-void Sampler::printOutputToTerminal() {
+void Sampler::getOutput() {
     int     np = m_system->getNumberOfParticles();
     int     nd = m_system->getNumberOfDimensions();
     int     ms = m_system->getNumberOfMetropolisSteps();
     int     p  = m_system->getWaveFunction()->getNumberOfParameters();
     double  ef = m_system->getEquilibrationFraction();
     std::vector<double> pa = m_system->getWaveFunction()->getParameters();
+    
+    m_output.append("  -- System info -- \n");
+    m_output.append(" Number of particles  : " + to_string(np) + "\n");
+    m_output.append(" Number of dimensions : " + to_string(nd) + "\n");
+    m_output.append(" Number of Metropolis steps run : 10^" + to_string(std::log10(ms)) + "\n");
+    m_output.append(" Number of equilibration steps  : 10^" + to_string(std::log10(std::round(ms*ef))) + "\n");
+    m_output.append("\n");
+    for (int i=0; i < p; i++) {
+        m_output.append(" Parameter " + to_string(i+1) + " : " + to_string(pa.at(i)) + "\n");
+    }
+    m_output.append("\n");
+    m_output.append("  -- Reults -- \n");
+    m_output.append(" Energy : " + to_string(m_energy) + "\n");
+    m_output.append("\n");
+    
+}
 
+void Sampler::printOutputToTerminal() {
+    
     cout << endl;
+    cout << m_output;
+
+    /* cout << endl;
     cout << "  -- System info -- " << endl;
     cout << " Number of particles  : " << np << endl;
     cout << " Number of dimensions : " << nd << endl;
@@ -58,7 +82,16 @@ void Sampler::printOutputToTerminal() {
     cout << endl;
     cout << "  -- Reults -- " << endl;
     cout << " Energy : " << m_energy << endl;
-    cout << endl;
+    cout << endl; */
+}
+
+void Sampler::printOutputToFile() {
+    
+    ofstream outfile;
+    outfile.open ("results.txt", ios::out | ios::trunc);
+    outfile << m_output;
+    outfile.close();
+
 }
 
 void Sampler::computeAverages() {

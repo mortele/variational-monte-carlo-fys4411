@@ -1,3 +1,4 @@
+#include <string>
 #pragma once
 
 class Sampler {
@@ -5,7 +6,9 @@ public:
     Sampler(class System* system);
     void setNumberOfMetropolisSteps(int steps);
     void sample(bool acceptedStep);
+    void getOutput();
     void printOutputToTerminal();
+    void printOutputToFile();
     void computeAverages();
     double getEnergy()          { return m_energy; }
 
@@ -14,5 +17,6 @@ private:
     int     m_stepNumber = 0;
     double  m_energy = 0;
     double  m_cumulativeEnergy = 0;
+    std::string  m_output = "";
     class System* m_system = nullptr;
 };
