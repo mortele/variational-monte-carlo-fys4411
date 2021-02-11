@@ -21,10 +21,12 @@ double SimpleGaussian::evaluate(std::vector<class Particle*> particles) {
      * For the actual expression, use exp(-alpha * r^2), with alpha being the
      * (only) variational parameter.
      */
-	double r2 = std::pow(particles[0]->getPosition()[0], 2);
+	double r2 = 0;
+	for( int dim = 0; dim < m_system->getNumberOfDimensions(); dim++ )
+	{
+		r2 += std::pow(particles[0]->getPosition()[dim], 2);
+	}
 	return -m_parameters[0]*r2;
-	//return std::exp( -m_parameters[0]*r2 );
-	//return 0;
 }
 
 double SimpleGaussian::computeDoubleDerivative(std::vector<class Particle*> particles) {
@@ -36,8 +38,48 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<class Particle*> part
      * This quantity is needed to compute the (local) energy (consider the
      * Schrödinger equation to see how the two are related).
      */
-	return -2*m_parameters[0] + 4*pow(m_parameters[0], 2)
-		*std::pow(particles[0]->getPosition()[0], 2);
-		//*exp(-m_parameters[0]*pow)particles[0].getPosition(), 2)
-    //return 0;
+
+	double r2 = 0;
+	for( int dim = 0; dim < m_system->getNumberOfDimensions(); dim++ )
+	{
+		r2 += std::pow(particles[0]->getPosition()[dim], 2);
+	}
+	return -2*m_parameters[0] + 4*pow(m_parameters[0], 2)*r2;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
