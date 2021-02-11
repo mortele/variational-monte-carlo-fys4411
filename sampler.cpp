@@ -21,6 +21,7 @@ Sampler::Sampler(System* system) {
 
 void Sampler::setNumberOfMetropolisSteps(int steps) {
     m_numberOfMetropolisSteps = steps;
+    m_numberOfSampledMetropolisSteps = steps - steps*m_system->getEquilibrationFraction();
 }
 
 void Sampler::sample(bool acceptedStep) {
@@ -100,6 +101,5 @@ void Sampler::computeAverages() {
     /* Compute the averages of the sampled quantities. You need to think
      * thoroughly through what is written here currently; is this correct?
      */
-    int num = m_system->getNumberOfMetropolisSteps();
-    m_energy = m_cumulativeEnergy / (num - num*m_system->getEquilibrationFraction());
+    m_energy = m_cumulativeEnergy / (m_numberOfSampledMetropolisSteps);
 }
