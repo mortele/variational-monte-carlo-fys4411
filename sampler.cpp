@@ -49,8 +49,10 @@ void Sampler::getOutput() {
     m_output.append("  -- System info -- \n");
     m_output.append(" Number of particles  : " + to_string(np) + "\n");
     m_output.append(" Number of dimensions : " + to_string(nd) + "\n");
-    m_output.append(" Number of Metropolis steps run : 10^" + to_string(std::log10(ms)) + "\n");
-    m_output.append(" Number of equilibration steps  : 10^" + to_string(std::log10(std::round(ms*ef))) + "\n");
+    m_output.append(" Number of Metropolis steps run : 10^" + to_string(static_cast<int>(std::log10(ms))) + "\n");
+    m_output.append(" Number of equilibration steps  : 10^" + to_string(static_cast<int>(std::log10(std::round(ms*ef)))) + "\n");
+    // m_output.append(" Number of Metropolis steps run : 10^" + to_string(std::log10(ms)) + "\n");
+    //m_output.append(" Number of equilibration steps  : 10^" + to_string(std::log10(std::round(ms*ef))) + "\n");
     m_output.append("\n");
     for (int i=0; i < p; i++) {
         m_output.append(" Parameter " + to_string(i+1) + " : " + to_string(pa.at(i)) + "\n");
