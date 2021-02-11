@@ -8,7 +8,7 @@
 #include "InitialStates/initialstate.h"
 #include "Math/random.h"
 
-bool System::metropolisStep() {
+bool System::metropolisStep(int particle) {
     /* Perform the actual Metropolis step: Choose a particle at random and
      * change it's position by a random amount, and check if the step is
      * accepted by the Metropolis test (compare the wave function evaluated
@@ -16,16 +16,14 @@ bool System::metropolisStep() {
 	 * double step = m_stepLength*(Random::nextDouble() - .5);
      */
 
-std::vector<double> step(m_numberOfDimensions);
-
-for( int dim = 0; dim < m_numberOfDimensions; dim++ )
-{
-	step[dim] = m_stepLength*2*(Random::nextDouble() - .5);
-	m_particles[0]->adjustPosition(step[dim], dim);
-}
-
+	std::vector<double> step(m_numberOfDimensions);
 	double wfold = m_waveFunction->evaluate(m_particles);
 
+	for( int dim = 0; dim < m_numberOfDimensions; dim++ )
+	{
+		step[dim] = m_stepLength*2*(Random::nextDouble() - .5);
+		m_particles[particle]->adjustPosition(step[dim], dim);
+	}
 
 	double wfnew = m_waveFunction->evaluate(m_particles);
 
@@ -37,9 +35,8 @@ for( int dim = 0; dim < m_numberOfDimensions; dim++ )
 	{
 		for( int dim = 0; dim < m_numberOfDimensions; dim++ )
 		{
-			m_particles[0]->adjustPosition(-step[dim], dim);
+			m_particles[particle]->adjustPosition(-step[dim], dim);
 		}
-		//m_particles[0]->adjustPosition(-step, 0);
 		return false;
 	}
 
@@ -53,15 +50,21 @@ void System::runMetropolisSteps(int numberOfMetropolisSteps) {
     m_sampler->setNumberOfMetropolisSteps(numberOfMetropolisSteps);
 
     for (int i=0; i < numberOfMetropolisSteps; i++) {
-        bool acceptedStep = metropolisStep();
+		for( int particle=0; particle < m_numberOfParticles; particle++ )
+		{
+			bool acceptedStep = metropolisStep(particle);
 
-        /* Here you should sample the energy (and maybe other things using
-         * the m_sampler instance of the Sampler class. Make sure, though,
-         * to only begin sampling after you have let the system equilibrate
-         * for a while. You may handle this using the fraction of steps which
-         * are equilibration steps; m_equilibrationFraction.
-         */
-        m_sampler->sample(acceptedStep);
+			/* Here you should sample the energy (and maybe other things using
+			* the m_sampler instance of the Sampler class. Make sure, though,
+			* to only begin sampling after you have let the system equilibrate
+			* for a while. You may handle this using the fraction of steps which
+			* are equilibration steps; m_equilibrationFraction.
+			*/
+			if( i > numberOfMetropolisSteps*m_equilibrationFraction )
+			{
+				m_sampler->sample(acceptedStep);
+			}
+		}
     }
     m_sampler->computeAverages();
     m_sampler->printOutputToTerminal();
