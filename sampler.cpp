@@ -28,9 +28,8 @@ void Sampler::sample(bool acceptedStep) {
     // Make sure the sampling variable(s) are initialized at the first step.
     if (m_stepNumber == 0) {
         m_cumulativeEnergy = 0;
-        //bytt til vektor
-        double m_energies[steps - steps*m_system->getEquilibrationFraction()];
-        double m_posisions[steps - steps*m_system->getEquilibrationFraction()];
+        m_energies.clear();
+        m_positions.clear();
     }
 
     /* Here you should sample all the interesting things you want to measure.
@@ -39,7 +38,15 @@ void Sampler::sample(bool acceptedStep) {
     double localEnergy = m_system->getHamiltonian()->
                          computeLocalEnergy(m_system->getParticles());
     m_cumulativeEnergy  += localEnergy;
-    m_energies[m_stepNumber] = localEnergy;
+    m_energies.push_back(localEnergy);
+
+    /* std::vector<class Particle*> particles = m_system->getParticles();
+    std::vector<double> currPos = std::vector<double>();
+    for (int i = 0; i < m_system->getNumberOfParticles(); i++)
+    {
+        currPos.push_back(particles[i]->getPosition());
+    }
+    m_positions.push_back(currPos); */
     m_stepNumber++;
 }
 
