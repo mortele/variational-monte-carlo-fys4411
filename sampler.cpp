@@ -3,6 +3,9 @@
 #include <cmath>
 #include <vector>
 #include <string>
+#include <algorithm> 
+#include <sstream> 
+#include <iterator> 
 #include "sampler.h"
 #include "system.h"
 #include "particle.h"
@@ -40,13 +43,13 @@ void Sampler::sample(bool acceptedStep) {
     m_cumulativeEnergy  += localEnergy;
     m_energies.push_back(localEnergy);
 
-    /* std::vector<class Particle*> particles = m_system->getParticles();
-    std::vector<double> currPos = std::vector<double>();
+    vector<class Particle*> particles = m_system->getParticles();
+    vector<vector<double>> currPos = vector<vector<double>>();
     for (int i = 0; i < m_system->getNumberOfParticles(); i++)
     {
         currPos.push_back(particles[i]->getPosition());
     }
-    m_positions.push_back(currPos); */
+    m_positions.push_back(currPos);
     m_stepNumber++;
 }
 
@@ -56,15 +59,15 @@ void Sampler::getOutput() {
     int     ms = m_system->getNumberOfMetropolisSteps();
     int     p  = m_system->getWaveFunction()->getNumberOfParameters();
     double  ef = m_system->getEquilibrationFraction();
-    std::vector<double> pa = m_system->getWaveFunction()->getParameters();
+    vector<double> pa = m_system->getWaveFunction()->getParameters();
     
     m_output.append("  -- System info -- \n");
     m_output.append(" Number of particles  : " + to_string(np) + "\n");
     m_output.append(" Number of dimensions : " + to_string(nd) + "\n");
-    m_output.append(" Number of Metropolis steps run : 10^" + to_string(static_cast<int>(std::log10(ms))) + "\n");
-    m_output.append(" Number of equilibration steps  : 10^" + to_string(static_cast<int>(std::log10(std::round(ms*ef)))) + "\n");
-    // m_output.append(" Number of Metropolis steps run : 10^" + to_string(std::log10(ms)) + "\n");
-    //m_output.append(" Number of equilibration steps  : 10^" + to_string(std::log10(std::round(ms*ef))) + "\n");
+    m_output.append(" Number of Metropolis steps run : 10^" + to_string(static_cast<int>(log10(ms))) + "\n");
+    m_output.append(" Number of equilibration steps  : 10^" + to_string(static_cast<int>(log10(round(ms*ef)))) + "\n");
+    // m_output.append(" Number of Metropolis steps run : 10^" + to_string(log10(ms)) + "\n");
+    //m_output.append(" Number of equilibration steps  : 10^" + to_string(log10(round(ms*ef))) + "\n");
     m_output.append("\n");
     for (int i=0; i < p; i++) {
         m_output.append(" Parameter " + to_string(i+1) + " : " + to_string(pa.at(i)) + "\n");
@@ -85,8 +88,8 @@ void Sampler::printOutputToTerminal() {
     cout << "  -- System info -- " << endl;
     cout << " Number of particles  : " << np << endl;
     cout << " Number of dimensions : " << nd << endl;
-    cout << " Number of Metropolis steps run : 10^" << std::log10(ms) << endl;
-    cout << " Number of equilibration steps  : 10^" << std::log10(std::round(ms*ef)) << endl;
+    cout << " Number of Metropolis steps run : 10^" << log10(ms) << endl;
+    cout << " Number of equilibration steps  : 10^" << log10(round(ms*ef)) << endl;
     cout << endl;
     cout << "  -- Wave function parameters -- " << endl;
     cout << " Number of parameters : " << p << endl;
@@ -104,6 +107,17 @@ void Sampler::printOutputToFile() {
     ofstream outfile;
     outfile.open ("results.txt", ios::out | ios::trunc);
     outfile << m_output;
+    outfile << endl;
+    outfile << endl;
+
+    /* ostringstream oss;
+    copy(m_energies.begin(), m_energies.end()-1, ostream_iterator<vector<double>>(oss, ","));
+    oss << m_energies.back();
+    outfile << oss.str() << endl << endl; */
+
+    /* copy(m_positions.begin(), m_positions.end()-1, ostream_iterator<double>(oss, ","));
+    oss << m_energies.back();
+    outfile << oss.str(); */
     outfile.close();
 
 }

@@ -20,6 +20,6 @@ private:
     double              m_cumulativeEnergy = 0;
     std::string         m_output = "";
     std::vector<double> m_energies = std::vector<double>();
-    std::vector<double> m_positions = std::vector<double>();
+    std::vector<std::vector<std::vector<double>>> m_positions = std::vector<std::vector<std::vector<double>>>();
     class System* m_system = nullptr;
 };
