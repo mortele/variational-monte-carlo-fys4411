@@ -38,7 +38,7 @@ int main() {
             for (double nAlpha : alpha)
             {
                 System* system = new System(seed);
-                system->setHamiltonian              (new HarmonicOscillator(system, omega));
+                system->setHamiltonian              (new HarmonicOscillator(system, omega, 1));
                 system->setWaveFunction             (new SimpleGaussian(system, nAlpha));
                 system->setInitialState             (new RandomUniform(system, nDim, nPar));
                 system->setEquilibrationFraction    (equilibration);
