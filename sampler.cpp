@@ -105,7 +105,7 @@ void Sampler::printOutputToTerminal() {
 void Sampler::printOutputToFile() {
     
     ofstream outfile;
-    outfile.open ("results.txt", ios::out | ios::trunc);
+    outfile.open ("results.txt", ios::out | ios::app);
     outfile << m_output;
     outfile << endl;
     outfile << endl;

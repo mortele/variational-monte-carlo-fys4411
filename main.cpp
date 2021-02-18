@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "system.h"
 #include "particle.h"
 #include "WaveFunctions/wavefunction.h"
@@ -17,7 +18,7 @@ int main() {
     int seed = 2020;
 
     int numberOfDimensions[]    = {1};
-    int numberOfParticles[]     = {1,2};
+    int numberOfParticles[]     = {1,2,3}; //{1,10,100,500};
     int numberOfSteps           = (int) 1e6;
     double omega                = 1.0;          // Oscillator frequency.
     double alpha                = 0.5;          // Variational parameter.
@@ -25,6 +26,10 @@ int main() {
     double equilibration        = 0.1;          // Amount of the total steps used
     // for equilibration.
 
+    // clears output file
+    ofstream outfile;
+    outfile.open ("results.txt", ios::out | ios::trunc);
+    outfile.close();
 
     for (int nDim : numberOfDimensions)
     {
