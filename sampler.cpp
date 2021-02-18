@@ -43,13 +43,15 @@ void Sampler::sample(bool acceptedStep) {
     m_cumulativeEnergy  += localEnergy;
     m_energies.push_back(localEnergy);
 
-    vector<class Particle*> particles = m_system->getParticles();
+
+    /* vector<class Particle*> particles = m_system->getParticles();
     vector<vector<double>> currPos = vector<vector<double>>();
     for (int i = 0; i < m_system->getNumberOfParticles(); i++)
     {
         currPos.push_back(particles[i]->getPosition());
     }
-    m_positions.push_back(currPos);
+    m_positions.push_back(currPos); */
+
     m_stepNumber++;
 }
 
