@@ -1,0 +1,404 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/ms/uni/fys4411/project1/src/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	/p5.9.20210110.0/
+$(VERBOSE).SILENT	build/Makefile	/^$(VERBOSE).SILENT:$/;"	t
+$(VERBOSE)MAKESILENT	build/Makefile	/^$(VERBOSE)MAKESILENT = -s$/;"	m
+%	build/Makefile	/^% : %,v$/;"	t
+%	build/Makefile	/^% : RCS\/%$/;"	t
+%	build/Makefile	/^% : RCS\/%,v$/;"	t
+%	build/Makefile	/^% : SCCS\/s.%$/;"	t
+%	build/Makefile	/^% : s.%$/;"	t
+AM	Math/random.h	/^#define AM /;"	d
+ARCHITECTURE_ID	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#   define ARCHITECTURE_ID /;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define ARCHITECTURE_ID /;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define ARCHITECTURE_ID$/;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#   define ARCHITECTURE_ID /;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define ARCHITECTURE_ID /;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define ARCHITECTURE_ID$/;"	d	file:
+CMAKE_AR	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_AR "\/usr\/bin\/ar")$/;"	v
+CMAKE_AR	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_AR "\/usr\/bin\/ar")$/;"	v
+CMAKE_BINARY_DIR	build/Makefile	/^CMAKE_BINARY_DIR = \/home\/ms\/uni\/fys4411\/project1\/src\/build$/;"	m
+CMAKE_C11_COMPILE_FEATURES	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C11_COMPILE_FEATURES "c_std_11;c_static_assert")$/;"	v
+CMAKE_C90_COMPILE_FEATURES	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C90_COMPILE_FEATURES "c_std_90;c_function_prototypes")$/;"	v
+CMAKE_C99_COMPILE_FEATURES	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C99_COMPILE_FEATURES "c_std_99;c_restrict;c_variadic_macros")$/;"	v
+CMAKE_CL_SHOWINCLUDES_PREFIX	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^  set(CMAKE_CL_SHOWINCLUDES_PREFIX "${CMAKE_C_CL_SHOWINCLUDES_PREFIX}")$/;"	v
+CMAKE_CL_SHOWINCLUDES_PREFIX	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^  set(CMAKE_CL_SHOWINCLUDES_PREFIX "${CMAKE_CXX_CL_SHOWINCLUDES_PREFIX}")$/;"	v
+CMAKE_COMMAND	build/Makefile	/^CMAKE_COMMAND = \/usr\/bin\/cmake$/;"	m
+CMAKE_COMPILER_IS_CYGWIN	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_COMPILER_IS_CYGWIN )$/;"	v
+CMAKE_COMPILER_IS_CYGWIN	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_COMPILER_IS_CYGWIN )$/;"	v
+CMAKE_COMPILER_IS_GNUCC	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_COMPILER_IS_GNUCC 1)$/;"	v
+CMAKE_COMPILER_IS_GNUCXX	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_COMPILER_IS_GNUCXX 1)$/;"	v
+CMAKE_COMPILER_IS_MINGW	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_COMPILER_IS_MINGW )$/;"	v
+CMAKE_COMPILER_IS_MINGW	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_COMPILER_IS_MINGW )$/;"	v
+CMAKE_CROSSCOMPILING	build/CMakeFiles/3.19.3/CMakeSystem.cmake	/^set(CMAKE_CROSSCOMPILING "FALSE")$/;"	v
+CMAKE_CROSSCOMPILING	build/cmake_install.cmake	/^  set(CMAKE_CROSSCOMPILING "FALSE")$/;"	v
+CMAKE_CXX11_COMPILE_FEATURES	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX11_COMPILE_FEATURES "cxx_std_11;cxx_alias_templates;cxx_alignas;cxx_alignof;cxx_att/;"	v
+CMAKE_CXX14_COMPILE_FEATURES	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX14_COMPILE_FEATURES "cxx_std_14;cxx_aggregate_default_initializers;cxx_attribute_de/;"	v
+CMAKE_CXX17_COMPILE_FEATURES	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX17_COMPILE_FEATURES "cxx_std_17")$/;"	v
+CMAKE_CXX20_COMPILE_FEATURES	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX20_COMPILE_FEATURES "cxx_std_20")$/;"	v
+CMAKE_CXX98_COMPILE_FEATURES	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX98_COMPILE_FEATURES "cxx_std_98;cxx_template_template_parameters")$/;"	v
+CMAKE_CXX_ABI_COMPILED	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_ABI_COMPILED TRUE)$/;"	v
+CMAKE_CXX_CL_SHOWINCLUDES_PREFIX	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_CL_SHOWINCLUDES_PREFIX "")$/;"	v
+CMAKE_CXX_COMPILER	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER "\/usr\/bin\/c++")$/;"	v
+CMAKE_CXX_COMPILER_ABI	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_ABI "ELF")$/;"	v
+CMAKE_CXX_COMPILER_AR	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_AR "\/usr\/bin\/gcc-ar")$/;"	v
+CMAKE_CXX_COMPILER_ARG1	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_ARG1 "")$/;"	v
+CMAKE_CXX_COMPILER_ENV_VAR	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_ENV_VAR "CXX")$/;"	v
+CMAKE_CXX_COMPILER_FRONTEND_VARIANT	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_FRONTEND_VARIANT "")$/;"	v
+CMAKE_CXX_COMPILER_ID	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_ID "GNU")$/;"	v
+CMAKE_CXX_COMPILER_ID	build/CMakeFiles/vmc.dir/DependInfo.cmake	/^set(CMAKE_CXX_COMPILER_ID "GNU")$/;"	v
+CMAKE_CXX_COMPILER_ID_RUN	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_ID_RUN 1)$/;"	v
+CMAKE_CXX_COMPILER_LOADED	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_LOADED 1)$/;"	v
+CMAKE_CXX_COMPILER_RANLIB	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_RANLIB "\/usr\/bin\/gcc-ranlib")$/;"	v
+CMAKE_CXX_COMPILER_VERSION	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_VERSION "10.2.0")$/;"	v
+CMAKE_CXX_COMPILER_VERSION_INTERNAL	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_VERSION_INTERNAL "")$/;"	v
+CMAKE_CXX_COMPILER_WORKS	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_WORKS TRUE)$/;"	v
+CMAKE_CXX_COMPILER_WRAPPER	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILER_WRAPPER "")$/;"	v
+CMAKE_CXX_COMPILE_FEATURES	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_COMPILE_FEATURES "cxx_std_98;cxx_template_template_parameters;cxx_std_11;cxx_alias/;"	v
+CMAKE_CXX_IGNORE_EXTENSIONS	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_IGNORE_EXTENSIONS inl;h;hpp;HPP;H;o;O;obj;OBJ;def;DEF;rc;RC)$/;"	v
+CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "\/usr\/include\/c++\/10.2.0;\/usr\/include\/c++\/10./;"	v
+CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "\/usr\/lib\/gcc\/x86_64-pc-linux-gnu\/10.2.0;\/usr\/lib/;"	v
+CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")$/;"	v
+CMAKE_CXX_IMPLICIT_LINK_LIBRARIES	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "stdc++;m;gcc_s;gcc;c;gcc_s;gcc")$/;"	v
+CMAKE_CXX_INCLUDE_REGEX_COMPLAIN	build/CMakeFiles/CMakeDirectoryInformation.cmake	/^set(CMAKE_CXX_INCLUDE_REGEX_COMPLAIN ${CMAKE_C_INCLUDE_REGEX_COMPLAIN})$/;"	v
+CMAKE_CXX_INCLUDE_REGEX_SCAN	build/CMakeFiles/CMakeDirectoryInformation.cmake	/^set(CMAKE_CXX_INCLUDE_REGEX_SCAN ${CMAKE_C_INCLUDE_REGEX_SCAN})$/;"	v
+CMAKE_CXX_LIBRARY_ARCHITECTURE	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_LIBRARY_ARCHITECTURE "")$/;"	v
+CMAKE_CXX_LINKER_PREFERENCE	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_LINKER_PREFERENCE 30)$/;"	v
+CMAKE_CXX_LINKER_PREFERENCE_PROPAGATES	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_LINKER_PREFERENCE_PROPAGATES 1)$/;"	v
+CMAKE_CXX_PLATFORM_ID	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_PLATFORM_ID "Linux")$/;"	v
+CMAKE_CXX_SIMULATE_ID	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_SIMULATE_ID "")$/;"	v
+CMAKE_CXX_SIMULATE_VERSION	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_SIMULATE_VERSION "")$/;"	v
+CMAKE_CXX_SIZEOF_DATA_PTR	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_SIZEOF_DATA_PTR "8")$/;"	v
+CMAKE_CXX_SOURCE_FILE_EXTENSIONS	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_SOURCE_FILE_EXTENSIONS C;M;c++;cc;cpp;cxx;m;mm;CPP)$/;"	v
+CMAKE_CXX_STANDARD_COMPUTED_DEFAULT	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_CXX_STANDARD_COMPUTED_DEFAULT "14")$/;"	v
+CMAKE_CXX_TARGET_INCLUDE_PATH	build/CMakeFiles/vmc.dir/DependInfo.cmake	/^set(CMAKE_CXX_TARGET_INCLUDE_PATH$/;"	v
+CMAKE_C_ABI_COMPILED	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_ABI_COMPILED TRUE)$/;"	v
+CMAKE_C_CL_SHOWINCLUDES_PREFIX	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_CL_SHOWINCLUDES_PREFIX "")$/;"	v
+CMAKE_C_COMPILER	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER "\/usr\/bin\/cc")$/;"	v
+CMAKE_C_COMPILER_ABI	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_ABI "ELF")$/;"	v
+CMAKE_C_COMPILER_AR	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_AR "\/usr\/bin\/gcc-ar")$/;"	v
+CMAKE_C_COMPILER_ARG1	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_ARG1 "")$/;"	v
+CMAKE_C_COMPILER_ENV_VAR	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_ENV_VAR "CC")$/;"	v
+CMAKE_C_COMPILER_FRONTEND_VARIANT	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_FRONTEND_VARIANT "")$/;"	v
+CMAKE_C_COMPILER_ID	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_ID "GNU")$/;"	v
+CMAKE_C_COMPILER_ID_RUN	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_ID_RUN 1)$/;"	v
+CMAKE_C_COMPILER_LOADED	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_LOADED 1)$/;"	v
+CMAKE_C_COMPILER_RANLIB	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_RANLIB "\/usr\/bin\/gcc-ranlib")$/;"	v
+CMAKE_C_COMPILER_VERSION	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_VERSION "10.2.0")$/;"	v
+CMAKE_C_COMPILER_VERSION_INTERNAL	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_VERSION_INTERNAL "")$/;"	v
+CMAKE_C_COMPILER_WORKS	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_WORKS TRUE)$/;"	v
+CMAKE_C_COMPILER_WRAPPER	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILER_WRAPPER "")$/;"	v
+CMAKE_C_COMPILE_FEATURES	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_COMPILE_FEATURES "c_std_90;c_function_prototypes;c_std_99;c_restrict;c_variadic_macr/;"	v
+CMAKE_C_IGNORE_EXTENSIONS	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_IGNORE_EXTENSIONS h;H;o;O;obj;OBJ;def;DEF;rc;RC)$/;"	v
+CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES "\/usr\/lib\/gcc\/x86_64-pc-linux-gnu\/10.2.0\/include;/;"	v
+CMAKE_C_IMPLICIT_LINK_DIRECTORIES	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_IMPLICIT_LINK_DIRECTORIES "\/usr\/lib\/gcc\/x86_64-pc-linux-gnu\/10.2.0;\/usr\/lib;\//;"	v
+CMAKE_C_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")$/;"	v
+CMAKE_C_IMPLICIT_LINK_LIBRARIES	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_IMPLICIT_LINK_LIBRARIES "gcc;gcc_s;c;gcc;gcc_s")$/;"	v
+CMAKE_C_INCLUDE_REGEX_COMPLAIN	build/CMakeFiles/CMakeDirectoryInformation.cmake	/^set(CMAKE_C_INCLUDE_REGEX_COMPLAIN "^$")$/;"	v
+CMAKE_C_INCLUDE_REGEX_SCAN	build/CMakeFiles/CMakeDirectoryInformation.cmake	/^set(CMAKE_C_INCLUDE_REGEX_SCAN "^.*$")$/;"	v
+CMAKE_C_LIBRARY_ARCHITECTURE	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_LIBRARY_ARCHITECTURE "")$/;"	v
+CMAKE_C_LINKER_PREFERENCE	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_LINKER_PREFERENCE 10)$/;"	v
+CMAKE_C_PLATFORM_ID	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_PLATFORM_ID "Linux")$/;"	v
+CMAKE_C_SIMULATE_ID	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_SIMULATE_ID "")$/;"	v
+CMAKE_C_SIMULATE_VERSION	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_SIMULATE_VERSION "")$/;"	v
+CMAKE_C_SIZEOF_DATA_PTR	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_SIZEOF_DATA_PTR "8")$/;"	v
+CMAKE_C_SOURCE_FILE_EXTENSIONS	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_SOURCE_FILE_EXTENSIONS c;m)$/;"	v
+CMAKE_C_STANDARD_COMPUTED_DEFAULT	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_C_STANDARD_COMPUTED_DEFAULT "11")$/;"	v
+CMAKE_DEPENDS_CHECK_CXX	build/CMakeFiles/vmc.dir/DependInfo.cmake	/^set(CMAKE_DEPENDS_CHECK_CXX$/;"	v
+CMAKE_DEPENDS_GENERATOR	build/CMakeFiles/Makefile.cmake	/^set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")$/;"	v
+CMAKE_DEPENDS_LANGUAGES	build/CMakeFiles/vmc.dir/DependInfo.cmake	/^set(CMAKE_DEPENDS_LANGUAGES$/;"	v
+CMAKE_DEPEND_INFO_FILES	build/CMakeFiles/Makefile.cmake	/^set(CMAKE_DEPEND_INFO_FILES$/;"	v
+CMAKE_FORCE_UNIX_PATHS	build/CMakeFiles/CMakeDirectoryInformation.cmake	/^set(CMAKE_FORCE_UNIX_PATHS 1)$/;"	v
+CMAKE_Fortran_TARGET_MODULE_DIR	build/CMakeFiles/vmc.dir/DependInfo.cmake	/^set(CMAKE_Fortran_TARGET_MODULE_DIR "")$/;"	v
+CMAKE_HOST_SYSTEM	build/CMakeFiles/3.19.3/CMakeSystem.cmake	/^set(CMAKE_HOST_SYSTEM "Linux-5.10.9-arch1-1")$/;"	v
+CMAKE_HOST_SYSTEM_NAME	build/CMakeFiles/3.19.3/CMakeSystem.cmake	/^set(CMAKE_HOST_SYSTEM_NAME "Linux")$/;"	v
+CMAKE_HOST_SYSTEM_PROCESSOR	build/CMakeFiles/3.19.3/CMakeSystem.cmake	/^set(CMAKE_HOST_SYSTEM_PROCESSOR "x86_64")$/;"	v
+CMAKE_HOST_SYSTEM_VERSION	build/CMakeFiles/3.19.3/CMakeSystem.cmake	/^set(CMAKE_HOST_SYSTEM_VERSION "5.10.9-arch1-1")$/;"	v
+CMAKE_INSTALL_COMPONENT	build/cmake_install.cmake	/^    set(CMAKE_INSTALL_COMPONENT "${COMPONENT}")$/;"	v
+CMAKE_INSTALL_COMPONENT	build/cmake_install.cmake	/^    set(CMAKE_INSTALL_COMPONENT)$/;"	v
+CMAKE_INSTALL_CONFIG_NAME	build/cmake_install.cmake	/^    set(CMAKE_INSTALL_CONFIG_NAME "")$/;"	v
+CMAKE_INSTALL_MANIFEST	build/cmake_install.cmake	/^  set(CMAKE_INSTALL_MANIFEST "install_manifest.txt")$/;"	v
+CMAKE_INSTALL_MANIFEST	build/cmake_install.cmake	/^  set(CMAKE_INSTALL_MANIFEST "install_manifest_${CMAKE_INSTALL_COMPONENT}.txt")$/;"	v
+CMAKE_INSTALL_PREFIX	build/cmake_install.cmake	/^  set(CMAKE_INSTALL_PREFIX "\/usr\/local")$/;"	v
+CMAKE_INSTALL_SO_NO_EXE	build/cmake_install.cmake	/^  set(CMAKE_INSTALL_SO_NO_EXE "0")$/;"	v
+CMAKE_INTERNAL_PLATFORM_ABI	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^  set(CMAKE_INTERNAL_PLATFORM_ABI "${CMAKE_C_COMPILER_ABI}")$/;"	v
+CMAKE_INTERNAL_PLATFORM_ABI	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^  set(CMAKE_INTERNAL_PLATFORM_ABI "${CMAKE_CXX_COMPILER_ABI}")$/;"	v
+CMAKE_LIBRARY_ARCHITECTURE	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^  set(CMAKE_LIBRARY_ARCHITECTURE "")$/;"	v
+CMAKE_LIBRARY_ARCHITECTURE	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^  set(CMAKE_LIBRARY_ARCHITECTURE "")$/;"	v
+CMAKE_LINKER	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_LINKER "\/usr\/bin\/ld")$/;"	v
+CMAKE_LINKER	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_LINKER "\/usr\/bin\/ld")$/;"	v
+CMAKE_MAKEFILE_DEPENDS	build/CMakeFiles/Makefile.cmake	/^set(CMAKE_MAKEFILE_DEPENDS$/;"	v
+CMAKE_MAKEFILE_OUTPUTS	build/CMakeFiles/Makefile.cmake	/^set(CMAKE_MAKEFILE_OUTPUTS$/;"	v
+CMAKE_MAKEFILE_PRODUCTS	build/CMakeFiles/Makefile.cmake	/^set(CMAKE_MAKEFILE_PRODUCTS$/;"	v
+CMAKE_MT	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_MT "")$/;"	v
+CMAKE_MT	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_MT "")$/;"	v
+CMAKE_OBJDUMP	build/cmake_install.cmake	/^  set(CMAKE_OBJDUMP "\/usr\/bin\/objdump")$/;"	v
+CMAKE_RANLIB	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^set(CMAKE_RANLIB "\/usr\/bin\/ranlib")$/;"	v
+CMAKE_RANLIB	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^set(CMAKE_RANLIB "\/usr\/bin\/ranlib")$/;"	v
+CMAKE_RELATIVE_PATH_TOP_BINARY	build/CMakeFiles/CMakeDirectoryInformation.cmake	/^set(CMAKE_RELATIVE_PATH_TOP_BINARY "\/home\/ms\/uni\/fys4411\/project1\/src\/build")$/;"	v
+CMAKE_RELATIVE_PATH_TOP_SOURCE	build/CMakeFiles/CMakeDirectoryInformation.cmake	/^set(CMAKE_RELATIVE_PATH_TOP_SOURCE "\/home\/ms\/uni\/fys4411\/project1\/src")$/;"	v
+CMAKE_SIZEOF_VOID_P	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^  set(CMAKE_SIZEOF_VOID_P "${CMAKE_C_SIZEOF_DATA_PTR}")$/;"	v
+CMAKE_SIZEOF_VOID_P	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^  set(CMAKE_SIZEOF_VOID_P "${CMAKE_CXX_SIZEOF_DATA_PTR}")$/;"	v
+CMAKE_SOURCE_DIR	build/Makefile	/^CMAKE_SOURCE_DIR = \/home\/ms\/uni\/fys4411\/project1\/src$/;"	m
+CMAKE_SYSTEM	build/CMakeFiles/3.19.3/CMakeSystem.cmake	/^set(CMAKE_SYSTEM "Linux-5.10.9-arch1-1")$/;"	v
+CMAKE_SYSTEM_LOADED	build/CMakeFiles/3.19.3/CMakeSystem.cmake	/^set(CMAKE_SYSTEM_LOADED 1)$/;"	v
+CMAKE_SYSTEM_NAME	build/CMakeFiles/3.19.3/CMakeSystem.cmake	/^set(CMAKE_SYSTEM_NAME "Linux")$/;"	v
+CMAKE_SYSTEM_PROCESSOR	build/CMakeFiles/3.19.3/CMakeSystem.cmake	/^set(CMAKE_SYSTEM_PROCESSOR "x86_64")$/;"	v
+CMAKE_SYSTEM_VERSION	build/CMakeFiles/3.19.3/CMakeSystem.cmake	/^set(CMAKE_SYSTEM_VERSION "5.10.9-arch1-1")$/;"	v
+CMAKE_TARGET_LINKED_INFO_FILES	build/CMakeFiles/vmc.dir/DependInfo.cmake	/^set(CMAKE_TARGET_LINKED_INFO_FILES$/;"	v
+COMPILER_ID	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_ID /;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define COMPILER_ID /;"	d	file:
+COMPILER_VERSION_INTERNAL	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define COMPILER_VERSION_INTERNAL /;"	d	file:
+COMPILER_VERSION_INTERNAL	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_VERSION_INTERNAL /;"	d	file:
+COMPILER_VERSION_INTERNAL	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define COMPILER_VERSION_INTERNAL /;"	d	file:
+COMPILER_VERSION_INTERNAL	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define COMPILER_VERSION_INTERNAL /;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^  # define COMPILER_VERSION_MAJOR /;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define COMPILER_VERSION_MAJOR /;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_VERSION_MAJOR /;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^  # define COMPILER_VERSION_MAJOR /;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define COMPILER_VERSION_MAJOR /;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define COMPILER_VERSION_MAJOR /;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^  # define COMPILER_VERSION_MINOR /;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define COMPILER_VERSION_MINOR /;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_VERSION_MINOR /;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^  # define COMPILER_VERSION_MINOR /;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define COMPILER_VERSION_MINOR /;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define COMPILER_VERSION_MINOR /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^  # define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#   define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^  # define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#   define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define COMPILER_VERSION_TWEAK /;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_VERSION_TWEAK /;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define COMPILER_VERSION_TWEAK /;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define COMPILER_VERSION_TWEAK /;"	d	file:
+CXX_STD	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#      define CXX_STD /;"	d	file:
+CXX_STD	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#    define CXX_STD /;"	d	file:
+CXX_STD	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define CXX_STD /;"	d	file:
+CYGWIN	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^  set(CYGWIN 1)$/;"	v
+CYGWIN	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^  set(CYGWIN 1)$/;"	v
+C_DIALECT	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define C_DIALECT /;"	d	file:
+C_DIALECT	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define C_DIALECT$/;"	d	file:
+C_DIALECT	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^# define C_DIALECT /;"	d	file:
+Cleaning the directory	README.md	/^#### Cleaning the directory$/;"	t	subsection:Simple Variational Monte Carlo solve for FYS4411""Compilling and running the project""Compiling the project using CMake
+Compiling the project using CMake	README.md	/^### Compiling the project using CMake$/;"	S	section:Simple Variational Monte Carlo solve for FYS4411""Compilling and running the project
+Compilling and running the project	README.md	/^## Compilling and running the project$/;"	s	chapter:Simple Variational Monte Carlo solve for FYS4411
+Completing the missing parts	README.md	/^## Completing the missing parts ##$/;"	s	chapter:Simple Variational Monte Carlo solve for FYS4411
+DEC	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#define DEC(/;"	d	file:
+DEC	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define DEC(/;"	d	file:
+EPS	Math/random.h	/^#define EPS /;"	d
+EQUALS	build/Makefile	/^EQUALS = =$/;"	m
+HEX	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#define HEX(/;"	d	file:
+HEX	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define HEX(/;"	d	file:
+Hamiltonian	Hamiltonians/hamiltonian.cpp	/^Hamiltonian::Hamiltonian(System* system) {$/;"	f	class:Hamiltonian
+Hamiltonian	Hamiltonians/hamiltonian.h	/^class Hamiltonian {$/;"	c
+Hamiltonians/hamiltonian.i	build/Makefile	/^Hamiltonians\/hamiltonian.i:$/;"	t
+Hamiltonians/hamiltonian.o	build/Makefile	/^Hamiltonians\/hamiltonian.o:$/;"	t
+Hamiltonians/hamiltonian.s	build/Makefile	/^Hamiltonians\/hamiltonian.s:$/;"	t
+Hamiltonians/harmonicoscillator.i	build/Makefile	/^Hamiltonians\/harmonicoscillator.i:$/;"	t
+Hamiltonians/harmonicoscillator.o	build/Makefile	/^Hamiltonians\/harmonicoscillator.o:$/;"	t
+Hamiltonians/harmonicoscillator.s	build/Makefile	/^Hamiltonians\/harmonicoscillator.s:$/;"	t
+HarmonicOscillator	Hamiltonians/harmonicoscillator.cpp	/^HarmonicOscillator::HarmonicOscillator(System* system, double omega) :$/;"	f	class:HarmonicOscillator
+HarmonicOscillator	Hamiltonians/harmonicoscillator.h	/^class HarmonicOscillator : public Hamiltonian {$/;"	c
+IA	Math/random.h	/^#define IA /;"	d
+ID_VOID_MAIN	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^# define ID_VOID_MAIN$/;"	d	file:
+IM	Math/random.h	/^#define IM /;"	d
+IQ	Math/random.h	/^#define IQ /;"	d
+IR	Math/random.h	/^#define IR /;"	d
+InitialState	InitialStates/initialstate.cpp	/^InitialState::InitialState(System* system) {$/;"	f	class:InitialState
+InitialState	InitialStates/initialstate.h	/^class InitialState {$/;"	c
+InitialStates/initialstate.i	build/Makefile	/^InitialStates\/initialstate.i:$/;"	t
+InitialStates/initialstate.o	build/Makefile	/^InitialStates\/initialstate.o:$/;"	t
+InitialStates/initialstate.s	build/Makefile	/^InitialStates\/initialstate.s:$/;"	t
+InitialStates/randomuniform.i	build/Makefile	/^InitialStates\/randomuniform.i:$/;"	t
+InitialStates/randomuniform.o	build/Makefile	/^InitialStates\/randomuniform.o:$/;"	t
+InitialStates/randomuniform.s	build/Makefile	/^InitialStates\/randomuniform.s:$/;"	t
+MINGW	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^  set(MINGW 1)$/;"	v
+MINGW	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^  set(MINGW 1)$/;"	v
+Math/random.i	build/Makefile	/^Math\/random.i:$/;"	t
+Math/random.o	build/Makefile	/^Math\/random.o:$/;"	t
+Math/random.s	build/Makefile	/^Math\/random.s:$/;"	t
+NDIV	Math/random.h	/^#define NDIV /;"	d
+NTAB	Math/random.h	/^#define NTAB /;"	d
+PLATFORM_ID	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define PLATFORM_ID /;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define PLATFORM_ID$/;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^# define PLATFORM_ID /;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^# define PLATFORM_ID$/;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define PLATFORM_ID /;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define PLATFORM_ID$/;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define PLATFORM_ID /;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define PLATFORM_ID$/;"	d	file:
+Particle	particle.cpp	/^Particle::Particle() {$/;"	f	class:Particle
+Particle	particle.h	/^class Particle {$/;"	c
+RM	Makefile	/^RM := rm -r$/;"	m
+RM	build/Makefile	/^RM = \/usr\/bin\/cmake -E rm -f$/;"	m
+RNMX	Math/random.h	/^#define RNMX /;"	d
+Random	Math/random.h	/^class Random {$/;"	c
+RandomUniform	InitialStates/randomuniform.cpp	/^RandomUniform::RandomUniform(System*    system,$/;"	f	class:RandomUniform
+RandomUniform	InitialStates/randomuniform.h	/^class RandomUniform : public InitialState {$/;"	c
+SHELL	build/Makefile	/^SHELL = \/bin\/sh$/;"	m
+SIMULATE_ID	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define SIMULATE_ID /;"	d	file:
+SIMULATE_ID	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define SIMULATE_ID /;"	d	file:
+SIMULATE_VERSION_MAJOR	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define SIMULATE_VERSION_MAJOR /;"	d	file:
+SIMULATE_VERSION_MAJOR	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define SIMULATE_VERSION_MAJOR /;"	d	file:
+SIMULATE_VERSION_MINOR	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define SIMULATE_VERSION_MINOR /;"	d	file:
+SIMULATE_VERSION_MINOR	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define SIMULATE_VERSION_MINOR /;"	d	file:
+SIMULATE_VERSION_PATCH	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#  define SIMULATE_VERSION_PATCH /;"	d	file:
+SIMULATE_VERSION_PATCH	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define SIMULATE_VERSION_PATCH /;"	d	file:
+STRINGIFY	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#define STRINGIFY(/;"	d	file:
+STRINGIFY	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define STRINGIFY(/;"	d	file:
+STRINGIFY_HELPER	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^#define STRINGIFY_HELPER(/;"	d	file:
+STRINGIFY_HELPER	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define STRINGIFY_HELPER(/;"	d	file:
+Sampler	sampler.cpp	/^Sampler::Sampler(System* system) {$/;"	f	class:Sampler
+Sampler	sampler.h	/^class Sampler {$/;"	c
+Simple Variational Monte Carlo solve for FYS4411	README.md	/^# Simple Variational Monte Carlo solve for FYS4411$/;"	c
+SimpleGaussian	WaveFunctions/simplegaussian.cpp	/^SimpleGaussian::SimpleGaussian(System* system, double alpha) :$/;"	f	class:SimpleGaussian
+SimpleGaussian	WaveFunctions/simplegaussian.h	/^class SimpleGaussian : public WaveFunction {$/;"	c
+System	system.h	/^class System {$/;"	c
+UNIX	build/CMakeFiles/3.19.3/CMakeCCompiler.cmake	/^  set(UNIX 1)$/;"	v
+UNIX	build/CMakeFiles/3.19.3/CMakeCXXCompiler.cmake	/^  set(UNIX 1)$/;"	v
+WaveFunction	WaveFunctions/wavefunction.cpp	/^WaveFunction::WaveFunction(System* system) {$/;"	f	class:WaveFunction
+WaveFunction	WaveFunctions/wavefunction.h	/^class WaveFunction {$/;"	c
+WaveFunctions/simplegaussian.i	build/Makefile	/^WaveFunctions\/simplegaussian.i:$/;"	t
+WaveFunctions/simplegaussian.o	build/Makefile	/^WaveFunctions\/simplegaussian.o:$/;"	t
+WaveFunctions/simplegaussian.s	build/Makefile	/^WaveFunctions\/simplegaussian.s:$/;"	t
+WaveFunctions/wavefunction.i	build/Makefile	/^WaveFunctions\/wavefunction.i:$/;"	t
+WaveFunctions/wavefunction.o	build/Makefile	/^WaveFunctions\/wavefunction.o:$/;"	t
+WaveFunctions/wavefunction.s	build/Makefile	/^WaveFunctions\/wavefunction.s:$/;"	t
+Windows	README.md	/^#### Windows$/;"	t	subsection:Simple Variational Monte Carlo solve for FYS4411""Compilling and running the project""Compiling the project using CMake
+adjustPosition	particle.cpp	/^void Particle::adjustPosition(double change, int dimension) {$/;"	f	class:Particle	typeref:typename:void
+all	build/Makefile	/^all: cmake_check_build_system$/;"	t
+clean	Makefile	/^clean:$/;"	t
+clean	build/Makefile	/^clean:$/;"	t
+clean/fast	build/Makefile	/^clean\/fast: clean$/;"	t
+cmake_check_build_system	build/Makefile	/^cmake_check_build_system:$/;"	t
+cmake_force	build/Makefile	/^cmake_force:$/;"	t
+computeAverages	sampler.cpp	/^void Sampler::computeAverages() {$/;"	f	class:Sampler	typeref:typename:void
+computeDoubleDerivative	WaveFunctions/simplegaussian.cpp	/^double SimpleGaussian::computeDoubleDerivative(std::vector<class Particle*> particles) {$/;"	f	class:SimpleGaussian	typeref:typename:double
+computeLocalEnergy	Hamiltonians/harmonicoscillator.cpp	/^double HarmonicOscillator::computeLocalEnergy(std::vector<Particle*> particles) {$/;"	f	class:HarmonicOscillator	typeref:typename:double
+const	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^# define const$/;"	d	file:
+default_target	build/Makefile	/^default_target: all$/;"	t
+depend	build/Makefile	/^depend:$/;"	t
+edit_cache	build/Makefile	/^edit_cache:$/;"	t
+edit_cache/fast	build/Makefile	/^edit_cache\/fast: edit_cache$/;"	t
+evaluate	WaveFunctions/simplegaussian.cpp	/^double SimpleGaussian::evaluate(std::vector<class Particle*> particles) {$/;"	f	class:SimpleGaussian	typeref:typename:double
+getEnergy	sampler.h	/^    double getEnergy()          { return m_energy; }$/;"	f	class:Sampler	typeref:typename:double
+getEquilibrationFraction	system.h	/^    double getEquilibrationFraction()   { return m_equilibrationFraction; }$/;"	f	class:System	typeref:typename:double
+getHamiltonian	system.h	/^    class Hamiltonian*              getHamiltonian()    { return m_hamiltonian; }$/;"	f	class:System	typeref:class:System::getWaveFunction class Hamiltonian *
+getNumberOfDimensions	system.h	/^    int getNumberOfDimensions()         { return m_numberOfDimensions; }$/;"	f	class:System	typeref:typename:int
+getNumberOfMetropolisSteps	system.h	/^    int getNumberOfMetropolisSteps()    { return m_numberOfMetropolisSteps; }$/;"	f	class:System	typeref:typename:int
+getNumberOfParameters	WaveFunctions/wavefunction.h	/^    int     getNumberOfParameters() { return m_numberOfParameters; }$/;"	f	class:WaveFunction	typeref:typename:int
+getNumberOfParticles	system.h	/^    int getNumberOfParticles()          { return m_numberOfParticles; }$/;"	f	class:System	typeref:typename:int
+getParameters	WaveFunctions/wavefunction.h	/^    std::vector<double> getParameters() { return m_parameters; }$/;"	f	class:WaveFunction	typeref:typename:std::vector<double>
+getParticles	InitialStates/initialstate.h	/^    std::vector<class Particle*> getParticles() { return m_particles; }$/;"	c	class:InitialState
+getParticles	system.h	/^    std::vector<class Particle*>    getParticles()      { return m_particles; }$/;"	f	class:System	typeref:class:System::getSampler std::vector<class Particle * >
+getPosition	particle.h	/^    std::vector<double> getPosition() { return m_position; }$/;"	f	class:Particle	typeref:typename:std::vector<double>
+getSampler	system.h	/^    class Sampler*                  getSampler()        { return m_sampler; }$/;"	c	class:System
+getWaveFunction	system.h	/^    class WaveFunction*             getWaveFunction()   { return m_waveFunction; }$/;"	c	class:System
+help	build/Makefile	/^help:$/;"	t
+info_arch	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";$/;"	v	typeref:typename:char const *
+info_arch	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";$/;"	v	typeref:typename:char const *
+info_compiler	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^char const* info_compiler = "INFO" ":" "compiler[" COMPILER_ID "]";$/;"	v	typeref:typename:char const *
+info_compiler	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_compiler = "INFO" ":" "compiler[" COMPILER_ID "]";$/;"	v	typeref:typename:char const *
+info_cray	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^char const *info_cray = "INFO" ":" "compiler_wrapper[CrayPrgEnv]";$/;"	v	typeref:typename:char const *
+info_cray	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const *info_cray = "INFO" ":" "compiler_wrapper[CrayPrgEnv]";$/;"	v	typeref:typename:char const *
+info_language_dialect_default	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^const char* info_language_dialect_default =$/;"	v	typeref:typename:const char *
+info_language_dialect_default	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^const char* info_language_dialect_default = "INFO" ":" "dialect_default["$/;"	v	typeref:typename:const char *
+info_platform	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^char const* info_platform = "INFO" ":" "platform[" PLATFORM_ID "]";$/;"	v	typeref:typename:char const *
+info_platform	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_platform = "INFO" ":" "platform[" PLATFORM_ID "]";$/;"	v	typeref:typename:char const *
+info_simulate	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^char const* info_simulate = "INFO" ":" "simulate[" SIMULATE_ID "]";$/;"	v	typeref:typename:char const *
+info_simulate	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_simulate = "INFO" ":" "simulate[" SIMULATE_ID "]";$/;"	v	typeref:typename:char const *
+info_simulate_version	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^char const info_simulate_version[] = {$/;"	v	typeref:typename:char const[]
+info_simulate_version	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_simulate_version[] = {$/;"	v	typeref:typename:char const[]
+info_version	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^char const info_version[] = {$/;"	v	typeref:typename:char const[]
+info_version	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version[] = {$/;"	v	typeref:typename:char const[]
+info_version_internal	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^char const info_version_internal[] = {$/;"	v	typeref:typename:char const[]
+info_version_internal	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version_internal[] = {$/;"	v	typeref:typename:char const[]
+iv	Math/random.cpp	/^long     Random::iv[NTAB];$/;"	m	class:Random	typeref:typename:long[]
+iv	Math/random.h	/^    static long iv[NTAB];$/;"	m	class:Random	typeref:typename:long[]
+iy	Math/random.cpp	/^long     Random::iy = 0;$/;"	m	class:Random	typeref:typename:long
+iy	Math/random.h	/^    static long iy;$/;"	m	class:Random	typeref:typename:long
+m_cumulativeEnergy	sampler.h	/^    double  m_cumulativeEnergy = 0;$/;"	m	class:Sampler	typeref:typename:double
+m_energy	sampler.h	/^    double  m_energy = 0;$/;"	m	class:Sampler	typeref:typename:double
+m_equilibrationFraction	system.h	/^    double                          m_equilibrationFraction = 0.0;$/;"	m	class:System	typeref:typename:double
+m_hamiltonian	system.h	/^    class Hamiltonian*              m_hamiltonian = nullptr;$/;"	m	class:System	typeref:class:Hamiltonian *
+m_initialState	system.h	/^    class InitialState*             m_initialState = nullptr;$/;"	m	class:System	typeref:class:InitialState *
+m_numberOfDimensions	InitialStates/initialstate.h	/^    int m_numberOfDimensions = 0;$/;"	m	class:InitialState	typeref:typename:int
+m_numberOfDimensions	particle.h	/^    int     m_numberOfDimensions = 0;$/;"	m	class:Particle	typeref:typename:int
+m_numberOfDimensions	system.h	/^    int                             m_numberOfDimensions = 0;$/;"	m	class:System	typeref:typename:int
+m_numberOfMetropolisSteps	sampler.h	/^    int     m_numberOfMetropolisSteps = 0;$/;"	m	class:Sampler	typeref:typename:int
+m_numberOfMetropolisSteps	system.h	/^    int                             m_numberOfMetropolisSteps = 0;$/;"	m	class:System	typeref:typename:int
+m_numberOfParameters	WaveFunctions/wavefunction.h	/^    int     m_numberOfParameters = 0;$/;"	m	class:WaveFunction	typeref:typename:int
+m_numberOfParticles	InitialStates/initialstate.h	/^    int m_numberOfParticles = 0;$/;"	m	class:InitialState	typeref:typename:int
+m_numberOfParticles	system.h	/^    int                             m_numberOfParticles = 0;$/;"	m	class:System	typeref:typename:int
+m_omega	Hamiltonians/harmonicoscillator.h	/^    double m_omega = 0;$/;"	m	class:HarmonicOscillator	typeref:typename:double
+m_parameters	WaveFunctions/wavefunction.h	/^    std::vector<double> m_parameters = std::vector<double>();$/;"	m	class:WaveFunction	typeref:typename:std::vector<double>
+m_particles	InitialStates/initialstate.h	/^    std::vector<Particle*> m_particles;\/\/ = std::vector<Particle*>();$/;"	m	class:InitialState	typeref:typename:std::vector<Particle * >
+m_position	particle.h	/^    std::vector<double> m_position = std::vector<double>();$/;"	m	class:Particle	typeref:typename:std::vector<double>
+m_sampler	system.h	/^    class Sampler*                  m_sampler = nullptr;$/;"	m	class:System	typeref:class:Sampler *
+m_stepLength	system.h	/^    double                          m_stepLength = 0.1;$/;"	m	class:System	typeref:typename:double
+m_stepNumber	sampler.h	/^    int     m_stepNumber = 0;$/;"	m	class:Sampler	typeref:typename:int
+m_system	Hamiltonians/hamiltonian.h	/^    class System* m_system = nullptr;$/;"	m	class:Hamiltonian	typeref:class:System *
+m_system	WaveFunctions/wavefunction.h	/^    class System* m_system = nullptr;$/;"	m	class:WaveFunction	typeref:class:System *
+m_system	sampler.h	/^    class System* m_system = nullptr;$/;"	m	class:Sampler	typeref:class:System *
+m_waveFunction	system.h	/^    class WaveFunction*             m_waveFunction = nullptr;$/;"	m	class:System	typeref:class:WaveFunction *
+main	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^int main(argc, argv) int argc; char *argv[];$/;"	f
+main	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^void main() {}$/;"	f	typeref:typename:void
+main	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^int main(int argc, char* argv[])$/;"	f	typeref:typename:int
+main	main.cpp	/^int main() {$/;"	f	typeref:typename:int
+main.i	build/Makefile	/^main.i:$/;"	t
+main.o	build/Makefile	/^main.o:$/;"	t
+main.s	build/Makefile	/^main.s:$/;"	t
+metropolisStep	system.cpp	/^bool System::metropolisStep() {$/;"	f	class:System	typeref:typename:bool
+nextDouble	Math/random.cpp	/^double Random::nextDouble()$/;"	f	class:Random	typeref:typename:double
+nextGaussian	Math/random.cpp	/^double Random::nextGaussian(double mean, double standardDeviation) {$/;"	f	class:Random	typeref:typename:double
+nextInt	Math/random.cpp	/^int Random::nextInt(int upperLimit) {$/;"	f	class:Random	typeref:typename:int
+particle.i	build/Makefile	/^particle.i:$/;"	t
+particle.o	build/Makefile	/^particle.o:$/;"	t
+particle.s	build/Makefile	/^particle.s:$/;"	t
+preinstall	build/Makefile	/^preinstall: all$/;"	t
+preinstall/fast	build/Makefile	/^preinstall\/fast:$/;"	t
+printOutputToTerminal	sampler.cpp	/^void Sampler::printOutputToTerminal() {$/;"	f	class:Sampler	typeref:typename:void
+project_1_fys4411	CMakeLists.txt	/^project(project_1_fys4411)$/;"	p
+qnxnto	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v	typeref:typename:char const *
+qnxnto	build/CMakeFiles/3.19.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v	typeref:typename:char const *
+rebuild_cache	build/Makefile	/^rebuild_cache:$/;"	t
+rebuild_cache/fast	build/Makefile	/^rebuild_cache\/fast: rebuild_cache$/;"	t
+runMetropolisSteps	system.cpp	/^void System::runMetropolisSteps(int numberOfMetropolisSteps) {$/;"	f	class:System	typeref:typename:void
+sample	sampler.cpp	/^void Sampler::sample(bool acceptedStep) {$/;"	f	class:Sampler	typeref:typename:void
+sampler.i	build/Makefile	/^sampler.i:$/;"	t
+sampler.o	build/Makefile	/^sampler.o:$/;"	t
+sampler.s	build/Makefile	/^sampler.s:$/;"	t
+seed	Math/random.cpp	/^long     Random::seed = -1;$/;"	m	class:Random	typeref:typename:long
+seed	Math/random.h	/^    static long seed;$/;"	m	class:Random	typeref:typename:long
+setEquilibrationFraction	system.cpp	/^void System::setEquilibrationFraction(double equilibrationFraction) {$/;"	f	class:System	typeref:typename:void
+setHamiltonian	system.cpp	/^void System::setHamiltonian(Hamiltonian* hamiltonian) {$/;"	f	class:System	typeref:typename:void
+setInitialState	system.cpp	/^void System::setInitialState(InitialState* initialState) {$/;"	f	class:System	typeref:typename:void
+setNumberOfDimensions	particle.cpp	/^void Particle::setNumberOfDimensions(int numberOfDimensions) {$/;"	f	class:Particle	typeref:typename:void
+setNumberOfDimensions	system.cpp	/^void System::setNumberOfDimensions(int numberOfDimensions) {$/;"	f	class:System	typeref:typename:void
+setNumberOfMetropolisSteps	sampler.cpp	/^void Sampler::setNumberOfMetropolisSteps(int steps) {$/;"	f	class:Sampler	typeref:typename:void
+setNumberOfParticles	system.cpp	/^void System::setNumberOfParticles(int numberOfParticles) {$/;"	f	class:System	typeref:typename:void
+setPosition	particle.cpp	/^void Particle::setPosition(const std::vector<double> &position) {$/;"	f	class:Particle	typeref:typename:void
+setSeed	Math/random.cpp	/^void Random::setSeed(long seed) {$/;"	f	class:Random	typeref:typename:void
+setStepLength	system.cpp	/^void System::setStepLength(double stepLength) {$/;"	f	class:System	typeref:typename:void
+setWaveFunction	system.cpp	/^void System::setWaveFunction(WaveFunction* waveFunction) {$/;"	f	class:System	typeref:typename:void
+setupInitialState	InitialStates/randomuniform.cpp	/^void RandomUniform::setupInitialState() {$/;"	f	class:RandomUniform	typeref:typename:void
+system.i	build/Makefile	/^system.i:$/;"	t
+system.o	build/Makefile	/^system.o:$/;"	t
+system.s	build/Makefile	/^system.s:$/;"	t
+vmc	CMakeLists.txt	/^add_executable(vmc ${SOURCES})$/;"	t
+vmc	build/Makefile	/^vmc: cmake_check_build_system$/;"	t
+vmc/fast	build/Makefile	/^vmc\/fast:$/;"	t
+volatile	build/CMakeFiles/3.19.3/CompilerIdC/CMakeCCompilerId.c	/^# define volatile$/;"	d	file:

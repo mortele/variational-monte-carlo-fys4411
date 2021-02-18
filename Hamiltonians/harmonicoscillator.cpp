@@ -1,6 +1,7 @@
 #include "harmonicoscillator.h"
 #include <cassert>
 #include <iostream>
+#include <cmath>
 #include "../system.h"
 #include "../particle.h"
 #include "../WaveFunctions/wavefunction.h"
@@ -25,8 +26,15 @@ double HarmonicOscillator::computeLocalEnergy(std::vector<Particle*> particles) 
      * m_system->getWaveFunction()...
      */
 
-    double potentialEnergy = 0;
-    double kineticEnergy   = 0;
+	double r2 = 0;
+	for( int dim=0; dim < m_system->getNumberOfDimensions(); dim++ )
+	{
+		r2 = std::pow(particles[0]->getPosition()[dim], 2);
+	}
+	double potentialEnergy	= 0.5*m_omega*r2;
+	double kineticEnergy	=
+		-0.5*m_system->getWaveFunction()->computeDoubleDerivative(particles);
+
     return kineticEnergy + potentialEnergy;
 }
 

@@ -7,10 +7,14 @@ mkdir build
 cd build
 
 # Run CMake to create a Makefile
+# Might have to delete files in build first
+# cmake.exe -G "MinGW Makefiles" ..
 cmake ../
 
 # Make the Makefile using two threads
-make -j2
+mingw32-make.exe -j2
+#make -j2
 
 # Move the executable to the top-directory
-mv vmc ..
+#mv vmc ..
+mv .\vmc.exe ..
