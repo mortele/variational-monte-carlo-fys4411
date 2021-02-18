@@ -20,10 +20,10 @@ int main() {
     int numberOfDimensions[]    = {1};
     int numberOfParticles[]     = {1}; //{1,10,100,500};
     int numberOfSteps           = (int) 1e6;
-    double omega                = 1.0;          // Oscillator frequency.
-    double alpha[]              = {0.45, 0.5, 0.55};          // Variational parameter.
-    double stepLength           = 0.1;          // Metropolis step length.
-    double equilibration        = 0.1;          // Amount of the total steps used
+    double omega                = 1.0;              // Oscillator frequency.
+    double alpha[]              = {0.45, 0.5, 0.55};// Variational parameter.
+    double stepLength           = 0.1;              // Metropolis step length.
+    double equilibration        = 0.1;              // Amount of the total steps used
     // for equilibration.
 
     // clears output file
