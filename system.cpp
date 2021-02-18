@@ -34,7 +34,7 @@ void System::runMetropolisSteps(int numberOfMetropolisSteps) {
 
     for (int i=0; i < numberOfMetropolisSteps; i++) {
         bool acceptedStep = metropolisStep();
-
+		
         /* Here you should sample the energy (and maybe other things using
          * the m_sampler instance of the Sampler class. Make sure, though,
          * to only begin sampling after you have let the system equilibrate
