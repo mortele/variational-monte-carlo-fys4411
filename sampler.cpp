@@ -41,8 +41,8 @@ void Sampler::sample(bool acceptedStep) {
     double localEnergy = m_system->getHamiltonian()->
                          computeLocalEnergy(m_system->getParticles());
     m_cumulativeEnergy  += localEnergy;
-    m_energies.push_back(localEnergy);
 
+    // m_energies.push_back(localEnergy);
 
     /* vector<class Particle*> particles = m_system->getParticles();
     vector<vector<double>> currPos = vector<vector<double>>();
