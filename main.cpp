@@ -17,7 +17,7 @@ int main() {
     int seed = 2020;
 
     int numberOfDimensions  = 1;
-    int numberOfParticles   = 10;
+    int numberOfParticles   = 1;
     int numberOfSteps       = (int) 1e6;
     double omega            = 1.0;          // Oscillator frequency.
     double alpha            = 0.5;          // Variational parameter.

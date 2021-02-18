@@ -17,7 +17,7 @@ System::System(int seed) {
     m_random = new Random(seed);
 }
 
-bool System::metropolisStep() {
+bool System::metropolisStep(int particle) {
     /* Perform the actual Metropolis step: Choose a particle at random and
      * change it's position by a random amount, and check if the step is
      * accepted by the Metropolis test (compare the wave function evaluated
@@ -30,13 +30,13 @@ bool System::metropolisStep() {
 
 	for( int dim = 0; dim < m_numberOfDimensions; dim++ )
 	{
-		step[dim] = m_stepLength*2*(Random::nextDouble() - .5);
+		step[dim] = m_stepLength*2*(m_random->nextDouble() - .5);
 		m_particles[particle]->adjustPosition(step[dim], dim);
 	}
 
 	double wfnew = m_waveFunction->evaluate(m_particles);
 
-	if( Random::nextDouble() <= std::exp(2*(wfnew - wfold)) )
+	if( m_random->nextDouble() <= std::exp(2*(wfnew - wfold)) )
 	{
 		return true;
 	}

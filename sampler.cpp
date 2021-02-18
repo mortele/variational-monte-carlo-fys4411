@@ -126,5 +126,5 @@ void Sampler::computeAverages() {
     /* Compute the averages of the sampled quantities. You need to think
      * thoroughly through what is written here currently; is this correct?
      */
-    m_energy = m_cumulativeEnergy / (m_numberOfSampledMetropolisSteps);
+    m_energy = m_cumulativeEnergy / (m_numberOfSampledMetropolisSteps-1);
 }
