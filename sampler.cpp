@@ -76,7 +76,6 @@ void Sampler::getOutput() {
     m_output.append("\n");
     m_output.append("  -- Reults -- \n");
     m_output.append(" Found energy : " + to_string(m_energy) + "\n");
-    // m_output.append(" Expected energy : " + to_string(pa.at(0)*np*nd) + "\n");
     m_output.append("\n");
     
 }
