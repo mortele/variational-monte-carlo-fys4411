@@ -13,7 +13,11 @@ double Hamiltonian::numeric()
 
 	std::vector<class Particle*> particles = m_system->getParticles();
 
-	double wfcur = m_system->getWaveFunction()->evaluate(particles, 0); //probably shouldn't be 0 here
+	double wfcur = 0; 
+	for (int particle = 0; particle < m_system->getNumberOfParticles(); particle++)
+	{
+		wfcur += m_system->getWaveFunction()->evaluate(particles, particle);
+	}
 
 	double wfnext = 0; double wfprev = 0;
 	// found in 

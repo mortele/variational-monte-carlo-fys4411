@@ -29,7 +29,7 @@ double SimpleGaussian::evaluate(std::vector<class Particle*> particles, int part
 	return -m_parameters[particle]*r2;
 }
 
-double SimpleGaussian::computeDoubleDerivative(std::vector<class Particle*> particles) {
+double SimpleGaussian::computeDoubleDerivative(double r2) {
     /* All wave functions need to implement this function, so you need to
      * find the double derivative analytically. Note that by double derivative,
      * we actually mean the sum of the Laplacians with respect to the
@@ -39,11 +39,11 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<class Particle*> part
      * Schrödinger equation to see how the two are related).
      */
 
-	double r2 = 0;
+	/* double r2 = 0;
 	for( int dim = 0; dim < m_system->getNumberOfDimensions(); dim++ )
 	{
-		r2 += std::pow(particles[0]->getPosition()[dim], 2);
-	}
+		r2 += std::pow(particles[particle]->getPosition()[dim], 2);
+	} */
 	return -2*m_parameters[0] + 4*pow(m_parameters[0], 2)*r2;
     // return m_parameters[0]*( m_system->getNumberOfDimensions() - 2 * m_parameters[0] * r2);
 }
