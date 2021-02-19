@@ -28,7 +28,9 @@ int main() {
 
     // clears output file
     ofstream outfile;
-    outfile.open ("results.txt", ios::out | ios::trunc);
+    outfile.open ("res/results.txt", ios::out | ios::trunc);
+    outfile.close();
+    outfile.open ("res/energies.txt", ios::out | ios::trunc);
     outfile.close();
 
     for (int nDim : numberOfDimensions)

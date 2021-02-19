@@ -104,15 +104,17 @@ void Sampler::printOutputToTerminal() {
 void Sampler::printOutputToFile() {
     
     ofstream outfile;
-    outfile.open ("results.txt", ios::out | ios::app);
+    outfile.open ("res/results.txt", ios::out | ios::app);
     outfile << m_output;
     outfile << endl;
     outfile << endl;
+    outfile.close();
 
-    /* ostringstream oss;
-    copy(m_energies.begin(), m_energies.end()-1, ostream_iterator<vector<double>>(oss, ","));
+    outfile.open ("res/energies.txt", ios::out | ios::app);
+    ostringstream oss;
+    copy(m_energies.begin(), m_energies.end()-1, ostream_iterator<double>(oss, ", "));
     oss << m_energies.back();
-    outfile << oss.str() << endl << endl; */
+    outfile << oss.str() << endl << endl << endl;
 
     /* copy(m_positions.begin(), m_positions.end()-1, ostream_iterator<double>(oss, ","));
     oss << m_energies.back();
