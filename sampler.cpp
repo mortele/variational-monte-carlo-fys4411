@@ -42,7 +42,7 @@ void Sampler::sample(bool acceptedStep) {
                          computeLocalEnergy(m_system->getParticles());
     m_cumulativeEnergy  += localEnergy;
 
-    // m_energies.push_back(localEnergy);
+    m_energies.push_back(localEnergy);
 
     /* vector<class Particle*> particles = m_system->getParticles();
     vector<vector<double>> currPos = vector<vector<double>>();
@@ -76,7 +76,8 @@ void Sampler::getOutput() {
     }
     m_output.append("\n");
     m_output.append("  -- Reults -- \n");
-    m_output.append(" Energy : " + to_string(m_energy) + "\n");
+    m_output.append(" Found energy : " + to_string(m_energy) + "\n");
+    m_output.append(" Expected energy : " + to_string(pa.at(0)*np*nd) + "\n");
     m_output.append("\n");
     
 }
