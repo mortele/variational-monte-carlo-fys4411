@@ -24,7 +24,6 @@ Sampler::Sampler(System* system) {
 
 void Sampler::setNumberOfMetropolisSteps(int steps) {
     m_numberOfMetropolisSteps = steps;
-    m_numberOfSampledMetropolisSteps = steps - steps*m_system->getEquilibrationFraction();
 }
 
 void Sampler::sample(bool acceptedStep) {
@@ -77,7 +76,7 @@ void Sampler::getOutput() {
     m_output.append("\n");
     m_output.append("  -- Reults -- \n");
     m_output.append(" Found energy : " + to_string(m_energy) + "\n");
-    m_output.append(" Expected energy : " + to_string(pa.at(0)*np*nd) + "\n");
+    // m_output.append(" Expected energy : " + to_string(pa.at(0)*np*nd) + "\n");
     m_output.append("\n");
     
 }
@@ -129,5 +128,5 @@ void Sampler::computeAverages() {
     /* Compute the averages of the sampled quantities. You need to think
      * thoroughly through what is written here currently; is this correct?
      */
-    m_energy = m_cumulativeEnergy / (m_numberOfSampledMetropolisSteps-1);
+    m_energy = m_cumulativeEnergy / (m_stepNumber);
 }

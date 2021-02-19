@@ -31,11 +31,14 @@ double HarmonicOscillator::computeLocalEnergy(std::vector<Particle*> particles) 
 	for( int dim=0; dim < m_system->getNumberOfDimensions(); dim++ )
 	{
 		r2 = std::pow(particles[0]->getPosition()[dim], 2);
+		cout << r2 << endl;
 	}
 
 	double potentialEnergy	= 0.5*m_omega*r2;
 	double kineticEnergy = 0;
 
+	//Mulig opptimalisering: computeDoubleDerivative regner ut r2, men vi har allerede regnet 
+	//den ut her
 	if( m_mode ){
 		kineticEnergy	=
 			-0.5*m_system->getWaveFunction()->computeDoubleDerivative(particles);

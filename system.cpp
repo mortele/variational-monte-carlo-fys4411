@@ -26,15 +26,15 @@ bool System::metropolisStep(int particle) {
      */
 
 	std::vector<double> step(m_numberOfDimensions);
-	double wfold = m_waveFunction->evaluate(m_particles);
+	double wfold = m_waveFunction->evaluate(m_particles, particle);
 
 	for( int dim = 0; dim < m_numberOfDimensions; dim++ )
 	{
-		step[dim] = m_stepLength*2*(m_random->nextDouble() - .5);
+		step[dim] = m_stepLength*2*(m_random->nextDouble() - .5); //should the *2 be here?
 		m_particles[particle]->adjustPosition(step[dim], dim);
 	}
 
-	double wfnew = m_waveFunction->evaluate(m_particles);
+	double wfnew = m_waveFunction->evaluate(m_particles, particle);
 
 	if( m_random->nextDouble() <= std::exp(2*(wfnew - wfold)) )
 	{
