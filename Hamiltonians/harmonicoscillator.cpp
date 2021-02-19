@@ -39,8 +39,6 @@ double HarmonicOscillator::computeLocalEnergy(std::vector<Particle*> particles) 
 	double potentialEnergy	= 0.5*m_omega*r2;
 	double kineticEnergy = 0;
 
-	//Mulig opptimalisering: computeDoubleDerivative regner ut r2, men vi har allerede regnet 
-	//den ut her
 	if( m_mode ){
 		kineticEnergy	=
 			-0.5*m_system->getWaveFunction()->computeDoubleDerivative(r2);

@@ -13,8 +13,6 @@
 #include "WaveFunctions/wavefunction.h"
 
 using namespace std;
-using std::cout;
-using std::endl;
 
 
 Sampler::Sampler(System* system) {
