@@ -36,14 +36,14 @@ double HarmonicOscillator::computeLocalEnergy(std::vector<Particle*> particles) 
 		}
 	}
 	
-	double potentialEnergy	= 0.5*m_omega*r2;
+	double potentialEnergy	= 0.5*m_omega*m_omega*r2;
 	double kineticEnergy = 0;
 
 	if( m_mode ){
 		kineticEnergy	=
 			-0.5*m_system->getWaveFunction()->computeDoubleDerivative(r2);
 	} else
-	{
+	{// mode here means numeric or analytic. TODO clarify variable
 		kineticEnergy	= numeric();// -.5*numeric();
 	}
 

@@ -26,7 +26,8 @@ double SimpleGaussian::evaluate(std::vector<class Particle*> particles, int part
 	{
 		r2 += std::pow(particles[particle]->getPosition()[dim], 2);
 	}
-	return -m_parameters[particle]*r2;
+	//return -m_parameters[0]*r2;
+	return std::exp(-m_parameters[0]*r2);
 }
 
 double SimpleGaussian::computeDoubleDerivative(double r2) {
@@ -48,7 +49,9 @@ double SimpleGaussian::computeDoubleDerivative(double r2) {
     // since HarmonicOscillator::computeLocalEnergy allready finds r2, we can just reuse
     // that one. This might have to change in the future though, if we need the double
     // derivative somewhere else
-	return -2*m_parameters[0] + 4*pow(m_parameters[0], 2)*r2;
+	double D = m_system->getNumberOfDimensions();
+	double N = m_system->getNumberOfParticles();
+	return -2*D*N*m_parameters[0] + 4*pow(m_parameters[0], 2)*r2;
 }
 
 
