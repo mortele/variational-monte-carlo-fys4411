@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <chrono>
+#include <filesystem>
 #include "system.h"
 #include "particle.h"
 #include "WaveFunctions/wavefunction.h"
@@ -30,6 +31,10 @@ int main() {
     // for equilibration.
 
     // clears output file
+    namespace fs = std::filesystem;
+    if (!fs::is_directory("res") || !fs::exists("res")) { // Check if res folder exists
+        fs::create_directory("res"); // create res folder
+    }
     ofstream outfile;
     outfile.open ("res/results.csv", ios::out | ios::trunc);
     outfile << 
