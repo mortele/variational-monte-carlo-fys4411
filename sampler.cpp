@@ -6,6 +6,7 @@
 #include <algorithm> 
 #include <sstream> 
 #include <iterator> 
+#include <chrono> 
 #include "sampler.h"
 #include "system.h"
 #include "particle.h"
@@ -13,6 +14,7 @@
 #include "WaveFunctions/wavefunction.h"
 
 using namespace std;
+using namespace std::chrono; 
 
 
 Sampler::Sampler(System* system) {
@@ -59,6 +61,7 @@ void Sampler::getOutput() {
     int     p  = m_system->getWaveFunction()->getNumberOfParameters();
     double  ef = m_system->getEquilibrationFraction();
     vector<double> pa = m_system->getWaveFunction()->getParameters();
+    double ti =  m_system->getElapsedTime();
     
     m_output.append("  -- System info -- \n");
     m_output.append(" Number of particles  : " + to_string(np) + "\n");
@@ -74,6 +77,7 @@ void Sampler::getOutput() {
     m_output.append("\n");
     m_output.append("  -- Reults -- \n");
     m_output.append(" Found energy : " + to_string(m_energy) + "\n");
+    m_output.append(" Elapsed time : " + to_string(ti) + " seconds\n");
     m_output.append("\n");
     
 }
@@ -113,12 +117,14 @@ void Sampler::printOutputToFile() {
     int     p  = m_system->getWaveFunction()->getNumberOfParameters();
     double  ef = m_system->getEquilibrationFraction();
     vector<double> pa = m_system->getWaveFunction()->getParameters();
+    double  ti =  m_system->getElapsedTime();
 
     outfile << np << ";"
             << nd << ";"
             << ms << ";"
             << ef << ";"
             << m_energy << ";"
+            << ti << ";"
             << p << ";";
     for (int i=0; i < p-1; i++) {
         outfile << pa.at(i) << ";";

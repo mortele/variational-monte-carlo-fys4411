@@ -30,7 +30,7 @@ int main() {
     ofstream outfile;
     outfile.open ("res/results.csv", ios::out | ios::trunc);
     outfile << 
-    "nParticles;nDimensions;nMetropolisSteps;EquilibrationFraction;foundEnergy;nParameters;Parameters(undefinedNumber)\n";
+    "nParticles;nDimensions;nMetropolisSteps;EquilibrationFraction;foundEnergy;elapsedTime;nParameters;Parameters(undefinedNumber)\n";
     outfile.close();
     outfile.open ("res/energies.csv", ios::out | ios::trunc);
     outfile.close();

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <chrono>
 #include "Math/random.h"
 
 class System {
@@ -24,6 +25,8 @@ public:
     int getNumberOfDimensions()         { return m_numberOfDimensions; }
     int getNumberOfMetropolisSteps()    { return m_numberOfMetropolisSteps; }
     double getEquilibrationFraction()   { return m_equilibrationFraction; }
+    // std::chrono::time_point<std::chrono::system_clock> getTimeStart()   { return m_time_start;}
+    double getElapsedTime()                      { return m_elapsed_time;}
 
 private:
     int                             m_numberOfParticles = 0;
@@ -37,5 +40,7 @@ private:
     class Sampler*                  m_sampler = nullptr;
     std::vector<class Particle*>    m_particles = std::vector<class Particle*>();
     class Random*                   m_random = nullptr;
+    std::chrono::time_point<std::chrono::system_clock> m_time_start;
+    double m_elapsed_time;
 };
 

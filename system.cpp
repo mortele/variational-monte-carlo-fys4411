@@ -1,20 +1,24 @@
 #include "system.h"
 #include <cassert>
 #include <cmath>
+#include <chrono>
 #include "sampler.h"
 #include "particle.h"
 #include "WaveFunctions/wavefunction.h"
 #include "Hamiltonians/hamiltonian.h"
 #include "InitialStates/initialstate.h"
 #include "Math/random.h"
+using namespace std::chrono; 
 
 
 System::System() {
     m_random = new Random();
+	m_time_start = high_resolution_clock::now();
 }
 
 System::System(int seed) {
     m_random = new Random(seed);
+	m_time_start = high_resolution_clock::now();
 }
 
 bool System::metropolisStep(int particle) {
@@ -76,6 +80,11 @@ void System::runMetropolisSteps(int numberOfMetropolisSteps) {
 		}
     }
     m_sampler->computeAverages();
+
+	//gets end time
+	time_point<system_clock> time_end = high_resolution_clock::now();
+	m_elapsed_time = duration_cast<nanoseconds> (time_end - m_time_start).count() / 1e9;
+
     m_sampler->getOutput();
     m_sampler->printOutputToTerminal();
     m_sampler->printOutputToFile();
