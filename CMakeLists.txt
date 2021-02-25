@@ -1,7 +1,7 @@
 project(project_1_fys4411)
 
 # Set CXX standard to C++11
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 # Check if the user has specified a build type via the command line, e.g., (in the
 # build-directory)

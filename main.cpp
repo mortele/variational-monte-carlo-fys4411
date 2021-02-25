@@ -10,6 +10,9 @@
 #include "InitialStates/randomuniform.h"
 #include "Math/random.h"
 
+#include <filesystem>
+namespace fs = std::filesystem;
+
 using namespace std;
 
 
