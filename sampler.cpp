@@ -26,8 +26,10 @@ void Sampler::setNumberOfMetropolisSteps(int steps) {
 
 void Sampler::sample(bool acceptedStep) {
     // Make sure the sampling variable(s) are initialized at the first step.
+	// TODO check acceptance rate
     if (m_stepNumber == 0) {
         m_cumulativeEnergy = 0;
+		m_accepted = 0;
         m_energies.clear();
         m_positions.clear();
     }
@@ -49,6 +51,7 @@ void Sampler::sample(bool acceptedStep) {
     }
     m_positions.push_back(currPos); */
 
+	m_accepted += acceptedStep;
     m_stepNumber++;
 }
 
@@ -73,6 +76,9 @@ void Sampler::getOutput() {
     }
     m_output.append("\n");
     m_output.append("  -- Reults -- \n");
+	m_output.append(
+			" Accepted steps	:	" + to_string((double)m_accepted/(double)m_stepNumber)
+			+ "\n");
     m_output.append(" Found energy : " + to_string(m_energy) + "\n");
     m_output.append("\n");
     
