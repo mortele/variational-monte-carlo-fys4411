@@ -30,13 +30,13 @@ bool System::metropolisStep(int particle) {
 
 	for( int dim = 0; dim < m_numberOfDimensions; dim++ )
 	{
-		step[dim] = m_stepLength*2*(m_random->nextDouble() - .5); //should the *2 be here?
+		step[dim] = m_stepLength*(m_random->nextDouble() - .5);
 		m_particles[particle]->adjustPosition(step[dim], dim);
 	}
-
 	double wfnew = m_waveFunction->evaluate(m_particles, particle);
 
-	if( m_random->nextDouble() <= std::exp(2*(wfnew - wfold)) )
+	double ratio = wfnew*wfnew/(wfold*wfold);
+	if( m_random->nextDouble() <= ratio )//std::exp(2*(wfnew - wfold)) )
 	{
 		return true;
 	}
@@ -48,9 +48,7 @@ bool System::metropolisStep(int particle) {
 		}
 		return false;
 	}
-
-    //return false;
-}
+} //!metropolisStep 
 
 void System::runMetropolisSteps(int numberOfMetropolisSteps) {
     m_particles                 = m_initialState->getParticles();
