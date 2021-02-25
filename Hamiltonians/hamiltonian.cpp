@@ -24,8 +24,8 @@ double Hamiltonian::numeric()
 	// ComputationalPhysics2/doc/Programs/LecturePrograms/programs/vmc_atoms.py
 	// lines 91-92:
 	double h = 1e-3;
-	//double h2 = 1./(h*h);
-	double h2 = 1e6;
+	double h2 = 1./(h*h);
+	//double h2 = 1e6;
 
 	double deriv=0;
 
