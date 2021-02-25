@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <chrono>
 #include "system.h"
 #include "particle.h"
 #include "WaveFunctions/wavefunction.h"
@@ -11,6 +12,7 @@
 #include "Math/random.h"
 
 using namespace std;
+using namespace std::chrono;
 
 
 int main() {
@@ -36,6 +38,7 @@ int main() {
     outfile.open ("res/energies.csv", ios::out | ios::trunc);
     outfile.close();
 
+    time_point<system_clock> tot_time_start = high_resolution_clock::now();
     for (int nDim : numberOfDimensions)
     {
         for (int nPar : numberOfParticles)
@@ -53,5 +56,11 @@ int main() {
         }
     }
     
+    time_point<system_clock> tot_time_end = high_resolution_clock::now();
+    double tot_elapsed_time = duration_cast<nanoseconds> (tot_time_end - tot_time_start).count() / 1e9;
+    cout << endl;
+    cout << " Total time elapsed: " << tot_elapsed_time << " seconds\n";
+    cout << endl;
+
     return 0;
 }
