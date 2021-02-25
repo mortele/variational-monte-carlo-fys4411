@@ -103,18 +103,36 @@ void Sampler::printOutputToTerminal() {
 
 void Sampler::printOutputToFile() {
     
+    //writes the general data to a file
     ofstream outfile;
-    outfile.open ("res/results.txt", ios::out | ios::app);
-    outfile << m_output;
-    outfile << endl;
-    outfile << endl;
+    outfile.open ("res/results.csv", ios::out | ios::app);
+
+    int     np = m_system->getNumberOfParticles();
+    int     nd = m_system->getNumberOfDimensions();
+    int     ms = m_system->getNumberOfMetropolisSteps();
+    int     p  = m_system->getWaveFunction()->getNumberOfParameters();
+    double  ef = m_system->getEquilibrationFraction();
+    vector<double> pa = m_system->getWaveFunction()->getParameters();
+
+    outfile << np << ";"
+            << nd << ";"
+            << ms << ";"
+            << ef << ";"
+            << m_energy << ";"
+            << p << ";";
+    for (int i=0; i < p-1; i++) {
+        outfile << pa.at(i) << ";";
+    }
+    outfile << pa.at(p-1) << "\n";
+    
     outfile.close();
 
-    outfile.open ("res/energies.txt", ios::out | ios::app);
+    //writes the energies to a file
+    outfile.open ("res/energies.csv", ios::out | ios::app);
     ostringstream oss;
-    copy(m_energies.begin(), m_energies.end()-1, ostream_iterator<double>(oss, ", "));
+    copy(m_energies.begin(), m_energies.end()-1, ostream_iterator<double>(oss, ";"));
     oss << m_energies.back();
-    outfile << oss.str() << endl << endl << endl;
+    outfile << oss.str() << endl; // << endl << endl;
 
     /* copy(m_positions.begin(), m_positions.end()-1, ostream_iterator<double>(oss, ","));
     oss << m_energies.back();

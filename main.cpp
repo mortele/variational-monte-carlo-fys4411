@@ -28,9 +28,11 @@ int main() {
 
     // clears output file
     ofstream outfile;
-    outfile.open ("res/results.txt", ios::out | ios::trunc);
+    outfile.open ("res/results.csv", ios::out | ios::trunc);
+    outfile << 
+    "nParticles;nDimensions;nMetropolisSteps;EquilibrationFraction;foundEnergy;nParameters;Parameters(undefinedNumber)\n";
     outfile.close();
-    outfile.open ("res/energies.txt", ios::out | ios::trunc);
+    outfile.open ("res/energies.csv", ios::out | ios::trunc);
     outfile.close();
 
     for (int nDim : numberOfDimensions)
