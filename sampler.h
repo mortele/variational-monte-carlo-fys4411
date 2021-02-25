@@ -15,6 +15,7 @@ public:
 private:
     int                 m_numberOfMetropolisSteps = 0;
     int                 m_stepNumber = 0;
+	int					m_accepted = 0;
     double              m_energy = 0;
     double              m_cumulativeEnergy = 0;
     std::string         m_output = "";
