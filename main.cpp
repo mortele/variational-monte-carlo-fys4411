@@ -1,7 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <chrono>
-#include <filesystem>
+#include <windows.h>
+// #include <filesystem>
 #include "system.h"
 #include "particle.h"
 #include "WaveFunctions/wavefunction.h"
@@ -12,8 +13,6 @@
 #include "InitialStates/randomuniform.h"
 #include "Math/random.h"
 
-#include <filesystem>
-namespace fs = std::filesystem;
 
 using namespace std;
 using namespace std::chrono;
@@ -34,10 +33,12 @@ int main() {
     // for equilibration.
 
     // clears output file
-    namespace fs = std::filesystem;
+    /* namespace fs = std::filesystem;
     if (!fs::is_directory("res") || !fs::exists("res")) { // Check if res folder exists
         fs::create_directory("res"); // create res folder
-    }
+    } */
+    string res_folder = ".\\res";
+    CreateDirectory(res_folder.c_str(), NULL);
     ofstream outfile;
     outfile.open ("res/results.csv", ios::out | ios::trunc);
     outfile << 
