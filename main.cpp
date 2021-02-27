@@ -37,14 +37,14 @@ int main() {
     if (!fs::is_directory("res") || !fs::exists("res")) { // Check if res folder exists
         fs::create_directory("res"); // create res folder
     } */
-    string res_folder = ".\\res";
+    string res_folder = ".\\results";
     CreateDirectory(res_folder.c_str(), NULL);
     ofstream outfile;
-    outfile.open ("res/results.csv", ios::out | ios::trunc);
+    outfile.open ("results/results.csv", ios::out | ios::trunc);
     outfile << 
-    "nParticles;nDimensions;nMetropolisSteps;EquilibrationFraction;foundEnergy;elapsedTime;nParameters;Parameters(undefinedNumber)\n";
+    "nParticles;nDimensions;nMetropolisSteps;EquilibrationFraction;acceptedSteps;foundEnergy;elapsedTime;nParameters;Parameters(undefinedNumber)\n";
     outfile.close();
-    outfile.open ("res/energies.csv", ios::out | ios::trunc);
+    outfile.open ("results/energies.csv", ios::out | ios::trunc);
     outfile.close();
 
     time_point<system_clock> tot_time_start = high_resolution_clock::now();
