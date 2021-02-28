@@ -40,20 +40,17 @@ int main() {
     //creares a folder for the results
     #if defined(_WIN32)
         // do some cool Windows stuff
-        // #include <windows.h>
         cout << "Windows detected\n";
         string res_folder = ".\\results";
         CreateDirectory(res_folder.c_str(), NULL);
     #elif defined(__linux__)
         // do some cool Unix stuff
         cout << "LINUX detected\n";
-        // #include <filesystem>
         namespace fs = std::filesystem;
         if (!fs::is_directory("results") || !fs::exists("results")) { // Check if res folder exists
             fs::create_directory("results"); // create res folder
         }
     #else
-        // #error Unsupported operating system
         cout << "No supported os detected. To get results saved in a file create a folder named 'results'.\n";
     #endif 
 
