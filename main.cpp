@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <chrono>
-#include <windows.h>
-// #include <filesystem>
 #include "system.h"
 #include "particle.h"
 #include "WaveFunctions/wavefunction.h"
@@ -13,6 +11,13 @@
 #include "InitialStates/randomuniform.h"
 #include "Math/random.h"
 
+#if defined(_WIN32)
+    #include <windows.h>
+#elif defined(__linux__)
+    #include <filesystem>
+#endif
+// #include <windows.h>
+// #include <filesystem>
 
 using namespace std;
 using namespace std::chrono;
@@ -32,13 +37,27 @@ int main() {
     double equilibration        = 0.1;              // Amount of the total steps used
     // for equilibration.
 
+    //creares a folder for the results
+    #if defined(_WIN32)
+        // do some cool Windows stuff
+        // #include <windows.h>
+        cout << "Windows detected\n";
+        string res_folder = ".\\results";
+        CreateDirectory(res_folder.c_str(), NULL);
+    #elif defined(__linux__)
+        // do some cool Unix stuff
+        cout << "LINUX detected\n";
+        // #include <filesystem>
+        namespace fs = std::filesystem;
+        if (!fs::is_directory("results") || !fs::exists("results")) { // Check if res folder exists
+            fs::create_directory("results"); // create res folder
+        }
+    #else
+        // #error Unsupported operating system
+        cout << "No supported os detected. To get results saved in a file create a folder named 'results'.\n";
+    #endif 
+
     // clears output file
-    /* namespace fs = std::filesystem;
-    if (!fs::is_directory("res") || !fs::exists("res")) { // Check if res folder exists
-        fs::create_directory("res"); // create res folder
-    } */
-    string res_folder = ".\\results";
-    CreateDirectory(res_folder.c_str(), NULL);
     ofstream outfile;
     outfile.open ("results/results.csv", ios::out | ios::trunc);
     outfile << 
