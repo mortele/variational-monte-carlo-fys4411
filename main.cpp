@@ -71,12 +71,13 @@ int main() {
             for (double nAlpha : alpha)
             {
                 System* system = new System(seed);
-                system->setHamiltonian              (new HarmonicOscillator(system, omega, false));
+                system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
                 system->setWaveFunction             (new SimpleGaussian(system, nAlpha));
                 system->setInitialState             (new RandomUniform(system, nDim, nPar));
                 system->setEquilibrationFraction    (equilibration);
                 system->setStepLength               (stepLength);
-                system->runMetropolisSteps          (numberOfSteps);
+                // system->runMetropolisSteps          (numberOfSteps);
+                system->runImportanceSamplingSteps  (numberOfSteps);
             }
         }
     }

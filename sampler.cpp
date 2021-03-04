@@ -78,7 +78,7 @@ void Sampler::getOutput() {
     m_output.append("\n");
     m_output.append("  -- Reults -- \n");
 	m_output.append(
-			" Accepted steps	:	" + to_string((double)m_accepted/(double)m_stepNumber)
+			" Accepted steps : " + to_string((double)m_accepted/(double)m_stepNumber)
 			+ "\n");
     m_output.append(" Found energy : " + to_string(m_energy) + "\n");
     m_output.append(" Elapsed time : " + to_string(ti) + " seconds\n");
