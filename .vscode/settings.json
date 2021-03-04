@@ -47,5 +47,6 @@
         "random": "cpp",
         "ratio": "cpp",
         "filesystem": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
