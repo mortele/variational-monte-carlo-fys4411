@@ -141,8 +141,8 @@ bool System::importanceSamplingStep(int particle) {
 
 	std::vector<double> qForceOld = quantumForce(particle);
 	std::vector<double> posOld = m_particles[particle]->getPosition();
-	double dt = 0.01;
-	double eta = m_random->nextGaussian(0, 0.01);
+	double dt = 0.005;
+	double eta = m_random->nextGaussian(0, 1);
 	for( int dim = 0; dim < m_numberOfDimensions; dim++ )
 	{
 		step[dim] = .5*qForceOld[dim]*dt + eta*sqrt(dt);

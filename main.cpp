@@ -31,7 +31,7 @@ int main() {
     int numberOfParticles[]     = {1, 2}; //{1,10,100,500};
     int numberOfSteps           = (int) 1e6;
     double omega                = 1.0;              // Oscillator frequency.
-    double alpha[]              = {.4};// Variational parameter.
+    double alpha[]              = {.46};// Variational parameter.
 	//double alpha[] = {0.3, 0.34, 0.38, 0.42, 0.46, 0.5, 0.54, 0.58, 0.62, 0.66, 0.7};
     double stepLength           = 2;              // Metropolis step length.
     double equilibration        = 0.1;              // Amount of the total steps used
