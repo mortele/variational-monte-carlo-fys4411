@@ -82,7 +82,7 @@ void Sampler::getOutput() {
 			+ "\n");
     m_output.append(" Found energy : " + to_string(m_energy) + "\n");
     m_output.append(" Elapsed time : " + to_string(ti) + " seconds\n");
-    m_output.append("\n");
+    m_output.append("\n\n");
     
 }
 

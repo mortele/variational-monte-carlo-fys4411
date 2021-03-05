@@ -5,12 +5,14 @@
 #include "../system.h"
 #include "../particle.h"
 
-SimpleGaussian::SimpleGaussian(System* system, double alpha) :
+SimpleGaussian::SimpleGaussian(System* system, double alpha, double dt) :
         WaveFunction(system) {
     assert(alpha >= 0);
-    m_numberOfParameters = 1;
-    m_parameters.reserve(1);
+    assert(dt >= 0);
+    m_numberOfParameters = 2;
+    m_parameters.reserve(2);
     m_parameters.push_back(alpha);
+    m_parameters.push_back(dt);
 }
 
 double SimpleGaussian::evaluate(std::vector<class Particle*> particles, int particle) {

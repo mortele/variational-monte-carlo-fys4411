@@ -27,15 +27,16 @@ int main() {
     // Seed for the random number generator
     int seed = 2020;
 
-    int numberOfDimensions[]    = {1, 2};
-    int numberOfParticles[]     = {1, 2}; //{1,10,100,500};
+    int numberOfDimensions[]    = {1, 2, 3};
+    int numberOfParticles[]     = {1, 2, 3}; //{1,10,100,500};
     int numberOfSteps           = (int) 1e6;
     double omega                = 1.0;              // Oscillator frequency.
-    double alpha[]              = {.46};// Variational parameter.
+    double alpha[]              = {.4};// Variational parameter.
 	//double alpha[] = {0.3, 0.34, 0.38, 0.42, 0.46, 0.5, 0.54, 0.58, 0.62, 0.66, 0.7};
     double stepLength           = 2;              // Metropolis step length.
     double equilibration        = 0.1;              // Amount of the total steps used
     // for equilibration.
+    double dt                   = 0.01;
 
     //creares a folder for the results
     #if defined(_WIN32)
@@ -58,26 +59,38 @@ int main() {
     ofstream outfile;
     outfile.open ("results/results.csv", ios::out | ios::trunc);
     outfile << 
-    "nParticles;nDimensions;nMetropolisSteps;EquilibrationFraction;acceptedSteps;foundEnergy;elapsedTime;nParameters;Parameters(undefinedNumber)\n";
+    "n Particles;n Dimensions;n Metropolis Steps;Equilibration Fraction;Accepted Steps;Found Energy;Elapsed Time;n Parameters;Parameters (undefinedNumber)\n";
     outfile.close();
     outfile.open ("results/energies.csv", ios::out | ios::trunc);
     outfile.close();
 
+    int methods[] = {1};
+
     time_point<system_clock> tot_time_start = high_resolution_clock::now();
-    for (int nDim : numberOfDimensions)
+    for (int nPar : numberOfParticles)
     {
-        for (int nPar : numberOfParticles)
+        for (int nDim : numberOfDimensions)
         {
             for (double nAlpha : alpha)
             {
-                System* system = new System(seed);
-                system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
-                system->setWaveFunction             (new SimpleGaussian(system, nAlpha));
-                system->setInitialState             (new RandomUniform(system, nDim, nPar));
-                system->setEquilibrationFraction    (equilibration);
-                system->setStepLength               (stepLength);
-                // system->runMetropolisSteps          (numberOfSteps);
-                system->runImportanceSamplingSteps  (numberOfSteps);
+                for (int met : methods)
+                {
+                    System* system = new System(seed);
+                    system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
+                    system->setWaveFunction             (new SimpleGaussian(system, nAlpha, dt));
+                    system->setInitialState             (new RandomUniform(system, nDim, nPar));
+                    system->setEquilibrationFraction    (equilibration);
+                    system->setStepLength               (stepLength);
+                    if (met == 0)
+                    {
+                        system->runMetropolisSteps          (numberOfSteps);
+                        // cout << "Metropolis\n";
+                    } else
+                    {
+                        system->runImportanceSamplingSteps  (numberOfSteps);
+                        // cout << "Importance Sampling\n";
+                    }
+                }
             }
         }
     }
