@@ -44,8 +44,9 @@ double Hamiltonian::numeric()
 			wfprev = m_system->getWaveFunction()->evaluate(particles, particle);
 			particles[particle]->adjustPosition(h, dimension);
 
-			deriv -= wfnext + wfprev - 2*wfcur;
+			deriv += (wfnext + wfprev - 2*wfcur);
 		}//!dimension
 	}//!particle
-	return  .5*h2*deriv/wfcur;
+	//return  .5*h2*deriv/wfcur;
+	return -.5*deriv/wfcur;
 } // !numeric
