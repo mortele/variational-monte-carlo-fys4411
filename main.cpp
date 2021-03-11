@@ -11,8 +11,13 @@
 #include "InitialStates/randomuniform.h"
 #include "Math/random.h"
 
-#include <filesystem>
-namespace fs = std::filesystem;
+#if defined(_WIN32)
+    #include <windows.h>
+#elif defined(__linux__)
+    #include <filesystem>
+#endif
+// #include <windows.h>
+// #include <filesystem>
 
 using namespace std;
 using namespace std::chrono;
@@ -23,7 +28,7 @@ int main() {
     int seed = 2020;
 
     int numberOfDimensions[]    = {1, 2, 3};
-    int numberOfParticles[]     = {1, 2}; //{1,10,100,500};
+    int numberOfParticles[]     = {1, 2, 3}; //{1,10,100,500};
     int numberOfSteps           = (int) 1e6;
     double omega                = 1.0;              // Oscillator frequency.
     double alpha[]              = {.4};// Variational parameter.
@@ -31,30 +36,61 @@ int main() {
     double stepLength           = 2;              // Metropolis step length.
     double equilibration        = 0.1;              // Amount of the total steps used
     // for equilibration.
+    double dt                   = 0.01;
+
+    //creares a folder for the results
+    #if defined(_WIN32)
+        // do some cool Windows stuff
+        cout << "Windows detected\n";
+        string res_folder = ".\\results";
+        CreateDirectory(res_folder.c_str(), NULL);
+    #elif defined(__linux__)
+        // do some cool Unix stuff
+        cout << "LINUX detected\n";
+        namespace fs = std::filesystem;
+        if (!fs::is_directory("results") || !fs::exists("results")) { // Check if res folder exists
+            fs::create_directory("results"); // create res folder
+        }
+    #else
+        cout << "No supported os detected. To get results saved in a file create a folder named 'results'.\n";
+    #endif 
 
     // clears output file
     ofstream outfile;
-    outfile.open ("res/results.csv", ios::out | ios::trunc);
+    outfile.open ("results/results.csv", ios::out | ios::trunc);
     outfile << 
-    "nParticles;nDimensions;nMetropolisSteps;EquilibrationFraction;foundEnergy;elapsedTime;nParameters;Parameters(undefinedNumber)\n";
+    "n Particles;n Dimensions;n Metropolis Steps;Equilibration Fraction;Accepted Steps;Found Energy;Elapsed Time;n Parameters;Parameters (undefinedNumber)\n";
     outfile.close();
-    outfile.open ("res/energies.csv", ios::out | ios::trunc);
+    outfile.open ("results/energies.csv", ios::out | ios::trunc);
     outfile.close();
 
+    int methods[] = {1};
+
     time_point<system_clock> tot_time_start = high_resolution_clock::now();
-    for (int nDim : numberOfDimensions)
+    for (int nPar : numberOfParticles)
     {
-        for (int nPar : numberOfParticles)
+        for (int nDim : numberOfDimensions)
         {
             for (double nAlpha : alpha)
             {
-                System* system = new System(seed);
-                system->setHamiltonian              (new HarmonicOscillator(system, omega, false));
-                system->setWaveFunction             (new SimpleGaussian(system, nAlpha));
-                system->setInitialState             (new RandomUniform(system, nDim, nPar));
-                system->setEquilibrationFraction    (equilibration);
-                system->setStepLength               (stepLength);
-                system->runMetropolisSteps          (numberOfSteps);
+                for (int met : methods)
+                {
+                    System* system = new System(seed);
+                    system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
+                    system->setWaveFunction             (new SimpleGaussian(system, nAlpha, dt));
+                    system->setInitialState             (new RandomUniform(system, nDim, nPar));
+                    system->setEquilibrationFraction    (equilibration);
+                    system->setStepLength               (stepLength);
+                    if (met == 0)
+                    {
+                        system->runMetropolisSteps          (numberOfSteps);
+                        // cout << "Metropolis\n";
+                    } else
+                    {
+                        system->runImportanceSamplingSteps  (numberOfSteps);
+                        // cout << "Importance Sampling\n";
+                    }
+                }
             }
         }
     }

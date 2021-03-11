@@ -12,8 +12,8 @@ cd build
 cmake ../
 
 # Make the Makefile using two threads
-mingw32-make.exe -j2
-#make -j2
+# mingw32-make.exe -j2
+make -j2
 
 # Move the executable to the top-directory
 #mv vmc ..
