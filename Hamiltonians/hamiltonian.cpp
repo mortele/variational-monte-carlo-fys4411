@@ -13,11 +13,7 @@ double Hamiltonian::numeric()
 
 	std::vector<class Particle*> particles = m_system->getParticles();
 
-	double wfcur = 0; 
-	for (int particle = 0; particle < m_system->getNumberOfParticles(); particle++)
-	{
-		wfcur += m_system->getWaveFunction()->evaluate(particles, particle);
-	}
+	double wfcur = m_system->getWaveFunction()->evaluate(particles);
 
 	double wfnext = 0; double wfprev = 0;
 	// found in 
@@ -38,15 +34,15 @@ double Hamiltonian::numeric()
 				dimension++)
 		{
 			particles[particle]->adjustPosition(h, dimension);
-			wfnext = m_system->getWaveFunction()->evaluate(particles, particle);
+			wfnext = m_system->getWaveFunction()->evaluate(particles);
 			particles[particle]->adjustPosition(-2*h, dimension);
 
-			wfprev = m_system->getWaveFunction()->evaluate(particles, particle);
+			wfprev = m_system->getWaveFunction()->evaluate(particles);
 			particles[particle]->adjustPosition(h, dimension);
 
 			deriv += (wfnext + wfprev - 2*wfcur);
 		}//!dimension
 	}//!particle
 	//return  .5*h2*deriv/wfcur;
-	return -.5*deriv/wfcur;
+	return -.5*h2*deriv;
 } // !numeric

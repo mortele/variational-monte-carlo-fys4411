@@ -30,14 +30,14 @@ bool System::metropolisStep(int particle) {
      */
 
 	std::vector<double> step(m_numberOfDimensions);
-	double wfold = m_waveFunction->evaluate(m_particles, particle);
+	double wfold = m_waveFunction->evaluate(m_particles);
 
 	for( int dim = 0; dim < m_numberOfDimensions; dim++ )
 	{
 		step[dim] = m_stepLength*(m_random->nextDouble() - .5);
 		m_particles[particle]->adjustPosition(step[dim], dim);
 	}
-	double wfnew = m_waveFunction->evaluate(m_particles, particle);
+	double wfnew = m_waveFunction->evaluate(m_particles);
 
 	double ratio = wfnew*wfnew/(wfold*wfold);
 	if( m_random->nextDouble() <= ratio )//std::exp(2*(wfnew - wfold)) )
