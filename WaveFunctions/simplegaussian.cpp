@@ -15,7 +15,7 @@ SimpleGaussian::SimpleGaussian(System* system, double alpha, double dt) :
     m_parameters.push_back(dt);
 }
 
-double SimpleGaussian::evaluate(std::vector<class Particle*> particles, int particle) {
+double SimpleGaussian::evaluate(std::vector<class Particle*> particles) {
     /* You need to implement a Gaussian wave function here. The positions of
      * the particles are accessible through the particle[i].getPosition()
      * function.
@@ -24,9 +24,12 @@ double SimpleGaussian::evaluate(std::vector<class Particle*> particles, int part
      * (only) variational parameter.
      */
 	double r2 = 0;
-	for( int dim = 0; dim < m_system->getNumberOfDimensions(); dim++ )
+	for( int particle = 0; particle < m_system->getNumberOfParticles(); particle++ )
 	{
-		r2 += std::pow(particles[particle]->getPosition()[dim], 2);
+		for( int dim = 0; dim < m_system->getNumberOfDimensions(); dim++ )
+		{
+			r2 += std::pow(particles[particle]->getPosition()[dim], 2);
+		}
 	}
 	//return -m_parameters[0]*r2;
 	return std::exp(-m_parameters[0]*r2);
