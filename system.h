@@ -7,15 +7,21 @@ class System {
 public:
     System();
     System(int seed);
-    bool metropolisStep             (int particle);
-    void runMetropolisSteps         (int numberOfMetropolisSteps);
-    void setNumberOfParticles       (int numberOfParticles);
-    void setNumberOfDimensions      (int numberOfDimensions);
-    void setStepLength              (double stepLength);
-    void setEquilibrationFraction   (double equilibrationFraction);
-    void setHamiltonian             (class Hamiltonian* hamiltonian);
-    void setWaveFunction            (class WaveFunction* waveFunction);
-    void setInitialState            (class InitialState* initialState);
+    bool metropolisStep                     (int particle);
+    void runMetropolisSteps                 (int numberOfMetropolisSteps);
+    bool importanceSamplingStep             (int particle);
+    void runImportanceSamplingSteps         (int numberOfMetropolisSteps);
+    std::vector<double> quantumForce        (int particle);
+    void setNumberOfParticles               (int numberOfParticles);
+    void setNumberOfDimensions              (int numberOfDimensions);
+    void setStepLength                      (double stepLength);
+    void setEquilibrationFraction           (double equilibrationFraction);
+    void setHamiltonian                     (class Hamiltonian* hamiltonian);
+    void setWaveFunction                    (class WaveFunction* waveFunction);
+    void setInitialState                    (class InitialState* initialState);
+    double GreensFunctionRatio              (std::vector<double> y, std::vector<double> x, 
+                                             double dt, std::vector<double> qForceOld, 
+                                             std::vector<double> qForceNew);
     class WaveFunction*             getWaveFunction()   { return m_waveFunction; }
     class Hamiltonian*              getHamiltonian()    { return m_hamiltonian; }
     class Sampler*                  getSampler()        { return m_sampler; }

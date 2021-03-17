@@ -69,8 +69,6 @@ void Sampler::getOutput() {
     m_output.append("  -- System info -- \n");
     m_output.append(" Number of particles  : " + to_string(np) + "\n");
     m_output.append(" Number of dimensions : " + to_string(nd) + "\n");
-    // m_output.append(" Number of Metropolis steps run : 10^" + to_string(static_cast<int>(log10(ms))) + "\n");
-    // m_output.append(" Number of equilibration steps  : 10^" + to_string(static_cast<int>(log10(round(ms*ef)))) + "\n");
     m_output.append(" Number of Metropolis steps run : 10^" + to_string(log10(ms)) + "\n");
     m_output.append(" Number of equilibration steps  : 10^" + to_string(log10(round(ms*ef))) + "\n");
     m_output.append("\n");
@@ -80,11 +78,11 @@ void Sampler::getOutput() {
     m_output.append("\n");
     m_output.append("  -- Reults -- \n");
 	m_output.append(
-			" Accepted steps	:	" + to_string((double)m_accepted/(double)m_stepNumber)
+			" Accepted steps : " + to_string((double)m_accepted/(double)m_stepNumber)
 			+ "\n");
     m_output.append(" Found energy : " + to_string(m_energy) + "\n");
     m_output.append(" Elapsed time : " + to_string(ti) + " seconds\n");
-    m_output.append("\n");
+    m_output.append("\n\n");
     
 }
 
@@ -115,7 +113,7 @@ void Sampler::printOutputToFile() {
     
     //writes the general data to a file
     ofstream outfile;
-    outfile.open ("res/results.csv", ios::out | ios::app);
+    outfile.open ("results/results.csv", ios::out | ios::app);
 
     int     np = m_system->getNumberOfParticles();
     int     nd = m_system->getNumberOfDimensions();
@@ -123,12 +121,14 @@ void Sampler::printOutputToFile() {
     int     p  = m_system->getWaveFunction()->getNumberOfParameters();
     double  ef = m_system->getEquilibrationFraction();
     vector<double> pa = m_system->getWaveFunction()->getParameters();
-    double  ti =  m_system->getElapsedTime();
+    double  ti = m_system->getElapsedTime();
+    double  ac = (double)m_accepted/(double)m_stepNumber;
 
     outfile << np << ";"
             << nd << ";"
             << ms << ";"
             << ef << ";"
+            << ac << ";"
             << m_energy << ";"
             << ti << ";"
             << p << ";";
@@ -140,7 +140,7 @@ void Sampler::printOutputToFile() {
     outfile.close();
 
     //writes the energies to a file
-    outfile.open ("res/energies.csv", ios::out | ios::app);
+    outfile.open ("results/energies.csv", ios::out | ios::app);
     ostringstream oss;
     copy(m_energies.begin(), m_energies.end()-1, ostream_iterator<double>(oss, ";"));
     oss << m_energies.back();

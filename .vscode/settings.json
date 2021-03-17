@@ -45,6 +45,9 @@
         "iterator": "cpp",
         "numeric": "cpp",
         "random": "cpp",
-        "ratio": "cpp"
-    }
+        "ratio": "cpp",
+        "filesystem": "cpp",
+        "codecvt": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
