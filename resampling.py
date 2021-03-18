@@ -7,7 +7,7 @@ from numpy.random import randint
 from time import time
 
 #where to save data
-DATA_ID = "build/res"
+DATA_ID = "build/results"
 
 def data_path(data_id): 
     return os.path.join(DATA_ID, data_id)
@@ -30,7 +30,7 @@ def tsboot(data, statistic, R, l):
     print(  "Runtime: %g sec" % (time()-t0))
     print(  "Bootstrap statistics: ")
     print(  "original   bias    std.error")
-    print(  "%8g %14g %15g" % (statistic(data), \
+    print(  "%7g    %4g %14g" % (statistic(data), \
                 np.mean(t) - statistic(data), \
                 np.std(t)   ))
     return t
@@ -42,6 +42,6 @@ def stat(data):
 infile = open(data_path("energies.csv"), "r")
 
 #read in data
-X = np.loadtxt(infile)
+X = np.genfromtxt(infile, delimiter=";")
 
 t = tsboot(X, stat, 2**12, 2**10)
