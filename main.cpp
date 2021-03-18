@@ -43,7 +43,7 @@ int main() {
     double alpha_guess          = 0.45;
     int sd_steps                = (int) 1e4;
     int nIterations             = 1000;
-    double eta                  = 0.01;
+    double eta                  = 0.1;
     double alphaChange          = 0;
 
     //creares a folder for the results
@@ -115,6 +115,7 @@ int main() {
                     alpha.clear();
                     alpha.push_back(alpha_guess);
                 }
+
                 for (double nAlpha : alpha)
                     {
                         System* system = new System(seed);
