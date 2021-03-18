@@ -40,10 +40,11 @@ int main() {
     double dt                   = 0.001;
     //for steepest descent
     bool do_steepest_descent    = true;
-    double alpha_guess          = 0.4;
+    double alpha_guess          = 0.45;
     int sd_steps                = (int) 1e4;
-    int nIterations             = 60;
+    int nIterations             = 1000;
     double eta                  = 0.01;
+    double alphaChange          = 0;
 
     //creares a folder for the results
     #if defined(_WIN32)
@@ -101,8 +102,14 @@ int main() {
                         double currEnergy = system->getSdRes()[0];
                         double currDeltaPsi = system->getSdRes()[1];
                         double currDerivativePsiE = system->getSdRes()[2];
-                        alpha_guess -= eta*2*(currDerivativePsiE - currEnergy*currDeltaPsi);
-                        // cout << "Found best alpha: " << alpha_guess << endl;
+                        alphaChange = eta*2*(currDerivativePsiE - currEnergy*currDeltaPsi);
+                        alpha_guess -= alphaChange;
+
+                        if (abs(alphaChange) < 1e-4)
+                        {
+                            cout << "iter: " << iter << endl;
+                            break;
+                        }
                     }
                     cout << "Found best alpha: " << alpha_guess << endl;
                     alpha.clear();
