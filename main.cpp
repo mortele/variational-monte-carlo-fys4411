@@ -27,8 +27,8 @@ int main() {
     // Seed for the random number generator
     int seed = 2020;
 
-    int numberOfDimensions[]    = {1, 2, 3};
-    int numberOfParticles[]     = {1, 2, 3}; //{1,10,100,500};
+    int numberOfDimensions[]    = {3};//= {1, 2, 3};
+    int numberOfParticles[]     = {1};//= {1, 2, 3}; //{1,10,100,500};
     int numberOfSteps           = (int) 1e6;
     double omega                = 1.0;              // Oscillator frequency.
     double alpha[]              = {.4};// Variational parameter.
