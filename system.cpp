@@ -22,7 +22,7 @@ System::System(int seed) {
 }
 
 std::vector<double> System::quantumForce(int particle) {
-	// double waveFun = m_waveFunction->evaluate(m_particles, particle);
+	// double waveFun = m_waveFunction->evaluate(m_particles);
 	std::vector<double> qForce(m_numberOfParticles);
 	std::vector<double> pos = m_particles[particle]->getPosition();
 	for (int dim = 0; dim < m_numberOfParticles; dim++)
@@ -141,7 +141,7 @@ bool System::importanceSamplingStep(int particle) {
      */
 
 	std::vector<double> step(m_numberOfDimensions);
-	double wfold = m_waveFunction->evaluate(m_particles, particle);
+	double wfold = m_waveFunction->evaluate(m_particles);
 
 	std::vector<double> qForceOld = quantumForce(particle);
 	std::vector<double> posOld = m_particles[particle]->getPosition();
@@ -152,7 +152,7 @@ bool System::importanceSamplingStep(int particle) {
 		step[dim] = .5*qForceOld[dim]*dt + xi*sqrt(dt);
 		m_particles[particle]->adjustPosition(step[dim], dim);
 	}
-	double wfnew = m_waveFunction->evaluate(m_particles, particle);
+	double wfnew = m_waveFunction->evaluate(m_particles);
 	std::vector<double> qForceNew = quantumForce(particle);
 
 	double ratio = wfnew*wfnew/(wfold*wfold);
