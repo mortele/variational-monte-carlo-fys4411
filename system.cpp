@@ -94,7 +94,7 @@ bool System::metropolisStep(int particle) {
 	}
 } //!metropolisStep 
 
-void System::runMetropolisSteps(int numberOfMetropolisSteps) {
+void System::runMetropolisSteps(int numberOfMetropolisSteps, bool saveData) {
     m_particles                 = m_initialState->getParticles();
     m_sampler                   = new Sampler(this);
     m_numberOfMetropolisSteps   = numberOfMetropolisSteps;
@@ -118,14 +118,18 @@ void System::runMetropolisSteps(int numberOfMetropolisSteps) {
 		}
     }
     m_sampler->computeAverages();
+	m_sdRes = {m_sampler->getEnergy(), m_sampler->getDeltaPsi(), m_sampler->getDerivativePsiE()};
 
 	//gets end time
 	time_point<system_clock> time_end = high_resolution_clock::now();
 	m_elapsed_time = duration_cast<nanoseconds> (time_end - m_time_start).count() / 1e9;
-
-    m_sampler->getOutput();
-    m_sampler->printOutputToTerminal();
-    m_sampler->printOutputToFile();
+	
+	if (saveData)
+	{
+		m_sampler->getOutput();
+		m_sampler->printOutputToTerminal();
+		m_sampler->printOutputToFile();
+	}
 }
 
 bool System::importanceSamplingStep(int particle) {
@@ -167,7 +171,7 @@ bool System::importanceSamplingStep(int particle) {
 	}
 } //!metropolisStep 
 
-void System::runImportanceSamplingSteps(int numberOfMetropolisSteps) {
+void System::runImportanceSamplingSteps(int numberOfMetropolisSteps, bool saveData) {
     m_particles                 = m_initialState->getParticles();
     m_sampler                   = new Sampler(this);
     m_numberOfMetropolisSteps   = numberOfMetropolisSteps;
@@ -191,14 +195,18 @@ void System::runImportanceSamplingSteps(int numberOfMetropolisSteps) {
 		}
     }
     m_sampler->computeAverages();
+	m_sdRes = {m_sampler->getEnergy(), m_sampler->getDeltaPsi(), m_sampler->getDerivativePsiE()};
 
 	//gets end time
 	time_point<system_clock> time_end = high_resolution_clock::now();
 	m_elapsed_time = duration_cast<nanoseconds> (time_end - m_time_start).count() / 1e9;
 
-    m_sampler->getOutput();
-    m_sampler->printOutputToTerminal();
-    m_sampler->printOutputToFile();
+    if (saveData)
+	{
+		m_sampler->getOutput();
+		m_sampler->printOutputToTerminal();
+		m_sampler->printOutputToFile();
+	}
 }
 
 void System::setNumberOfParticles(int numberOfParticles) {

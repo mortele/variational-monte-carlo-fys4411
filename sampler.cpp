@@ -31,6 +31,8 @@ void Sampler::sample(bool acceptedStep) {
 	// TODO check acceptance rate
     if (m_stepNumber == 0) {
         m_cumulativeEnergy = 0;
+        m_deltaPsi = 0;
+        m_derivativePsiE = 0;
 		m_accepted = 0;
         m_energies.clear();
         m_positions.clear();
@@ -42,6 +44,10 @@ void Sampler::sample(bool acceptedStep) {
     double localEnergy = m_system->getHamiltonian()->
                          computeLocalEnergy(m_system->getParticles());
     m_cumulativeEnergy  += localEnergy;
+    //for steepest descent
+    double derPsi = m_system->getWaveFunction()->computeDerivative(m_system->getParticles()); //the derivative of psi
+    m_deltaPsi += derPsi;
+    m_derivativePsiE += derPsi*localEnergy;
 
     m_energies.push_back(localEnergy);
 
@@ -64,7 +70,7 @@ void Sampler::getOutput() {
     int     p  = m_system->getWaveFunction()->getNumberOfParameters();
     double  ef = m_system->getEquilibrationFraction();
     vector<double> pa = m_system->getWaveFunction()->getParameters();
-    double ti =  m_system->getElapsedTime();
+    double  ti = m_system->getElapsedTime();
     
     m_output.append("  -- System info -- \n");
     m_output.append(" Number of particles  : " + to_string(np) + "\n");
@@ -158,4 +164,6 @@ void Sampler::computeAverages() {
      * thoroughly through what is written here currently; is this correct?
      */
     m_energy = m_cumulativeEnergy / (m_stepNumber);
+    m_deltaPsi /= m_stepNumber;
+    m_derivativePsiE /= m_stepNumber;
 }
