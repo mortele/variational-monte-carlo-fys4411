@@ -27,8 +27,8 @@ int main() {
     // Seed for the random number generator
     int seed = 2020;
 
-    int numberOfDimensions[]    = {2}; // {1, 2, 3};
-    int numberOfParticles[]     = {2}; //{1,10,100,500};
+    int numberOfDimensions[]    = {3}; // {1, 2, 3};
+    int numberOfParticles[]     = {1,3}; //{1,10,100,500};
     int numberOfSteps           = (int) 1e5;
     double omega                = 1.0;              // Oscillator frequency.
     vector<double> alpha        = {.5};// Variational parameter.
@@ -36,12 +36,13 @@ int main() {
     double stepLength           = 2;              // Metropolis step length.
     double equilibration        = 0.1;              // Amount of the total steps used
     // for equilibration.
+    int methods[]               = {1};
     double dt                   = 0.001;
     //for steepest descent
     bool do_steepest_descent    = true;
     double alpha_guess          = 0.4;
     int sd_steps                = (int) 1e4;
-    int nIterations             = 50;
+    int nIterations             = 60;
     double eta                  = 0.01;
 
     //creares a folder for the results
@@ -70,17 +71,16 @@ int main() {
     outfile.open ("results/energies.csv", ios::out | ios::trunc);
     outfile.close();
 
-    int methods[] = {0};
-
     time_point<system_clock> tot_time_start = high_resolution_clock::now();
     //checks if want to use steepest descent to optimize alpha
-    if (do_steepest_descent)
+    
+    for (int nPar : numberOfParticles)
     {
-        for (int nPar : numberOfParticles)
+        for (int nDim : numberOfDimensions)
         {
-            for (int nDim : numberOfDimensions)
+            for (int met : methods)
             {
-                for (int met : methods)
+                if (do_steepest_descent)
                 {
                     for (int iter = 0; iter < nIterations; iter++)
                     {    
@@ -108,18 +108,7 @@ int main() {
                     alpha.clear();
                     alpha.push_back(alpha_guess);
                 }
-            }
-        }
-    } 
-    // else
-    // {
-        for (int nPar : numberOfParticles)
-        {
-            for (int nDim : numberOfDimensions)
-            {
                 for (double nAlpha : alpha)
-                {
-                    for (int met : methods)
                     {
                         System* system = new System(seed);
                         system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
@@ -138,10 +127,38 @@ int main() {
                         }
 
                     }
+            }
+        }
+    }
+     
+    /* for (int nPar : numberOfParticles)
+    {
+        for (int nDim : numberOfDimensions)
+        {
+            for (int met : methods)
+            {
+                for (double nAlpha : alpha)
+                {
+                    System* system = new System(seed);
+                    system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
+                    system->setWaveFunction             (new SimpleGaussian(system, nAlpha, dt));
+                    system->setInitialState             (new RandomUniform(system, nDim, nPar));
+                    system->setEquilibrationFraction    (equilibration);
+                    system->setStepLength               (stepLength);
+                    if (met == 0)
+                    {
+                        system->runMetropolisSteps          (numberOfSteps, true);
+                        // cout << "Metropolis\n";
+                    } else if (met == 1)
+                    {
+                        system->runImportanceSamplingSteps  (numberOfSteps, true);
+                        // cout << "Importance Sampling\n";
+                    }
+
                 }
             }
         }
-    // }
+    } */
     
     time_point<system_clock> tot_time_end = high_resolution_clock::now();
     double tot_elapsed_time = duration_cast<nanoseconds> (tot_time_end - tot_time_start).count() / 1e9;
