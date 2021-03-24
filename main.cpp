@@ -73,7 +73,6 @@ int main() {
     outfile.close();
 
     time_point<system_clock> tot_time_start = high_resolution_clock::now();
-    //checks if want to use steepest descent to optimize alpha
     
     for (int nPar : numberOfParticles)
     {
@@ -81,8 +80,11 @@ int main() {
         {
             for (int met : methods)
             {
+                //checks if want to use steepest descent to optimize alpha
                 if (do_steepest_descent)
                 {
+                    //steepest descent keeps goining until the desired number of iterations or until
+                    //the change in alpha is acceptably small
                     for (int iter = 0; iter < nIterations; iter++)
                     {    
                         System* system = new System(seed);
@@ -94,10 +96,10 @@ int main() {
                         
                         if (met == 0)
                         {
-                            system->runMetropolisSteps          (sd_steps, false);
+                            system->runMetropolisSteps         (sd_steps, false);
                         } else if (met == 1)
                         {
-                            system->runImportanceSamplingSteps  (sd_steps, false);
+                            system->runImportanceSamplingSteps (sd_steps, false);
                         }
                         double currEnergy = system->getSdRes()[0];
                         double currDeltaPsi = system->getSdRes()[1];
@@ -105,7 +107,7 @@ int main() {
                         alphaChange = eta*2*(currDerivativePsiE - currEnergy*currDeltaPsi);
                         alpha_guess -= alphaChange;
 
-                        if (abs(alphaChange) < 1e-4)
+                        if (abs(alphaChange) < 1e-5)
                         {
                             cout << "iter: " << iter << endl;
                             break;
