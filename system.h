@@ -8,9 +8,9 @@ public:
     System();
     System(int seed);
     bool metropolisStep                     (int particle);
-    void runMetropolisSteps                 (int numberOfMetropolisSteps);
+    void runMetropolisSteps                 (int numberOfMetropolisSteps, bool saveData);
     bool importanceSamplingStep             (int particle);
-    void runImportanceSamplingSteps         (int numberOfMetropolisSteps);
+    void runImportanceSamplingSteps         (int numberOfMetropolisSteps, bool saveData);
     std::vector<double> quantumForce        (int particle);
     void setNumberOfParticles               (int numberOfParticles);
     void setNumberOfDimensions              (int numberOfDimensions);
@@ -27,6 +27,7 @@ public:
     class Sampler*                  getSampler()        { return m_sampler; }
     std::vector<class Particle*>    getParticles()      { return m_particles; }
     class Random*                   getRandomEngine()   { return m_random; }
+    std::vector<double>             getSdRes()          { return m_sdRes; }
     int getNumberOfParticles()          { return m_numberOfParticles; }
     int getNumberOfDimensions()         { return m_numberOfDimensions; }
     int getNumberOfMetropolisSteps()    { return m_numberOfMetropolisSteps; }
@@ -45,6 +46,7 @@ private:
     class InitialState*             m_initialState = nullptr;
     class Sampler*                  m_sampler = nullptr;
     std::vector<class Particle*>    m_particles = std::vector<class Particle*>();
+    std::vector<double>             m_sdRes = std::vector<double> {};
     class Random*                   m_random = nullptr;
     std::chrono::time_point<std::chrono::system_clock> m_time_start;
     double m_elapsed_time;

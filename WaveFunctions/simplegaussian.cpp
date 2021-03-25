@@ -35,6 +35,22 @@ double SimpleGaussian::evaluate(std::vector<class Particle*> particles) {
 	return std::exp(-m_parameters[0]*r2);
 }
 
+double SimpleGaussian::computeDerivative(std::vector<class Particle*> particles) {
+    /* Computes the derivative of wave function ansatz as function of variational parameters.
+     * (I think this is correct)
+     */
+	double r2 = 0;
+    for (int particle = 0; particle < m_system->getNumberOfParticles(); particle++)
+    {
+        for( int dim = 0; dim < m_system->getNumberOfDimensions(); dim++ )
+        {
+            r2 += std::pow(particles[particle]->getPosition()[dim], 2);
+        }
+    }
+	return -.5*r2;
+}
+
+
 double SimpleGaussian::computeDoubleDerivative(double r2) {
     /* All wave functions need to implement this function, so you need to
      * find the double derivative analytically. Note that by double derivative,
