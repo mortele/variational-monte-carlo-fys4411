@@ -11,8 +11,6 @@
 #include "InitialStates/randomuniform.h"
 #include "Math/random.h"
 
-#include <omp.h>
-
 #if defined(_WIN32)
     #include <windows.h>
 #elif defined(__linux__)
@@ -30,7 +28,7 @@ int main() {
     int seed = 2020;
 
     int numberOfDimensions[]    = {3}; // {1, 2, 3};
-    int numberOfParticles[]     = {1}; //{1,10,100,500};
+    int numberOfParticles[]     = {1,3}; //{1,10,100,500};
     int numberOfSteps           = (int) 1e5;
     double omega                = 1.0;              // Oscillator frequency.
     vector<double> alpha        = {.5};// Variational parameter.
@@ -78,8 +76,6 @@ int main() {
     
     for (int nPar : numberOfParticles)
     {
-        // int nthreads = omp_get_num_threads();
-        // printf("There are %d threads\n",nthreads);
         for (int nDim : numberOfDimensions)
         {
             for (int met : methods)
@@ -90,43 +86,39 @@ int main() {
                     //steepest descent keeps goining until the desired number of iterations or until
                     //the change in alpha is acceptably small
                     int iters = nIterations;
-                    int iter;
-                    // # pragma omp parallel default(shared) private (iter, alphaChange) reduction(+:alpha_guess)
-                    // {
-                        for (iter = 0; iter < nIterations; iter++)
-                        {    
-                            System* system = new System(seed);
-                            system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
-                            system->setWaveFunction             (new SimpleGaussian(system, alpha_guess, dt));
-                            system->setInitialState             (new RandomUniform(system, nDim, nPar));
-                            system->setEquilibrationFraction    (0); 
-                            system->setStepLength               (stepLength);
-                            
-                            if (met == 0)
-                            {
-                                system->runMetropolisSteps         (sd_steps, false);
-                            } else if (met == 1)
-                            {
-                                system->runImportanceSamplingSteps (sd_steps, false);
-                            }
-                            double currEnergy = system->getSdRes()[0];
-                            double currDeltaPsi = system->getSdRes()[1];
-                            double currDerivativePsiE = system->getSdRes()[2];
-                            alphaChange = eta*2*(currDerivativePsiE - currEnergy*currDeltaPsi);
-                            alpha_guess -= alphaChange;
-
-                            if (abs(alphaChange) < 1e-6)
-                            {
-                                // cout << "iter: " << iter << endl;
-                                iters = iter;
-                                break;
-                            }
+                    for (int iter = 0; iter < nIterations; iter++)
+                    {    
+                        System* system = new System(seed);
+                        system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
+                        system->setWaveFunction             (new SimpleGaussian(system, alpha_guess, dt));
+                        system->setInitialState             (new RandomUniform(system, nDim, nPar));
+                        system->setEquilibrationFraction    (0); 
+                        system->setStepLength               (stepLength);
+                        
+                        if (met == 0)
+                        {
+                            system->runMetropolisSteps         (sd_steps, false);
+                        } else if (met == 1)
+                        {
+                            system->runImportanceSamplingSteps (sd_steps, false);
                         }
-                        cout << "Found best alpha: " << alpha_guess << " after " << iters;
-                        cout << " iterations." << endl;
-                        alpha.clear();
-                        alpha.push_back(alpha_guess);
-                    // }
+                        double currEnergy = system->getSdRes()[0];
+                        double currDeltaPsi = system->getSdRes()[1];
+                        double currDerivativePsiE = system->getSdRes()[2];
+                        alphaChange = eta*2*(currDerivativePsiE - currEnergy*currDeltaPsi);
+                        alpha_guess -= alphaChange;
+
+                        if (abs(alphaChange) < 1e-5)
+                        {
+                            // cout << "iter: " << iter << endl;
+                            iters = iter;
+                            break;
+                        }
+                    }
+                    cout << "Found best alpha: " << alpha_guess << " after " << iters;
+                    cout << " iterations." << endl;
+                    alpha.clear();
+                    alpha.push_back(alpha_guess);
                 }
 
                 for (double nAlpha : alpha)
@@ -151,7 +143,6 @@ int main() {
             }
         }
     }
-    
      
     /* for (int nPar : numberOfParticles)
     {

@@ -1,4 +1,3 @@
-cmake_minimum_required(VERSION 3.19)
 project(project_1_fys4411)
 
 # Set CXX standard to C++11
@@ -44,10 +43,3 @@ file(
 
 # Create executable called "vmc"
 add_executable(vmc ${SOURCES})
-
-
-#OpenMP stuff
-find_package(OpenMP)
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(vmc PUBLIC OpenMP::OpenMP_CXX)
-endif()
