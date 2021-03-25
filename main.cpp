@@ -85,6 +85,7 @@ int main() {
                 {
                     //steepest descent keeps goining until the desired number of iterations or until
                     //the change in alpha is acceptably small
+                    int iters = nIterations;
                     for (int iter = 0; iter < nIterations; iter++)
                     {    
                         System* system = new System(seed);
@@ -109,11 +110,13 @@ int main() {
 
                         if (abs(alphaChange) < 1e-5)
                         {
-                            cout << "iter: " << iter << endl;
+                            // cout << "iter: " << iter << endl;
+                            iters = iter;
                             break;
                         }
                     }
-                    cout << "Found best alpha: " << alpha_guess << endl;
+                    cout << "Found best alpha: " << alpha_guess << " after " << iters;
+                    cout << " iterations." << endl;
                     alpha.clear();
                     alpha.push_back(alpha_guess);
                 }
