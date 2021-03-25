@@ -10,6 +10,7 @@
 #include "InitialStates/initialstate.h"
 #include "InitialStates/randomuniform.h"
 #include "Math/random.h"
+#include <cmath>
 
 #if defined(_WIN32)
     #include <windows.h>
@@ -26,6 +27,7 @@ using namespace std::chrono;
 int main() {
     // Seed for the random number generator
     int seed = 2020;
+
 
     int numberOfDimensions[]    = {3}; // {1, 2, 3};
     int numberOfParticles[]     = {1,3}; //{1,10,100,500};

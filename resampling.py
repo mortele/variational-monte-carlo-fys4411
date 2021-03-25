@@ -27,12 +27,18 @@ def tsboot(data, statistic, R, l):
         t[i] = statistic(_data)
 
     #analysis
+    print(  "="*25  )
     print(  "Runtime: %g sec" % (time()-t0))
     print(  "Bootstrap statistics: ")
-    print(  "original   bias    std.error")
-    print(  "%7g    %4g %14g" % (statistic(data), \
-                np.mean(t) - statistic(data), \
-                np.std(t)   ))
+    #print(  "original   bias    std.error")
+    #print(  "%7g    %4g %8g" % (statistic(data), \
+    #            np.mean(t) - statistic(data), \
+    #            np.std(t)   ))
+    print(  "Original set:      ", statistic(data)  )
+    print(  "mean statistics:   ", np.mean(t)   )
+    print(  "bias:              ", np.mean(t) - statistic(data) )
+    print(  "std. Error:        ", np.std(t)    )
+    print(  "="*25  )
     return t
 
 def stat(data):
@@ -44,4 +50,5 @@ infile = open(data_path("energies.csv"), "r")
 #read in data
 X = np.genfromtxt(infile, delimiter=";")
 
-t = tsboot(X, stat, 2**12, 2**10)
+#t = tsboot(X, stat, 2**12, 2**10)
+t = tsboot(X, stat, np.shape(X)[0], 2**10)
