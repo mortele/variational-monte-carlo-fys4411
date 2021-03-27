@@ -10,6 +10,7 @@
 #include "InitialStates/initialstate.h"
 #include "InitialStates/randomuniform.h"
 #include "Math/random.h"
+#include <cmath>
 
 #include <omp.h>
 
@@ -29,9 +30,10 @@ int main() {
     // Seed for the random number generator
     int seed = 2020;
 
-    int numberOfDimensions[]    = {1, 2, 3};
-    int numberOfParticles[]     = {1,10,100,500};
-    int numberOfSteps           = (int) 1e4;
+
+    int numberOfDimensions[]    = {3}; // {1, 2, 3};
+    int numberOfParticles[]     = {1,3}; //{1,10,100,500};
+    int numberOfSteps           = (int) 1e5;
     double omega                = 1.0;              // Oscillator frequency.
     vector<double> alpha        = {.5}; // Variational parameter.
 	//double alpha[] = {0.3, 0.34, 0.38, 0.42, 0.46, 0.5, 0.54, 0.58, 0.62, 0.66, 0.7};
