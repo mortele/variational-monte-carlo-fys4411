@@ -30,7 +30,7 @@ int main() {
 
 
     int numberOfDimensions[]    = {3}; // {1, 2, 3};
-    int numberOfParticles[]     = {1,3}; //{1,10,100,500};
+    int numberOfParticles[]     = {1}; //,3}; //{1,10,100,500};
     int numberOfSteps           = (int) 1e5;
     double omega                = 1.0;              // Oscillator frequency.
     vector<double> alpha        = {.5};// Variational parameter.
@@ -104,6 +104,8 @@ int main() {
                         double currEnergy = system->getSdRes()[0];
                         double currDeltaPsi = system->getSdRes()[1];
                         double currDerivativePsiE = system->getSdRes()[2];
+						std::cout << "gradient: " << std::endl;
+						std::cout << currDerivativePsiE - currEnergy*currDeltaPsi << std::endl;
                         alphaChange = eta*2*(currDerivativePsiE - currEnergy*currDeltaPsi);
                         alpha_guess -= alphaChange;
 
