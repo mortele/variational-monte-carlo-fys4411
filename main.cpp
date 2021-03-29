@@ -12,6 +12,8 @@
 #include "Math/random.h"
 #include <cmath>
 
+#include <omp.h>
+
 #if defined(_WIN32)
     #include <windows.h>
 #elif defined(__linux__)
@@ -30,10 +32,10 @@ int main() {
 
 
     int numberOfDimensions[]    = {3}; // {1, 2, 3};
-    int numberOfParticles[]     = {1}; //,3}; //{1,10,100,500};
-    int numberOfSteps           = (int) 1e5;
+    int numberOfParticles[]     = {1,3}; //{1,10,100,500};
+    int numberOfSteps           = (int) 1e4;
     double omega                = 1.0;              // Oscillator frequency.
-    vector<double> alpha        = {.5};// Variational parameter.
+    vector<double> alpha        = {.5}; // Variational parameter.
 	//double alpha[] = {0.3, 0.34, 0.38, 0.42, 0.46, 0.5, 0.54, 0.58, 0.62, 0.66, 0.7};
     double stepLength           = 2;              // Metropolis step length.
     double equilibration        = 0.1;              // Amount of the total steps used
@@ -43,10 +45,10 @@ int main() {
     //for steepest descent
     bool do_steepest_descent    = true;
     double alpha_guess          = 0.45;
-    int sd_steps                = (int) 1e4;
+    int sd_steps                = (int) 1e3;
     int nIterations             = 1000;
-    double eta                  = 0.1;
-    double alphaChange          = 0;
+    double eta                  = .01;
+    double alphaChange          = 10;
 
     //creares a folder for the results
     #if defined(_WIN32)
@@ -75,32 +77,40 @@ int main() {
     outfile.close();
 
     time_point<system_clock> tot_time_start = high_resolution_clock::now();
-    //checks if want to use steepest descent to optimize alpha
-    
-    for (int nPar : numberOfParticles)
+
+    // omp_set_num_threads(8);
+    // cout << omp_get_num_threads() << endl;
+
+    #pragma omp parallel for schedule(dynamic) default(shared) 
+    for (unsigned int nPar = 0; nPar < sizeof(numberOfParticles)/sizeof(numberOfParticles[0]); nPar++)
     {
-        for (int nDim : numberOfDimensions)
+        for (unsigned int nDim = 0; nDim < sizeof(numberOfDimensions)/sizeof(numberOfDimensions[0]); nDim++)
         {
-            for (int met : methods)
+            for (unsigned int met = 0; met < sizeof(methods)/sizeof(methods[0]); met++)
             {
+                //checks if want to use steepest descent to optimize alpha
                 if (do_steepest_descent)
                 {
+                    //steepest descent keeps goining until the desired number of iterations or until
+                    //the change in alpha is acceptably small
+                    int iters = nIterations;
                     for (int iter = 0; iter < nIterations; iter++)
                     {    
                         System* system = new System(seed);
                         system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
                         system->setWaveFunction             (new SimpleGaussian(system, alpha_guess, dt));
-                        system->setInitialState             (new RandomUniform(system, nDim, nPar));
+                        system->setInitialState             (new RandomUniform(system, numberOfDimensions[nDim], numberOfParticles[nPar]));
                         system->setEquilibrationFraction    (0); 
                         system->setStepLength               (stepLength);
                         
-                        if (met == 0)
+                        if (methods[met] == 0)
                         {
-                            system->runMetropolisSteps          (sd_steps, false);
-                        } else if (met == 1)
+                            system->runMetropolisSteps         (sd_steps, false);
+                        } else if (methods[met] == 1)
                         {
-                            system->runImportanceSamplingSteps  (sd_steps, false);
+                            system->runImportanceSamplingSteps (sd_steps, false);
                         }
+                        
                         double currEnergy = system->getSdRes()[0];
                         double currDeltaPsi = system->getSdRes()[1];
                         double currDerivativePsiE = system->getSdRes()[2];
@@ -109,36 +119,36 @@ int main() {
                         alphaChange = eta*2*(currDerivativePsiE - currEnergy*currDeltaPsi);
                         alpha_guess -= alphaChange;
 
-                        if (abs(alphaChange) < 1e-4)
+                        if (abs(alphaChange) < 1e-6)
                         {
-                            cout << "iter: " << iter << endl;
+                            // cout << "iter: " << iter << endl;
+                            iters = iter+1;
                             break;
                         }
                     }
-                    cout << "Found best alpha: " << alpha_guess << endl;
+                    cout << "Found best alpha: " << alpha_guess << " after " << iters;
+                    cout << " iterations on thread " << omp_get_thread_num()<< "." << endl;
                     alpha.clear();
                     alpha.push_back(alpha_guess);
                 }
 
-                for (double nAlpha : alpha)
+                for (unsigned int nAlpha = 0; nAlpha < alpha.size(); nAlpha++)
+                {
+                    System* system = new System(seed);
+                    system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
+                    system->setWaveFunction             (new SimpleGaussian(system, alpha[nAlpha], dt));
+                    system->setInitialState             (new RandomUniform(system, numberOfDimensions[nDim], numberOfParticles[nPar]));
+                    system->setEquilibrationFraction    (equilibration);
+                    system->setStepLength               (stepLength);
+                    
+                    if (methods[met] == 0)
                     {
-                        System* system = new System(seed);
-                        system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
-                        system->setWaveFunction             (new SimpleGaussian(system, nAlpha, dt));
-                        system->setInitialState             (new RandomUniform(system, nDim, nPar));
-                        system->setEquilibrationFraction    (equilibration);
-                        system->setStepLength               (stepLength);
-                        if (met == 0)
-                        {
-                            system->runMetropolisSteps          (numberOfSteps, true);
-                            // cout << "Metropolis\n";
-                        } else if (met == 1)
-                        {
-                            system->runImportanceSamplingSteps  (numberOfSteps, true);
-                            // cout << "Importance Sampling\n";
-                        }
-
+                        system->runMetropolisSteps          (numberOfSteps, true);
+                    } else if (methods[met] == 1)
+                    {
+                        system->runImportanceSamplingSteps  (numberOfSteps, true);
                     }
+                }
             }
         }
     }
