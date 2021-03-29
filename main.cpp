@@ -114,6 +114,8 @@ int main() {
                         double currEnergy = system->getSdRes()[0];
                         double currDeltaPsi = system->getSdRes()[1];
                         double currDerivativePsiE = system->getSdRes()[2];
+						std::cout << "gradient: " << std::endl;
+						std::cout << currDerivativePsiE - currEnergy*currDeltaPsi << std::endl;
                         alphaChange = eta*2*(currDerivativePsiE - currEnergy*currDeltaPsi);
                         alpha_guess -= alphaChange;
 
