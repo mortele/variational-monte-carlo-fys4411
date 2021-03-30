@@ -81,16 +81,17 @@ int main() {
     // omp_set_num_threads(8);
     // cout << omp_get_num_threads() << endl;
 
-    #pragma omp parallel for schedule(dynamic) default(shared) collapse(3)
-    for (unsigned int nPar = 0; nPar < sizeof(numberOfParticles)/sizeof(numberOfParticles[0]); nPar++)
-    {
-        for (unsigned int nDim = 0; nDim < sizeof(numberOfDimensions)/sizeof(numberOfDimensions[0]); nDim++)
+    //checks if want to use steepest descent to optimize alpha
+    if (do_steepest_descent)
+    {    
+        #pragma omp parallel for schedule(dynamic) default(shared) collapse(3)
+        for (unsigned int nPar = 0; nPar < sizeof(numberOfParticles)/sizeof(numberOfParticles[0]); nPar++)
         {
-            for (unsigned int met = 0; met < sizeof(methods)/sizeof(methods[0]); met++)
+            for (unsigned int nDim = 0; nDim < sizeof(numberOfDimensions)/sizeof(numberOfDimensions[0]); nDim++)
             {
-                //checks if want to use steepest descent to optimize alpha
-                if (do_steepest_descent)
+                for (unsigned int met = 0; met < sizeof(methods)/sizeof(methods[0]); met++)
                 {
+                
                     //steepest descent keeps goining until the desired number of iterations or until
                     //the change in alpha is acceptably small
                     int iters = nIterations;
@@ -105,10 +106,10 @@ int main() {
                         
                         if (methods[met] == 0)
                         {
-                            system->runMetropolisSteps         (sd_steps, false);
+                            system->runMetropolisSteps         (sd_steps, false, "");
                         } else if (methods[met] == 1)
                         {
-                            system->runImportanceSamplingSteps (sd_steps, false);
+                            system->runImportanceSamplingSteps (sd_steps, false, "");
                         }
                         
                         double currEnergy = system->getSdRes()[0];
@@ -124,32 +125,65 @@ int main() {
                             break;
                         }
                     }
-                    cout << "Found best alpha: " << alpha_guess << " after " << iters;
-                    cout << " iterations on thread " << omp_get_thread_num()<< "." << endl;
-                    alpha.clear();
-                    alpha.push_back(alpha_guess);
-                }
+                    // cout << "Found best alpha: " << alpha_guess << " after " << iters;
+                    // cout << " iterations on thread " << omp_get_thread_num()<< "." << endl;
+                    // alpha.clear();
+                    // alpha.push_back(alpha_guess);
 
-                for (unsigned int nAlpha = 0; nAlpha < alpha.size(); nAlpha++)
-                {
+                    string printStuff = "";
+                    printStuff.append("Found best alpha: " + to_string(alpha_guess) + " after " + to_string(iters));
+                    printStuff.append(" iterations on thread " + to_string(omp_get_thread_num()) + ".\n\n");
+
+
                     System* system = new System(seed);
                     system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
-                    system->setWaveFunction             (new SimpleGaussian(system, alpha[nAlpha], dt));
+                    system->setWaveFunction             (new SimpleGaussian(system, alpha_guess, dt));
                     system->setInitialState             (new RandomUniform(system, numberOfDimensions[nDim], numberOfParticles[nPar]));
                     system->setEquilibrationFraction    (equilibration);
                     system->setStepLength               (stepLength);
-                    
+
                     if (methods[met] == 0)
                     {
-                        system->runMetropolisSteps          (numberOfSteps, true);
+                        system->runMetropolisSteps          (numberOfSteps, true, printStuff);
                     } else if (methods[met] == 1)
                     {
-                        system->runImportanceSamplingSteps  (numberOfSteps, true);
+                        system->runImportanceSamplingSteps  (numberOfSteps, true, printStuff);
+                    }
+                    
+                }
+            }
+        }
+    } else
+    {
+        #pragma omp parallel for schedule(dynamic) default(shared) collapse(4)
+        for (unsigned int nPar = 0; nPar < sizeof(numberOfParticles)/sizeof(numberOfParticles[0]); nPar++)
+        {
+            for (unsigned int nDim = 0; nDim < sizeof(numberOfDimensions)/sizeof(numberOfDimensions[0]); nDim++)
+            {
+                for (unsigned int met = 0; met < sizeof(methods)/sizeof(methods[0]); met++)
+                {
+                    for (unsigned int nAlpha = 0; nAlpha < alpha.size(); nAlpha++)
+                    {
+                        System* system = new System(seed);
+                        system->setHamiltonian              (new HarmonicOscillator(system, omega, true));
+                        system->setWaveFunction             (new SimpleGaussian(system, alpha[nAlpha], dt));
+                        system->setInitialState             (new RandomUniform(system, numberOfDimensions[nDim], numberOfParticles[nPar]));
+                        system->setEquilibrationFraction    (equilibration);
+                        system->setStepLength               (stepLength);
+                        
+                        if (methods[met] == 0)
+                        {
+                            system->runMetropolisSteps          (numberOfSteps, true, "");
+                        } else if (methods[met] == 1)
+                        {
+                            system->runImportanceSamplingSteps  (numberOfSteps, true, "");
+                        }
                     }
                 }
             }
         }
     }
+    
      
     /* for (int nPar : numberOfParticles)
     {

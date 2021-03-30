@@ -94,11 +94,12 @@ bool System::metropolisStep(int particle) {
 	}
 } //!metropolisStep 
 
-void System::runMetropolisSteps(int numberOfMetropolisSteps, bool saveData) {
+void System::runMetropolisSteps(int numberOfMetropolisSteps, bool saveData, std::string output) {
     m_particles                 = m_initialState->getParticles();
     m_sampler                   = new Sampler(this);
     m_numberOfMetropolisSteps   = numberOfMetropolisSteps;
     m_sampler->setNumberOfMetropolisSteps(numberOfMetropolisSteps);
+	m_sampler->appendOutput(output);
 
     for (int i=0; i < numberOfMetropolisSteps; i++) {
 		for( int particle=0; particle < m_numberOfParticles; particle++ )
@@ -171,11 +172,13 @@ bool System::importanceSamplingStep(int particle) {
 	}
 } //!metropolisStep 
 
-void System::runImportanceSamplingSteps(int numberOfMetropolisSteps, bool saveData) {
+void System::runImportanceSamplingSteps(int numberOfMetropolisSteps, bool saveData, std::string output) {
     m_particles                 = m_initialState->getParticles();
     m_sampler                   = new Sampler(this);
     m_numberOfMetropolisSteps   = numberOfMetropolisSteps;
     m_sampler->setNumberOfMetropolisSteps(numberOfMetropolisSteps);
+	m_sampler->appendOutput(output);
+	
 
     for (int i=0; i < numberOfMetropolisSteps; i++) {
 		for( int particle=0; particle < m_numberOfParticles; particle++ )

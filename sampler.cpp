@@ -63,6 +63,10 @@ void Sampler::sample(bool acceptedStep) {
     m_stepNumber++;
 }
 
+void Sampler::appendOutput(string output) {
+    m_output.append(output);
+}
+
 void Sampler::getOutput() {
     int     np = m_system->getNumberOfParticles();
     int     nd = m_system->getNumberOfDimensions();
@@ -88,7 +92,7 @@ void Sampler::getOutput() {
 			+ "\n");
     m_output.append(" Found energy : " + to_string(m_energy) + "\n");
     m_output.append(" Elapsed time : " + to_string(ti) + " seconds\n");
-    m_output.append("\n\n");
+    m_output.append("\n");
     
 }
 

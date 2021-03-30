@@ -6,6 +6,7 @@ public:
     Sampler(class System* system);
     void setNumberOfMetropolisSteps(int steps);
     void sample(bool acceptedStep);
+    void appendOutput(std::string output);
     void getOutput();
     void printOutputToTerminal();
     void printOutputToFile();

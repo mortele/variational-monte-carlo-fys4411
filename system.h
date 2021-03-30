@@ -8,9 +8,9 @@ public:
     System();
     System(int seed);
     bool metropolisStep                     (int particle);
-    void runMetropolisSteps                 (int numberOfMetropolisSteps, bool saveData);
+    void runMetropolisSteps                 (int numberOfMetropolisSteps, bool saveData, std::string output);
     bool importanceSamplingStep             (int particle);
-    void runImportanceSamplingSteps         (int numberOfMetropolisSteps, bool saveData);
+    void runImportanceSamplingSteps         (int numberOfMetropolisSteps, bool saveData, std::string output);
     std::vector<double> quantumForce        (int particle);
     void setNumberOfParticles               (int numberOfParticles);
     void setNumberOfDimensions              (int numberOfDimensions);
