@@ -47,7 +47,7 @@ void Sampler::sample(bool acceptedStep) {
     //for steepest descent
     double derPsi = m_system->getWaveFunction()->computeDerivative(m_system->getParticles()); //the derivative of psi
     m_deltaPsi += derPsi;
-    m_derivativePsiE += derPsi*localEnergy;
+    m_derivativePsiE += derPsi*localEnergy; // Psi' * E_L
 
     m_energies.push_back(localEnergy);
 

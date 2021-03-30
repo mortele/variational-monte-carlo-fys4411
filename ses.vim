@@ -13,20 +13,20 @@ badd +0 InitialStates/initialstate.h
 badd +0 InitialStates/randomuniform.h
 badd +0 Math/random.h
 badd +0 particle.h
-badd +0 sampler.h
-badd +0 system.h
+badd +16 sampler.h
+badd +1 system.h
 badd +0 WaveFunctions/simplegaussian.h
 badd +0 WaveFunctions/wavefunction.h
-badd +48 Hamiltonians/hamiltonian.cpp
-badd +46 Hamiltonians/harmonicoscillator.cpp
+badd +0 Hamiltonians/hamiltonian.cpp
+badd +0 Hamiltonians/harmonicoscillator.cpp
 badd +0 InitialStates/initialstate.cpp
 badd +0 InitialStates/randomuniform.cpp
-badd +1 main.cpp
+badd +110 main.cpp
 badd +0 particle.cpp
-badd +88 sampler.cpp
-badd +0 system.cpp
+badd +34 sampler.cpp
+badd +121 system.cpp
 badd +0 WaveFunctions/simplegaussian.cpp
-badd +0 WaveFunctions/wavefunction.cpp
+badd +1 WaveFunctions/wavefunction.cpp
 argglobal
 %argdel
 $argadd Hamiltonians/hamiltonian.h
@@ -39,7 +39,7 @@ $argadd sampler.h
 $argadd system.h
 $argadd WaveFunctions/simplegaussian.h
 $argadd WaveFunctions/wavefunction.h
-$argadd build/CMakeFiles/3.19.4/CompilerIdCXX/CMakeCXXCompilerId.cpp
+$argadd build/CMakeFiles/3.20.0/CompilerIdCXX/CMakeCXXCompilerId.cpp
 $argadd Hamiltonians/hamiltonian.cpp
 $argadd Hamiltonians/harmonicoscillator.cpp
 $argadd InitialStates/initialstate.cpp
@@ -50,12 +50,8 @@ $argadd sampler.cpp
 $argadd system.cpp
 $argadd WaveFunctions/simplegaussian.cpp
 $argadd WaveFunctions/wavefunction.cpp
-edit main.cpp
+edit WaveFunctions/simplegaussian.cpp
 set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
@@ -63,10 +59,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 74 + 85) / 170)
-exe 'vert 2resize ' . ((&columns * 95 + 85) / 170)
 argglobal
-if bufexists("main.cpp") | buffer main.cpp | else | edit main.cpp | endif
+if bufexists("WaveFunctions/simplegaussian.cpp") | buffer WaveFunctions/simplegaussian.cpp | else | edit WaveFunctions/simplegaussian.cpp | endif
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -76,34 +70,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 52 - ((26 * winheight(0) + 22) / 45)
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-52
-normal! 096|
-wincmd w
-argglobal
-if bufexists("Hamiltonians/hamiltonian.cpp") | buffer Hamiltonians/hamiltonian.cpp | else | edit Hamiltonians/hamiltonian.cpp | endif
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 48 - ((40 * winheight(0) + 22) / 45)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-48
-normal! 019|
-wincmd w
-2wincmd w
-exe 'vert 1resize ' . ((&columns * 74 + 85) / 170)
-exe 'vert 2resize ' . ((&columns * 95 + 85) / 170)
+1
+normal! 0
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
