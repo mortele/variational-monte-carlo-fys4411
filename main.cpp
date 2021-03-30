@@ -31,16 +31,16 @@ int main() {
     int seed = 2020;
 
 
-    int numberOfDimensions[]    = {3}; // {1, 2, 3};
-    int numberOfParticles[]     = {1,3}; //{1,10,100,500};
-    int numberOfSteps           = (int) 1e4;
+    int numberOfDimensions[]    = {1, 2, 3};
+    int numberOfParticles[]     = {1, 2, 3}; //{1,10,100,500};
+    int numberOfSteps           = (int) 1e5;
     double omega                = 1.0;              // Oscillator frequency.
     vector<double> alpha        = {.5}; // Variational parameter.
 	//double alpha[] = {0.3, 0.34, 0.38, 0.42, 0.46, 0.5, 0.54, 0.58, 0.62, 0.66, 0.7};
     double stepLength           = 2;              // Metropolis step length.
     double equilibration        = 0.1;              // Amount of the total steps used
     // for equilibration.
-    int methods[]               = {1};
+    int methods[]               = {0,1};
     double dt                   = 0.001;
     //for steepest descent
     bool do_steepest_descent    = true;
@@ -81,7 +81,7 @@ int main() {
     // omp_set_num_threads(8);
     // cout << omp_get_num_threads() << endl;
 
-    #pragma omp parallel for schedule(dynamic) default(shared) 
+    #pragma omp parallel for schedule(dynamic) default(shared) collapse(3)
     for (unsigned int nPar = 0; nPar < sizeof(numberOfParticles)/sizeof(numberOfParticles[0]); nPar++)
     {
         for (unsigned int nDim = 0; nDim < sizeof(numberOfDimensions)/sizeof(numberOfDimensions[0]); nDim++)
