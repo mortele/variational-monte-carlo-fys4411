@@ -1,0 +1,157 @@
+PS C:\Users\benda\Documents\FYS4411\variational-monte-carlo-fys4411\build> .\vmc.exe
+Windows detected
+
+Found best alpha: 0.498652 after 719 iterations on thread 1.
+
+  -- System info --
+ Number of particles  : 1
+ Number of dimensions : 1
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.498652
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.731303
+ Found energy : 0.500049
+ Elapsed time : 0.019946 seconds
+
+
+Found best alpha: 0.499533 after 691 iterations on thread 3.
+
+  -- System info --
+ Number of particles  : 1
+ Number of dimensions : 2
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.499533
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.595399
+ Found energy : 1.000009
+ Elapsed time : 0.023904 seconds
+
+
+Found best alpha: 0.499643 after 574 iterations on thread 2.
+
+  -- System info --
+ Number of particles  : 1
+ Number of dimensions : 3
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.499643
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.506167
+ Found energy : 1.500029
+ Elapsed time : 0.053891 seconds
+
+
+Found best alpha: 0.499896 after 63 iterations on thread 4.
+
+  -- System info --
+ Number of particles  : 10
+ Number of dimensions : 1
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.499896
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.730003
+ Found energy : 4.999992
+ Elapsed time : 0.857710 seconds
+
+
+Found best alpha: 0.493553 after 270 iterations on thread 5.
+
+  -- System info --
+ Number of particles  : 10
+ Number of dimensions : 2
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.493553
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.596266
+ Found energy : 10.001017
+ Elapsed time : 1.789220 seconds
+
+
+Found best alpha: 0.499991 after 186 iterations on thread 0.
+
+  -- System info --
+ Number of particles  : 10
+ Number of dimensions : 3
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.499991
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.508190
+ Found energy : 14.999999
+ Elapsed time : 2.527247 seconds
+
+
+Found best alpha: 0.499994 after 24 iterations on thread 6.
+
+  -- System info --
+ Number of particles  : 100
+ Number of dimensions : 1
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.499994
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.728853
+ Found energy : 49.999999
+ Elapsed time : 75.793491 seconds
+
+
+Found best alpha: 0.500002 after 13 iterations on thread 7.
+
+  -- System info --
+ Number of particles  : 100
+ Number of dimensions : 2
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.500002
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.595576
+ Found energy : 100.000001
+ Elapsed time : 147.875838 seconds
+
+
+Found best alpha: 0.500002 after 9 iterations on thread 8.
+
+  -- System info --
+ Number of particles  : 100
+ Number of dimensions : 3
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.500002
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.506050
+ Found energy : 150.000001
+ Elapsed time : 218.301109 seconds
+
+
+ Total time elapsed: 425.625 seconds

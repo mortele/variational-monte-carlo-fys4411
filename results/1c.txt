@@ -1,0 +1,405 @@
+
+PS C:\Users\benda\Documents\FYS4411\variational-monte-carlo-fys4411\build> .\vmc.exe
+Windows detected
+
+  -- System info -- 
+ Number of particles  : 1
+ Number of dimensions : 1
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.739860
+ Found energy : 0.503530
+ Elapsed time : 0.022923 seconds
+
+
+  -- System info --
+ Number of particles  : 1
+ Number of dimensions : 1
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.010000
+
+  -- Reults --
+ Accepted steps : 0.739860
+ Found energy : 0.503530
+ Elapsed time : 0.027910 seconds
+
+
+  -- System info --
+ Number of particles  : 1
+ Number of dimensions : 1
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.005000
+
+  -- Reults --
+ Accepted steps : 0.739860
+ Found energy : 0.503530
+ Elapsed time : 0.026913 seconds
+
+
+  -- System info --
+ Number of particles  : 1
+ Number of dimensions : 2
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.010000
+
+  -- Reults --
+ Accepted steps : 0.610512
+ Found energy : 1.001764
+ Elapsed time : 0.037884 seconds
+
+
+  -- System info --
+ Number of particles  : 1
+ Number of dimensions : 2
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.005000
+
+  -- Reults --
+ Accepted steps : 0.610512
+ Found energy : 1.001764
+ Elapsed time : 0.038881 seconds
+
+
+  -- System info --
+ Number of particles  : 1
+ Number of dimensions : 2
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.610512
+ Found energy : 1.001764
+ Elapsed time : 0.041873 seconds
+
+
+  -- System info --
+ Number of particles  : 1
+ Number of dimensions : 3
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.005000
+
+  -- Reults --
+ Accepted steps : 0.524503
+ Found energy : 1.504473
+ Elapsed time : 0.048854 seconds
+
+
+  -- System info --
+ Number of particles  : 1
+ Number of dimensions : 3
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.524503
+ Found energy : 1.504473
+ Elapsed time : 0.048854 seconds
+
+
+  -- System info --
+ Number of particles  : 1
+ Number of dimensions : 3
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.010000
+
+  -- Reults --
+ Accepted steps : 0.524503
+ Found energy : 1.504473
+ Elapsed time : 0.050849 seconds
+
+
+  -- System info -- 
+ Number of particles  : 10
+ Number of dimensions : 1
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.005000
+
+  -- Reults --
+ Accepted steps : 0.739471
+ Found energy : 5.012079
+ Elapsed time : 1.344392 seconds
+
+
+  -- System info -- 
+ Number of particles  : 10
+ Number of dimensions : 2
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.608345
+ Found energy : 10.032080
+ Elapsed time : 2.520265 seconds
+
+
+  -- System info -- 
+ Number of particles  : 10
+ Number of dimensions : 3
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.005000
+
+  -- Reults --
+ Accepted steps : 0.522314
+ Found energy : 15.061022
+ Elapsed time : 3.893595 seconds
+
+
+  -- System info --
+ Number of particles  : 10
+ Number of dimensions : 1
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.739471
+ Found energy : 5.012079
+ Elapsed time : 4.070108 seconds
+
+
+  -- System info -- 
+ Number of particles  : 10
+ Number of dimensions : 1
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.010000
+
+  -- Reults --
+ Accepted steps : 0.739471
+ Found energy : 5.012079
+ Elapsed time : 4.303485 seconds
+
+
+  -- System info -- 
+ Number of particles  : 10
+ Number of dimensions : 2
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.010000
+
+  -- Reults --
+ Accepted steps : 0.608345
+ Found energy : 10.032080
+ Elapsed time : 8.622957 seconds
+
+
+  -- System info --
+ Number of particles  : 10
+ Number of dimensions : 2
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.005000
+
+  -- Reults --
+ Accepted steps : 0.608345
+ Found energy : 10.032080
+ Elapsed time : 8.679806 seconds
+
+
+  -- System info -- 
+ Number of particles  : 10
+ Number of dimensions : 3
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.010000
+
+  -- Reults --
+ Accepted steps : 0.522314
+ Found energy : 15.061022
+ Elapsed time : 11.068422 seconds
+
+
+  -- System info --
+ Number of particles  : 10
+ Number of dimensions : 3
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.522314
+ Found energy : 15.061022
+ Elapsed time : 11.098342 seconds
+
+
+  -- System info -- 
+ Number of particles  : 100
+ Number of dimensions : 1
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.005000
+
+  -- Reults --
+ Accepted steps : 0.738854
+ Found energy : 50.185387
+ Elapsed time : 141.175634 seconds
+
+
+  -- System info -- 
+ Number of particles  : 100
+ Number of dimensions : 1
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.738854
+ Found energy : 50.185387
+ Elapsed time : 142.307608 seconds
+
+
+  -- System info -- 
+ Number of particles  : 100
+ Number of dimensions : 1
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.010000
+
+  -- Reults --
+ Accepted steps : 0.738854
+ Found energy : 50.185387
+ Elapsed time : 142.908005 seconds
+
+
+  -- System info -- 
+ Number of particles  : 100
+ Number of dimensions : 2
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.005000
+
+  -- Reults --
+ Accepted steps : 0.610391
+ Found energy : 100.346432
+ Elapsed time : 254.728869 seconds
+
+
+  -- System info -- 
+ Number of particles  : 100
+ Number of dimensions : 2
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.010000
+
+  -- Reults --
+ Accepted steps : 0.610391
+ Found energy : 100.346432
+ Elapsed time : 254.343898 seconds
+
+
+  -- System info -- 
+ Number of particles  : 100
+ Number of dimensions : 2
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.610391
+ Found energy : 100.346432
+ Elapsed time : 257.336899 seconds
+
+
+  -- System info -- 
+ Number of particles  : 100
+ Number of dimensions : 3
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.005000
+
+  -- Reults --
+ Accepted steps : 0.523515
+ Found energy : 150.491499
+ Elapsed time : 339.821954 seconds
+
+
+  -- System info -- 
+ Number of particles  : 100
+ Number of dimensions : 3
+ Number of Metropolis steps run : 10^4.000000
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.001000
+
+  -- Reults --
+ Accepted steps : 0.523515
+ Found energy : 150.491499
+ Elapsed time : 340.925050 seconds
+
+
+ Number of equilibration steps  : 10^3.000000
+
+ Parameter 1 : 0.460000
+ Parameter 2 : 0.010000
+  -- Reults --
+ Accepted steps : 0.523515
+ Found energy : 150.491499
+ Elapsed time : 337.840757 seconds
+
+
+ Total time elapsed: 347.603 seconds
