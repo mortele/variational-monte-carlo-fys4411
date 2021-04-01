@@ -9,9 +9,10 @@ from numpy import log2, floor, array, zeros, mean, arange, cumsum, var, loadtxt
 import numpy.linalg as lin
 import os
 import csv
+import re
 
 
-DATA_ID = "results_1c"
+DATA_ID = "results"
 
 def data_path(data_id): 
     return os.path.join(DATA_ID, data_id)
@@ -68,9 +69,26 @@ runexample:
     $ standard error = 0.00392796
 """
 #read in data
-infile = open(data_path("energies.csv"), "r")
+#1c
+print("1c) ")
+infile = open(data_path("energies_1c.csv"), "r")
 csv_reader = csv.reader(infile, delimiter=";")
+i = 0
 for row in csv_reader:
+    print("*"*50)
+    row = list(filter(None, row))
     X = array(row, dtype=float)
     print("standard error = %g" %block(X)**.5)
-    break
+infile.close()
+
+#1d
+print("1d) ")
+infile = open(data_path("energies_1d.csv"), "r")
+csv_reader = csv.reader(infile, delimiter=";")
+for row in csv_reader:
+    print("*"*50)
+    row = list(filter(None, row))
+    X = array(row, dtype=float)
+    print("standard error = %g" %block(X)**.5)
+    #break
+infile.close()
