@@ -1,6 +1,6 @@
 # Simple Variational Monte Carlo solve for FYS4411
 
-Example class structure for the first VMC project of FYS4411 (spring 2022). You may, if you wish, fork this repository and make it the basis of your project. If you choose to do this, you will have to implement a lot of the crucial functions yourself. The relevant functions you need to implement are spread throughout the project, but they are all commented with a note saying what each function should do.
+Example class structure for the first VMC project of FYS4411 (spring 2023). You may, if you wish, fork this repository and make it the basis of your project. If you choose to do this, you will have to implement a lot of the crucial functions yourself. The relevant functions you need to implement are spread throughout the project, but they are all commented with a note saying what each function should do.
 
 Please note that this is only a start, and when you have implemented all of these functions you will only have completed the first exercise. However, once this is done, you will have a very good basis for further work, and adding functionality will be easier with a good class structure.
 
