@@ -1,3 +1,4 @@
+#include <memory>
 #include "randomuniform.h"
 #include <iostream>
 #include <cassert>
@@ -8,10 +9,12 @@
 using std::cout;
 using std::endl;
 
-RandomUniform::RandomUniform(System*    system,
-                             int        numberOfDimensions,
-                             int        numberOfParticles)  :
-        InitialState(system) {
+RandomUniform::RandomUniform(
+        std::shared_ptr<System> system,
+        unsigned int numberOfDimensions,
+        unsigned int numberOfParticles)
+    : InitialState(system)
+{
     assert(numberOfDimensions > 0 && numberOfParticles > 0);
     m_numberOfDimensions = numberOfDimensions;
     m_numberOfParticles  = numberOfParticles;
@@ -27,10 +30,10 @@ RandomUniform::RandomUniform(System*    system,
 }
 
 void RandomUniform::setupInitialState() {
-    for (int i=0; i < m_numberOfParticles; i++) {
+    for (unsigned int i=0; i < m_numberOfParticles; i++) {
         std::vector<double> position = std::vector<double>();
 
-        for (int j=0; j < m_numberOfDimensions; j++) {
+        for (unsigned int j=0; j < m_numberOfDimensions; j++) {
             /* This is where you should actually place the particles in
              * some positions, according to some rule. Since this class is
              * called random uniform, they should be placed randomly according
@@ -44,8 +47,7 @@ void RandomUniform::setupInitialState() {
              */
             position.push_back(i);
         }
-        m_particles.push_back(new Particle());
-        m_particles.at(i)->setNumberOfDimensions(m_numberOfDimensions);
-        m_particles.at(i)->setPosition(position);
+
+        m_particles.push_back(std::make_unique<Particle>(position, m_numberOfDimensions));
     }
 }

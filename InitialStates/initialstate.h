@@ -1,16 +1,21 @@
 #pragma once
+#include <memory>
 #include <vector>
+#include "../particle.h"
+#include "../system.h"
 
 class InitialState {
 public:
-    InitialState(class System* system);
+    InitialState(std::shared_ptr<class System> system);
+    virtual ~InitialState() = default;
+
     virtual void setupInitialState() = 0;
-    std::vector<class Particle*> getParticles() { return m_particles; }
+    std::vector<std::unique_ptr<Particle>> getParticles() { return std::move(m_particles); }
 
 protected:
-    class System* m_system = nullptr;
-    std::vector<Particle*> m_particles;// = std::vector<Particle*>();
-    int m_numberOfDimensions = 0;
-    int m_numberOfParticles = 0;
+    std::shared_ptr<class System> m_system = nullptr;
+    std::vector<std::unique_ptr<class Particle>> m_particles = std::vector<std::unique_ptr<class Particle>>();
+    unsigned int m_numberOfDimensions = 0;
+    unsigned int m_numberOfParticles = 0;
 };
 

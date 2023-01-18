@@ -1,3 +1,4 @@
+#include <memory>
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -11,12 +12,12 @@ using std::cout;
 using std::endl;
 
 
-Sampler::Sampler(System* system) {
+Sampler::Sampler(std::shared_ptr<System> system) {
     m_system = system;
     m_stepNumber = 0;
 }
 
-void Sampler::setNumberOfMetropolisSteps(int steps) {
+void Sampler::setNumberOfMetropolisSteps(unsigned int steps) {
     m_numberOfMetropolisSteps = steps;
 }
 
@@ -36,11 +37,11 @@ void Sampler::sample(bool acceptedStep) {
 }
 
 void Sampler::printOutputToTerminal() {
-    int     np = m_system->getNumberOfParticles();
-    int     nd = m_system->getNumberOfDimensions();
-    int     ms = m_system->getNumberOfMetropolisSteps();
-    int     p  = m_system->getWaveFunction()->getNumberOfParameters();
-    double  ef = m_system->getEquilibrationFraction();
+    unsigned int np = m_system->getNumberOfParticles();
+    unsigned int nd = m_system->getNumberOfDimensions();
+    unsigned int ms = m_system->getNumberOfMetropolisSteps();
+    unsigned int p  = m_system->getWaveFunction()->getNumberOfParameters();
+    double ef = m_system->getEquilibrationFraction();
     std::vector<double> pa = m_system->getWaveFunction()->getParameters();
 
     cout << endl;
@@ -52,7 +53,7 @@ void Sampler::printOutputToTerminal() {
     cout << endl;
     cout << "  -- Wave function parameters -- " << endl;
     cout << " Number of parameters : " << p << endl;
-    for (int i=0; i < p; i++) {
+    for (unsigned int i=0; i < p; i++) {
         cout << " Parameter " << i+1 << " : " << pa.at(i) << endl;
     }
     cout << endl;

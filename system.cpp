@@ -1,3 +1,4 @@
+#include <memory>
 #include "system.h"
 #include <cassert>
 #include "sampler.h"
@@ -7,13 +8,16 @@
 #include "InitialStates/initialstate.h"
 #include "Math/random.h"
 
+#include <iostream>
+
 
 System::System() {
-    m_random = new Random();
+    m_random = std::make_unique<Random>();
 }
 
 System::System(int seed) {
-    m_random = new Random(seed);
+    // m_random = std::unique_ptr<Random>(new Random(seed));
+    m_random = std::make_unique<Random>(seed);
 }
 
 bool System::metropolisStep() {
@@ -26,13 +30,13 @@ bool System::metropolisStep() {
     return false;
 }
 
-void System::runMetropolisSteps(int numberOfMetropolisSteps) {
-    m_particles                 = m_initialState->getParticles();
-    m_sampler                   = new Sampler(this);
-    m_numberOfMetropolisSteps   = numberOfMetropolisSteps;
+void System::runMetropolisSteps(unsigned int numberOfMetropolisSteps) {
+    m_particles = m_initialState->getParticles();
+    m_sampler = std::make_unique<Sampler>(this);
+    m_numberOfMetropolisSteps = numberOfMetropolisSteps;
     m_sampler->setNumberOfMetropolisSteps(numberOfMetropolisSteps);
 
-    for (int i=0; i < numberOfMetropolisSteps; i++) {
+    for (unsigned int i=0; i < numberOfMetropolisSteps; i++) {
         bool acceptedStep = metropolisStep();
 
         /* Here you should sample the energy (and maybe other things using
@@ -47,11 +51,11 @@ void System::runMetropolisSteps(int numberOfMetropolisSteps) {
     m_sampler->printOutputToTerminal();
 }
 
-void System::setNumberOfParticles(int numberOfParticles) {
+void System::setNumberOfParticles(unsigned int numberOfParticles) {
     m_numberOfParticles = numberOfParticles;
 }
 
-void System::setNumberOfDimensions(int numberOfDimensions) {
+void System::setNumberOfDimensions(unsigned int numberOfDimensions) {
     m_numberOfDimensions = numberOfDimensions;
 }
 
@@ -65,16 +69,16 @@ void System::setEquilibrationFraction(double equilibrationFraction) {
     m_equilibrationFraction = equilibrationFraction;
 }
 
-void System::setHamiltonian(Hamiltonian* hamiltonian) {
-    m_hamiltonian = hamiltonian;
+void System::setHamiltonian(std::unique_ptr<class Hamiltonian> hamiltonian) {
+    m_hamiltonian = std::move(hamiltonian);
 }
 
-void System::setWaveFunction(WaveFunction* waveFunction) {
-    m_waveFunction = waveFunction;
+void System::setWaveFunction(std::unique_ptr<class WaveFunction> waveFunction) {
+    m_waveFunction = std::move(waveFunction);
 }
 
-void System::setInitialState(InitialState* initialState) {
-    m_initialState = initialState;
+void System::setInitialState(std::unique_ptr<class InitialState> initialState) {
+    m_initialState = std::move(initialState);
 }
 
 
