@@ -39,8 +39,8 @@ void Sampler::sample(bool acceptedStep, System* system) {
 }
 
 void Sampler::printOutputToTerminal(System& system) {
-    std::vector<double> pa = system.getWaveFunctionParameters();
-    unsigned int p  = pa.size();
+    auto pa = system.getWaveFunctionParameters();
+    auto p = pa.size();
 
     cout << endl;
     cout << "  -- System info -- " << endl;
