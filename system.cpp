@@ -50,6 +50,8 @@ std::unique_ptr<class Sampler> System::runMetropolisSteps(
             numberOfMetropolisSteps);
 
     for (unsigned int i = 0; i < numberOfMetropolisSteps; i++) {
+        /* Call solver method to do a single Monte-Carlo step.
+         */
         bool acceptedStep = m_solver->step(stepLength, *m_waveFunction, m_particles);
 
         /* Here you should sample the energy (and maybe other things) using the
