@@ -6,7 +6,7 @@
  * free to use the standard library, or any other libabry, to create your own
  * generators. Example usage of this class is:
  *
- *  class Random* rng = new Random(2020); // Create rng instance
+ *  auto rng = std::make_unique<Random>(2020); // Create a unique rng instance
  *  int foo = rng->nextInt(5, 10); // Draw random uniform integers in [5, 10]
  *  double bar = rng->nextDouble(); // Draw random uniform doubles in [0, 1)
  */

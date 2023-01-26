@@ -27,21 +27,20 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 # Add directories containing header-files
 include_directories(
     .
-    # Hamiltonians
-    # InitialStates
-    # Math
-    # WaveFunctions
+    Hamiltonians
+    InitialStates
+    Math
+    WaveFunctions
+    Solvers
 )
 
 # Add sources from all directories
 file(
-    # GLOB SOURCES "*.cpp"
-    GLOB SOURCES "main.cpp"
-    GLOB SOURCES "system.cpp"
-    GLOB SOURCES "particle.cpp"
+    GLOB SOURCES "*.cpp"
     GLOB SOURCES "Hamiltonians/*.cpp"
     GLOB SOURCES "InitialStates/*.cpp"
     GLOB SOURCES "Math/*.cpp"
+    GLOB SOURCES "Solvers/*.cpp"
     GLOB SOURCES "WaveFunctions/*.cpp"
 )
 

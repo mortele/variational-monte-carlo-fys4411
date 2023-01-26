@@ -1,30 +1,30 @@
 #include<memory>
-#include "harmonicoscillator.h"
 #include <cassert>
 #include <iostream>
-#include "../system.h"
-// #include "../particle.h"
-// #include "../WaveFunctions/wavefunction.h"
+
+#include "harmonicoscillator.h"
+#include "../particle.h"
+#include "../WaveFunctions/wavefunction.h"
 
 using std::cout;
 using std::endl;
 
-HarmonicOscillator::HarmonicOscillator(std::shared_ptr<class System> system, double omega) :
-        Hamiltonian(system) {
+HarmonicOscillator::HarmonicOscillator(double omega)
+{
     assert(omega > 0);
     m_omega  = omega;
 }
 
-double HarmonicOscillator::computeLocalEnergy(std::vector<std::unique_ptr<Particle>> particles) {
-    /* Here, you need to compute the kinetic and potential energies. Note that
-     * when using numerical differentiation, the computation of the kinetic
-     * energy becomes the same for all Hamiltonians, and thus the code for
-     * doing this should be moved up to the super-class, Hamiltonian.
-     *
-     * You may access the wave function currently used through the
-     * getWaveFunction method in the m_system object in the super-class, i.e.
-     * m_system->getWaveFunction()...
-     */
+double HarmonicOscillator::computeLocalEnergy(
+            class WaveFunction& waveFunction,
+            std::vector<std::unique_ptr<class Particle>>& particles
+        )
+{
+    /* Here, you need to compute the kinetic and potential energies.
+     * Access to the wave function methods can be done using the dot notation
+     * for references, e.g., wavefunction.computeDoubleDerivative(particles),
+     * to get the Laplacian of the wave function.
+     * */
 
     double potentialEnergy = 0;
     double kineticEnergy   = 0;
