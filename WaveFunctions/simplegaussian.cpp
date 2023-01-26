@@ -1,30 +1,29 @@
-#include "simplegaussian.h"
+#include <memory>
 #include <cmath>
 #include <cassert>
+
+#include "simplegaussian.h"
 #include "wavefunction.h"
 #include "../system.h"
 #include "../particle.h"
 
-SimpleGaussian::SimpleGaussian(System* system, double alpha) :
-        WaveFunction(system) {
+SimpleGaussian::SimpleGaussian(double alpha)
+{
     assert(alpha >= 0);
     m_numberOfParameters = 1;
     m_parameters.reserve(1);
     m_parameters.push_back(alpha);
 }
 
-double SimpleGaussian::evaluate(std::vector<class Particle*> particles) {
+double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>>& particles) {
     /* You need to implement a Gaussian wave function here. The positions of
-     * the particles are accessible through the particle[i].getPosition()
+     * the particles are accessible through the particle[i]->getPosition()
      * function.
-     *
-     * For the actual expression, use exp(-alpha * r^2), with alpha being the
-     * (only) variational parameter.
      */
     return 0;
 }
 
-double SimpleGaussian::computeDoubleDerivative(std::vector<class Particle*> particles) {
+double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles) {
     /* All wave functions need to implement this function, so you need to
      * find the double derivative analytically. Note that by double derivative,
      * we actually mean the sum of the Laplacians with respect to the

@@ -1,12 +1,13 @@
 #pragma once
+#include <memory>
 #include <vector>
 
 class Hamiltonian {
 public:
-    Hamiltonian(class System* system);
-    virtual double computeLocalEnergy(std::vector<class Particle*> particles) = 0;
-
-protected:
-    class System* m_system = nullptr;
+    virtual ~Hamiltonian() = default;
+    virtual double computeLocalEnergy(
+            class WaveFunction& waveFunction,
+            std::vector<std::unique_ptr<class Particle>>& particles
+    ) = 0;
 };
 

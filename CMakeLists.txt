@@ -1,7 +1,9 @@
+cmake_minimum_required(VERSION 3.25)
+
 project(project_1_fys4411)
 
-# Set CXX standard to C++11
-set(CMAKE_CXX_STANDARD 11)
+# Set CXX standard to C++14
+set(CMAKE_CXX_STANDARD 14)
 
 # Check if the user has specified a build type via the command line, e.g., (in the
 # build-directory)
@@ -29,6 +31,7 @@ include_directories(
     InitialStates
     Math
     WaveFunctions
+    Solvers
 )
 
 # Add sources from all directories
@@ -37,6 +40,7 @@ file(
     GLOB SOURCES "Hamiltonians/*.cpp"
     GLOB SOURCES "InitialStates/*.cpp"
     GLOB SOURCES "Math/*.cpp"
+    GLOB SOURCES "Solvers/*.cpp"
     GLOB SOURCES "WaveFunctions/*.cpp"
 )
 

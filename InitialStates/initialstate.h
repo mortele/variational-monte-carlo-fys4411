@@ -1,16 +1,14 @@
 #pragma once
+
+#include <memory>
 #include <vector>
 
-class InitialState {
-public:
-    InitialState(class System* system);
-    virtual void setupInitialState() = 0;
-    std::vector<class Particle*> getParticles() { return m_particles; }
+#include "../particle.h"
+#include "Math/random.h"
 
-protected:
-    class System* m_system = nullptr;
-    std::vector<Particle*> m_particles;// = std::vector<Particle*>();
-    int m_numberOfDimensions = 0;
-    int m_numberOfParticles = 0;
-};
 
+std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
+            unsigned int numberOfDimensions,
+            unsigned int numberOfParticles,
+            Random& randomEngine
+            );

@@ -1,13 +1,18 @@
 #pragma once
-#include "hamiltonian.h"
+#include <memory>
 #include <vector>
+
+#include "hamiltonian.h"
 
 class HarmonicOscillator : public Hamiltonian {
 public:
-    HarmonicOscillator(System* system, double omega);
-    double computeLocalEnergy(std::vector<Particle*> particles);
+    HarmonicOscillator(double omega);
+    double computeLocalEnergy(
+            class WaveFunction& waveFunction,
+            std::vector<std::unique_ptr<class Particle>>& particles
+    );
 
 private:
-    double m_omega = 0;
+    double m_omega;
 };
 

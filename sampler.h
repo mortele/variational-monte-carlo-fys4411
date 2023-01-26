@@ -1,18 +1,26 @@
 #pragma once
+#include <memory>
 
 class Sampler {
 public:
-    Sampler(class System* system);
-    void setNumberOfMetropolisSteps(int steps);
-    void sample(bool acceptedStep);
-    void printOutputToTerminal();
+    Sampler(
+        unsigned int numberOfParticles,
+        unsigned int numberOfDimensions,
+        double stepLength,
+        unsigned int numberOfMetropolisSteps);
+
+
+    void sample(bool acceptedStep, class System* system);
+    void printOutputToTerminal(class System& system);
     void computeAverages();
-    double getEnergy()          { return m_energy; }
+    double getEnergy() { return m_energy; }
 
 private:
-    int     m_numberOfMetropolisSteps = 0;
-    int     m_stepNumber = 0;
-    double  m_energy = 0;
-    double  m_cumulativeEnergy = 0;
-    class System* m_system = nullptr;
+    unsigned int m_stepNumber = 0;
+    unsigned int m_numberOfMetropolisSteps = 0;
+    unsigned int m_numberOfParticles = 0;
+    unsigned int m_numberOfDimensions = 0;
+    unsigned int m_numberOfAcceptedSteps = 0;
+    double m_energy = 0;
+    double m_cumulativeEnergy = 0;
 };
