@@ -19,9 +19,9 @@ bool Metropolis::step(
         std::vector<std::unique_ptr<class Particle>>& particles)
 {
     /* Perform the actual Metropolis step: Choose a particle at random and
-     * change it's position by a random amount, and check if the step is
-     * accepted by the Metropolis test (compare the wave function evaluated
-     * at this new position with the one at the old position).
+     * change its position by a random amount, and check if the step is
+     * accepted by the Metropolis test (compare the wave function evaluated at
+     * this new position with the one at the old position).
      */
 
     return false;
