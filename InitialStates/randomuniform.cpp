@@ -23,9 +23,7 @@ std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
             /* This is where you should actually place the particles in
              * some positions, according to some rule. Since this class is
              * called random uniform, they should be placed randomly according
-             * to a uniform distribution here. However, later you will write
-             * more sub-classes of the InitialState class in which the
-             * particles are placed in other configurations.
+             * to a uniform distribution here.
              *
              * Note: For now, the particles are simply placed in positions
              * according to their index in the particles list (this is
