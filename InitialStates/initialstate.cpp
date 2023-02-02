@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include "initialstate.h"
+#include "../particle.h"
 #include "Math/random.h"
 
 
