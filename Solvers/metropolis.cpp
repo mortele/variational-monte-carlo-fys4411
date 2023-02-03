@@ -26,10 +26,26 @@ bool Metropolis::step(
      */
 
     int num_particles = particles.size();
-    int proposed_paticle_idx = m_rng->nextInt(0,num_particles-1);
-    Particle& proposed_paticle = *particles.at(proposed_paticle_idx);
+    int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
 
+    double Psi_old = waveFunction.evaluate(particles);
     
-    std::cout << m_rng->nextInt(0,10);
-    return false;
+    int proposed_particle_idx = m_rng->nextInt(0,num_particles-1);
+    Particle& proposed_particle = *particles.at(proposed_particle_idx);
+    Particle old_particle = proposed_particle; 
+    
+    for(int q = 0; q < numberOfDimensions; q++)
+        proposed_particle.adjustPosition(stepLength*( m_rng->nextDouble() - .5), q);
+    
+    double Psi_new = waveFunction.evaluate(particles);
+
+    double w = Psi_new/Psi_old;
+
+    if( w >= m_rng->nextDouble() ) {
+        return true;
+    }
+    else {
+        *particles.at(proposed_particle_idx) = old_particle;
+        return false;
+    }
 }
