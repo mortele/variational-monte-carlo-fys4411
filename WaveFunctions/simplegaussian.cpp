@@ -27,19 +27,19 @@ double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>>& pa
     int num_particles = particles.size();
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
     
-    double r = 0;
-    double r_j = 0;
+    double r2 = 0;
+    double r_q = 0;
     double alpha = m_parameters.at(0);
 
     for(int i = 0; i < num_particles; i++) {
         Particle& particle = *particles.at(i);
-        r = 0;
-        for(int j = 0; j < numberOfDimensions; j++) {
-            r_j =  particle.getPosition().at(j);
-            r += r_j * r_j;
+        r2 = 0;
+        for(int q = 0; q < numberOfDimensions; q++) {
+            r_q =  particle.getPosition().at(q);
+            r2 += r_q * r_q;
         }
 
-        psi_T *= std::exp( -alpha * r );
+        psi_T *= std::exp( -alpha * r2 );
     }
 
     return psi_T;
@@ -54,5 +54,25 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
      * This quantity is needed to compute the (local) energy (consider the
      * Schrödinger equation to see how the two are related).
      */
-    return 0;
+    int num_particles = particles.size();
+    int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
+    double alpha = m_parameters.at(0);
+    
+    double psi_prod = evaluate(particles);
+    double sum = 0;
+
+    double r2_sum = 0;
+    double r_q = 0;
+
+    for(int k = 0; k < num_particles; k++) {
+        Particle& particle = *particles.at(k);
+        for(int q = 0; q < numberOfDimensions; q++) {
+            r_q = particle.getPosition().at(q);
+            r2_sum += r_q * r_q;
+        }
+    }
+
+    double sum = 2*alpha*(2*alpha*r2_sum - num_particles*numberOfDimensions);
+    
+    return psi_prod*sum;
 }
