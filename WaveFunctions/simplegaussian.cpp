@@ -58,7 +58,7 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
     double alpha = m_parameters.at(0);
     
-    double psi_prod = evaluate(particles);
+    // double psi_T = evaluate(particles);
     double sum = 0;
 
     double r2_sum = 0;
@@ -72,7 +72,5 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
         }
     }
 
-    double sum = 2*alpha*(2*alpha*r2_sum - num_particles*numberOfDimensions);
-    
-    return psi_prod*sum;
+    return 2*alpha*(2*alpha*r2_sum - num_particles*numberOfDimensions);
 }
