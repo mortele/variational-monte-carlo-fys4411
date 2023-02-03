@@ -10,6 +10,7 @@
 #include "InitialStates/initialstate.h"
 #include "Solvers/montecarlo.h"
 
+#include<iostream>
 
 System::System(
         std::unique_ptr<class Hamiltonian> hamiltonian,
@@ -32,8 +33,14 @@ unsigned int System::runEquilibrationSteps(
 {
     unsigned int acceptedSteps = 0;
 
+    // std::cout << m_hamiltonian->computeLocalEnergy(*m_waveFunction, m_particles) << "\n";
+
     for (unsigned int i = 0; i < numberOfEquilibrationSteps; i++) {
         acceptedSteps += m_solver->step(stepLength, *m_waveFunction, m_particles);
+        
+        // std::cout << acceptedSteps << std::endl;
+        if(i > 100)
+            exit(1);
     }
 
     return acceptedSteps;

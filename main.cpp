@@ -18,8 +18,8 @@ int main() {
     // Seed for the random number generator
     int seed = 2023;
 
-    unsigned int numberOfDimensions = 1;
-    unsigned int numberOfParticles = 1;
+    unsigned int numberOfDimensions = 3;
+    unsigned int numberOfParticles = 10;
     unsigned int numberOfMetropolisSteps = (unsigned int) 1e6;
     unsigned int numberOfEquilibrationSteps = (unsigned int) 1e5;
     double omega = 1.0; // Oscillator frequency.
