@@ -7,6 +7,8 @@
 #include "../system.h"
 #include "../particle.h"
 
+#include<iostream>
+
 SimpleGaussian::SimpleGaussian(double alpha)
 {
     assert(alpha >= 0);
@@ -20,7 +22,27 @@ double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>>& pa
      * the particles are accessible through the particle[i]->getPosition()
      * function.
      */
-    return 0;
+
+    double psi_T = 1;
+    int num_particles = particles.size();
+    int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
+    
+    double r = 0;
+    double r_j = 0;
+    double alpha = m_parameters.at(0);
+
+    for(int i = 0; i < num_particles; i++) {
+        Particle& particle = *particles.at(i);
+        r = 0;
+        for(int j = 0; j < numberOfDimensions; j++) {
+            r_j =  particle.getPosition().at(j);
+            r += r_j * r_j;
+        }
+
+        psi_T *= std::exp( -alpha * r );
+    }
+
+    return psi_T;
 }
 
 double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles) {
