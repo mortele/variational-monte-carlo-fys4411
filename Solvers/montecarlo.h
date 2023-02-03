@@ -13,6 +13,6 @@ public:
             class WaveFunction& waveFunction,
             std::vector<std::unique_ptr<class Particle>>& particles) = 0;
 
-private:
+protected: // originally private?
     std::unique_ptr<class Random> m_rng;
 };

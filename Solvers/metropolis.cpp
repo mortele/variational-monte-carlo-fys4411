@@ -6,6 +6,7 @@
 #include "particle.h"
 #include "Math/random.h"
 
+#include <iostream>
 
 Metropolis::Metropolis(std::unique_ptr<class Random> rng)
     : MonteCarlo(std::move(rng))
@@ -24,5 +25,11 @@ bool Metropolis::step(
      * this new position with the one at the old position).
      */
 
+    int num_particles = particles.size();
+    int proposed_paticle_idx = m_rng->nextInt(0,num_particles-1);
+    Particle& proposed_paticle = *particles.at(proposed_paticle_idx);
+
+    
+    std::cout << m_rng->nextInt(0,10);
     return false;
 }
