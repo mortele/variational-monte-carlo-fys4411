@@ -40,7 +40,7 @@ bool Metropolis::step(
     double Psi_new = waveFunction.evaluate(particles);
 
     double w = Psi_new/Psi_old;
-    std::cout << w << std::endl;
+    
     if( w >= m_rng->nextDouble() ) {
         return true;
     }

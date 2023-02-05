@@ -59,7 +59,6 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
     double alpha = m_parameters.at(0);
     
     // double psi_T = evaluate(particles);
-    double sum = 0;
 
     double r2_sum = 0;
     double r_q = 0;

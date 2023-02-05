@@ -21,6 +21,11 @@ private:
     unsigned int m_numberOfParticles = 0;
     unsigned int m_numberOfDimensions = 0;
     unsigned int m_numberOfAcceptedSteps = 0;
+    
     double m_energy = 0;
+    double m_energy_variance = 0;
+    double m_energy_std = 0;
+    
     double m_cumulativeEnergy = 0;
+    double m_cumulativeEnergy2 = 0;
 };

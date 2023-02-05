@@ -22,8 +22,13 @@ Sampler::Sampler(
     m_numberOfMetropolisSteps = numberOfMetropolisSteps;
     m_numberOfParticles = numberOfParticles;
     m_numberOfDimensions = numberOfDimensions;
+    
     m_energy = 0;
+    m_energy_variance = 0;
+    m_energy_std = 0;
+    
     m_cumulativeEnergy = 0;
+    m_cumulativeEnergy2 = 0;
     m_numberOfAcceptedSteps = 0;
 }
 
@@ -34,6 +39,7 @@ void Sampler::sample(bool acceptedStep, System* system) {
      */
     auto localEnergy = system->computeLocalEnergy();
     m_cumulativeEnergy  += localEnergy;
+    m_cumulativeEnergy2 += (localEnergy*localEnergy);
     m_stepNumber++;
     m_numberOfAcceptedSteps += acceptedStep;
 }
@@ -57,6 +63,8 @@ void Sampler::printOutputToTerminal(System& system) {
     cout << endl;
     cout << "  -- Results -- " << endl;
     cout << " Energy : " << m_energy << endl;
+    cout << " Energy variance : " << m_energy_variance << endl;
+    cout << " Energy std : " << m_energy_std << endl;
     cout << endl;
 }
 
@@ -64,4 +72,8 @@ void Sampler::computeAverages() {
     /* Compute the averages of the sampled quantities.
      */
     m_energy = m_cumulativeEnergy / m_numberOfMetropolisSteps;
+     
+    m_cumulativeEnergy2 /= m_numberOfMetropolisSteps;
+    m_energy_variance = (m_cumulativeEnergy2 - m_energy*m_energy);
+    m_energy_std = sqrt(m_energy_variance);
 }

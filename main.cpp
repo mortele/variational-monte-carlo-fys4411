@@ -21,9 +21,9 @@ int main() {
     unsigned int numberOfDimensions = 3;
     unsigned int numberOfParticles = 10;
     unsigned int numberOfMetropolisSteps = (unsigned int) 1e6;
-    unsigned int numberOfEquilibrationSteps = (unsigned int) 1e5;
+    unsigned int numberOfEquilibrationSteps = (unsigned int) 1e6;
     double omega = 1.0; // Oscillator frequency.
-    double alpha = 0.5; // Variational parameter.
+    double alpha = omega/2.0; // Variational parameter.
     double stepLength = 0.1; // Metropolis step length.
 
     // The random engine can also be built without a seed
