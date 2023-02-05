@@ -1,5 +1,6 @@
 #include <memory>
 #include <iostream>
+#include <string>
 #include <cmath>
 #include <vector>
 #include "system.h"
@@ -66,6 +67,10 @@ void Sampler::printOutputToTerminal(System& system) {
     cout << " Energy variance : " << m_energy_variance << endl;
     cout << " Energy std : " << m_energy_std << endl;
     cout << endl;
+}
+
+void Sampler::writeOutToFile(System& system, std::string filename) {
+    
 }
 
 void Sampler::computeAverages() {

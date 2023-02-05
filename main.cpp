@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+
 #include <vector>
 #include <memory>
 #include <cmath>
@@ -26,6 +28,7 @@ int main(int argv, char** argc) {
     double omega = 1.0; // Oscillator frequency.
     double alpha = omega/2.0; // Variational parameter.
     double stepLength = 0.1; // Metropolis step length.
+    string filename = "";
 
     if( argv == 1 ) {
         cout << "Hello! Usage:" <<endl;
@@ -54,6 +57,9 @@ int main(int argv, char** argc) {
         alpha = (double) atof(argc[6]);
     if(argv >= 8)
         stepLength = (double) atof(argc[7]);
+    if(argv >= 9)
+        filename = argc[8];
+
 
     // The random engine can also be built without a seed
     auto rng = std::make_unique<Random>(seed);
@@ -81,7 +87,12 @@ int main(int argv, char** argc) {
             numberOfMetropolisSteps);
 
     // Output information from the simulation
-    sampler->printOutputToTerminal(*system);
+    if(filename == "") {
+        sampler->printOutputToTerminal(*system);
+    }
+    else {
+        sampler->writeOutToFile(*system, filename);
+    }
 
     return 0;
 }
