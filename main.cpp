@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <cmath>
 
 #include "system.h"
 #include "WaveFunctions/simplegaussian.h"
@@ -14,7 +15,7 @@
 using namespace std;
 
 
-int main() {
+int main(int argv, char** argc) {
     // Seed for the random number generator
     int seed = 2023;
 
@@ -25,6 +26,34 @@ int main() {
     double omega = 1.0; // Oscillator frequency.
     double alpha = omega/2.0; // Variational parameter.
     double stepLength = 0.1; // Metropolis step length.
+
+    if( argv == 1 ) {
+        cout << "Hello! Usage:" <<endl;
+        cout << "./vmc #dims #particles #log10(metropolis-steps) #log10(equilibriation-steps) omega alpha stepLength" << endl;
+        cout << "#dims, int: Number of dimensions" << endl;
+        cout << "#particles, int: Number of particles" << endl;
+        cout << "#log10(metropolis steps), int/double: log10 of number of steps, i.e. 6 gives 1e6 steps" << endl;
+        cout << "#log10(equilibriation-steps), int/double: log10 of number of equilibriation steps, i.e. 6 gives 1e6 steps" << endl;
+        cout << "omega, double: Trap frequency" << endl;
+        cout << "alpha, double: WF parameter for simple gaussian. Analytical sol alpha = omega/2" << endl;
+        cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
+        return 0;
+    }
+
+    if(argv >= 2)
+        numberOfDimensions = (unsigned int) atoi(argc[1]);
+    if(argv >= 3)
+        numberOfParticles = (unsigned int) atoi(argc[2]);
+    if(argv >= 4)
+        numberOfMetropolisSteps = (unsigned int) pow(10, atof(argc[3]));
+    if(argv >= 5)
+        numberOfEquilibrationSteps = (unsigned int) pow(10, atof(argc[4]));
+    if(argv >= 6)
+        omega = (double) atof(argc[5]);
+    if(argv >= 7)
+        alpha = (double) atof(argc[6]);
+    if(argv >= 8)
+        stepLength = (double) atof(argc[7]);
 
     // The random engine can also be built without a seed
     auto rng = std::make_unique<Random>(seed);
