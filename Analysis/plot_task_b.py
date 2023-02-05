@@ -21,4 +21,4 @@ def plot_simple_HO(omega=1.0, alpha_range=(0.5,1.5, 11)):
 
 if __name__ == "__main__":
     # plot_simple_HO()
-    cpp_utils.runVMC()
+    cpp_utils.runVMC(filename="simple_HO.dat")
