@@ -39,4 +39,6 @@ vmc
 
 # Custom 
 Sandkasse/
+__pycache__/
 .vscode/
+
