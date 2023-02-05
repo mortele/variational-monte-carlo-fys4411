@@ -15,7 +15,7 @@ using std::cout;
 using std::endl;
 
 using std::setw;
-using std::scientific;
+using std::fixed;
 using std::setprecision;
 
 Sampler::Sampler(
@@ -106,15 +106,15 @@ void Sampler::writeOutToFile(System& system, std::string filename, double omega)
     outfile << setw(w) << m_numberOfDimensions
             << setw(w) << m_numberOfParticles
             << setw(w) << setprecision(5) << m_numberOfMetropolisSteps
-            << setw(w) << setprecision(5) << omega
-            << setw(w) << setprecision(5) << m_stepLength;
+            << setw(w) << fixed << setprecision(5) << omega
+            << setw(w) << fixed << setprecision(5) << m_stepLength;
 
     for(int i = 0; i < p; i++)
-        outfile << setw(w) << setprecision(5) << pa.at(i);
+        outfile << setw(w) << fixed << setprecision(5) << pa.at(i);
 
-    outfile << setw(w) << m_energy
-            << setw(w) << m_energy_std
-            << setw(w) << m_energy_variance;
+    outfile << setw(w) << fixed << setprecision(5) << m_energy
+            << setw(w) << fixed << setprecision(5) << m_energy_std
+            << setw(w) << fixed << setprecision(5) << m_energy_variance;
 
     outfile << "\n";
     outfile.close();
