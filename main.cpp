@@ -91,7 +91,7 @@ int main(int argv, char** argc) {
         sampler->printOutputToTerminal(*system);
     }
     else {
-        sampler->writeOutToFile(*system, filename);
+        sampler->writeOutToFile(*system, filename, omega);
     }
 
     return 0;

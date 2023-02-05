@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <string>
 
 class Sampler {
 public:
@@ -12,10 +13,12 @@ public:
 
     void sample(bool acceptedStep, class System* system);
     void printOutputToTerminal(class System& system);
+    void writeOutToFile(class System& system, std::string filename, double omega);
     void computeAverages();
     double getEnergy() { return m_energy; }
 
 private:
+    double m_stepLength = 0;
     unsigned int m_stepNumber = 0;
     unsigned int m_numberOfMetropolisSteps = 0;
     unsigned int m_numberOfParticles = 0;

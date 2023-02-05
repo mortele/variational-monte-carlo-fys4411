@@ -1,5 +1,7 @@
 #include <memory>
 #include <iostream>
+#include <iomanip>
+#include <fstream>
 #include <string>
 #include <cmath>
 #include <vector>
@@ -12,6 +14,9 @@
 using std::cout;
 using std::endl;
 
+using std::setw;
+using std::scientific;
+using std::setprecision;
 
 Sampler::Sampler(
         unsigned int numberOfParticles,
@@ -23,7 +28,8 @@ Sampler::Sampler(
     m_numberOfMetropolisSteps = numberOfMetropolisSteps;
     m_numberOfParticles = numberOfParticles;
     m_numberOfDimensions = numberOfDimensions;
-    
+    m_stepLength = stepLength;
+
     m_energy = 0;
     m_energy_variance = 0;
     m_energy_std = 0;
@@ -69,8 +75,49 @@ void Sampler::printOutputToTerminal(System& system) {
     cout << endl;
 }
 
-void Sampler::writeOutToFile(System& system, std::string filename) {
-    
+void Sampler::writeOutToFile(System& system, std::string filename, double omega) {
+    std::ifstream exsists_file(filename.c_str());
+
+    std::fstream outfile;
+    auto pa = system.getWaveFunctionParameters();
+    int p = pa.size();
+    int w = 15;
+
+    if(!exsists_file.good()) {
+        outfile.open(filename, std::ios::out);
+        outfile << setw(w) << "Dimensions" 
+                << setw(w) << "Particles"
+                << setw(w) << "Metro-steps"
+                << setw(w) << "Omega"
+                << setw(w) << "StepLength";
+        for(int i = 0; i < p; i++)
+            outfile << setw(w-1) << "WF" << (i+1);
+                
+        outfile << setw(w) << "Energy"
+                << setw(w) << "Energy_std"
+                << setw(w) << "Energy_var";
+        outfile << "\n";
+    }
+    else {
+        outfile.open(filename, std::ios::out | std::ios::app);
+    }
+
+
+    outfile << setw(w) << m_numberOfDimensions
+            << setw(w) << m_numberOfParticles
+            << setw(w) << setprecision(5) << m_numberOfMetropolisSteps
+            << setw(w) << setprecision(5) << omega
+            << setw(w) << setprecision(5) << m_stepLength;
+
+    for(int i = 0; i < p; i++)
+        outfile << setw(w) << setprecision(5) << pa.at(i);
+
+    outfile << setw(w) << m_energy
+            << setw(w) << m_energy_std
+            << setw(w) << m_energy_variance;
+
+    outfile << "\n";
+    outfile.close();
 }
 
 void Sampler::computeAverages() {
