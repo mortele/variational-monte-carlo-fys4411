@@ -23,4 +23,5 @@ private:
     unsigned int m_numberOfAcceptedSteps = 0;
     double m_energy = 0;
     double m_cumulativeEnergy = 0;
+    double m_stepLength = 0;
 };
