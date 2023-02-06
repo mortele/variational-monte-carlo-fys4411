@@ -39,7 +39,7 @@ double HarmonicOscillator::computeLocalEnergy(
         }
     }
 
-    double potentialEnergy = 0.5*m_omega*r2_sum;
+    double potentialEnergy = 0.5*m_omega*m_omega*r2_sum;
     double kineticEnergy   = -0.5*waveFunction.computeDoubleDerivative(particles);
 
     return kineticEnergy + potentialEnergy;

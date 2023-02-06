@@ -22,8 +22,6 @@ double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>>& pa
      * the particles are accessible through the particle[i]->getPosition()
      * function.
      */
-
-    double psi_T = 1;
     int num_particles = particles.size();
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
     
@@ -32,17 +30,14 @@ double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>>& pa
     double alpha = m_parameters.at(0);
 
     for(int i = 0; i < num_particles; i++) {
-        Particle& particle = *particles.at(i);
-        r2 = 0;
+        Particle particle = *particles.at(i);
         for(int q = 0; q < numberOfDimensions; q++) {
             r_q =  particle.getPosition().at(q);
             r2 += r_q * r_q;
         }
-
-        psi_T *= std::exp( -alpha * r2 );
     }
 
-    return psi_T;
+    return std::exp( -alpha * r2 );;
 }
 
 double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles) {
@@ -64,7 +59,7 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
     double r_q = 0;
 
     for(int k = 0; k < num_particles; k++) {
-        Particle& particle = *particles.at(k);
+        Particle particle = *particles.at(k);
         for(int q = 0; q < numberOfDimensions; q++) {
             r_q = particle.getPosition().at(q);
             r2_sum += r_q * r_q;

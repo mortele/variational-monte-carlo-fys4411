@@ -49,7 +49,6 @@ def vmcLoad(filename):
     int_cols = ["Dimensions", "Particles" ,"Metro-steps"]
     numeric_cols = [col for col in df.columns if col not in int_cols]
     
-    print(numeric_cols)
     for col in numeric_cols:
         df[col] = df[col].astype(float)
 
