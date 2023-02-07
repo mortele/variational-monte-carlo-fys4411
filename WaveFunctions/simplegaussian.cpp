@@ -37,7 +37,7 @@ double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>>& pa
         }
     }
 
-    return std::exp( -alpha * r2 );;
+    return std::exp( -alpha * r2 );
 }
 
 double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles) {
