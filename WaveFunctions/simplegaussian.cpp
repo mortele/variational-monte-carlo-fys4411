@@ -68,3 +68,12 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
 
     return 2*alpha*(2*alpha*r2_sum - num_particles*numberOfDimensions);
 }
+
+double SimpleGaussian::computeDoubleDerivativeNumerically(std::vector<std::unique_ptr<class Particle>>& particles) {
+    /*
+    Calculate the double derivative of wave function using central finite differences.
+    */
+   double doubleDerivative = 1.234;
+
+   return doubleDerivative;
+}
