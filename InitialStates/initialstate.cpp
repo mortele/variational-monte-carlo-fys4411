@@ -3,10 +3,12 @@
 #include <cassert>
 
 #include "initialstate.h"
+#include "../particle.h"
 #include "Math/random.h"
 
 
 std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
+            double stepLength,
             unsigned int numberOfDimensions,
             unsigned int numberOfParticles,
             Random& rng
@@ -21,7 +23,7 @@ std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
 
         for (unsigned int j=0; j < numberOfDimensions; j++) {
             /* This is where you should actually place the particles in
-             * some positions, according to some rule. Since this class is
+             * some positions, according to some rule. Since this function is
              * called random uniform, they should be placed randomly according
              * to a uniform distribution here.
              *

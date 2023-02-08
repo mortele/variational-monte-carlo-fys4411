@@ -35,7 +35,11 @@ Sampler::Sampler(
     m_energy_std = 0;
     
     m_cumulativeEnergy = 0;
+<<<<<<< HEAD
     m_cumulativeEnergy2 = 0;
+=======
+    m_stepLength = stepLength;
+>>>>>>> master
     m_numberOfAcceptedSteps = 0;
 }
 
@@ -60,6 +64,7 @@ void Sampler::printOutputToTerminal(System& system) {
     cout << " Number of particles  : " << m_numberOfParticles << endl;
     cout << " Number of dimensions : " << m_numberOfDimensions << endl;
     cout << " Number of Metropolis steps run : 10^" << std::log10(m_numberOfMetropolisSteps) << endl;
+    cout << " Step length used : " << m_stepLength << endl;
     cout << " Ratio of accepted steps: " << ((double) m_numberOfAcceptedSteps) / ((double) m_numberOfMetropolisSteps) << endl;
     cout << endl;
     cout << "  -- Wave function parameters -- " << endl;
