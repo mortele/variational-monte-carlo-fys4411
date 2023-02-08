@@ -30,9 +30,5 @@ private:
     double m_energy_std = 0;
     
     double m_cumulativeEnergy = 0;
-<<<<<<< HEAD
     double m_cumulativeEnergy2 = 0;
-=======
-    double m_stepLength = 0;
->>>>>>> master
 };

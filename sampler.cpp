@@ -35,11 +35,7 @@ Sampler::Sampler(
     m_energy_std = 0;
     
     m_cumulativeEnergy = 0;
-<<<<<<< HEAD
     m_cumulativeEnergy2 = 0;
-=======
-    m_stepLength = stepLength;
->>>>>>> master
     m_numberOfAcceptedSteps = 0;
 }
 
