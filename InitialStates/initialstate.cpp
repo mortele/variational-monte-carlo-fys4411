@@ -31,7 +31,8 @@ std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
              * according to their index in the particles list (this is
              * NOT a good idea).
              */
-            position.push_back(i);
+            double q = rng.nextDouble()-0.5;
+            position.push_back(q);
         }
 
         particles.push_back(std::make_unique<Particle>(position));
