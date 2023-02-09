@@ -28,6 +28,7 @@ private:
     double m_energy = 0;
     double m_energy_variance = 0;
     double m_energy_std = 0;
+    double m_acceptRatio = 0;
     
     double m_cumulativeEnergy = 0;
     double m_cumulativeEnergy2 = 0;

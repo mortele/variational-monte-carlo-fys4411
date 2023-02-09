@@ -96,8 +96,10 @@ void Sampler::writeOutToFile(System& system, std::string filename, double omega)
                 
         outfile << setw(w) << "Energy"
                 << setw(w) << "Energy_std"
-                << setw(w) << "Energy_var";
-        outfile << "\n";
+                << setw(w) << "Energy_var"
+                << setw(w) << "Accept_number"
+                << setw(w) << "Accept_ratio"
+                << "\n";
     }
     else {
         outfile.open(filename, std::ios::out | std::ios::app);
@@ -115,9 +117,11 @@ void Sampler::writeOutToFile(System& system, std::string filename, double omega)
 
     outfile << setw(w) << fixed << setprecision(5) << m_energy
             << setw(w) << fixed << setprecision(5) << m_energy_std
-            << setw(w) << fixed << setprecision(5) << m_energy_variance;
+            << setw(w) << fixed << setprecision(5) << m_energy_variance
+            << setw(w) << fixed << setprecision(5) << m_numberOfAcceptedSteps
+            << setw(w) << fixed << setprecision(5) << m_acceptRatio
+            << "\n";
 
-    outfile << "\n";
     outfile.close();
 }
 
@@ -129,4 +133,5 @@ void Sampler::computeAverages() {
     m_cumulativeEnergy2 /= m_numberOfMetropolisSteps;
     m_energy_variance = (m_cumulativeEnergy2 - m_energy*m_energy);
     m_energy_std = sqrt(m_energy_variance);
+    m_acceptRatio = ((double) m_numberOfAcceptedSteps) / ((double) m_numberOfMetropolisSteps);
 }
