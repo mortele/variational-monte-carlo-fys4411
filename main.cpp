@@ -28,6 +28,7 @@ int main(int argv, char** argc) {
     double omega = 1.0; // Oscillator frequency.
     double alpha = omega/2.0; // Variational parameter.
     double stepLength = 0.1; // Metropolis step length.
+    bool analytical = true;
     string filename = "";
 
     if( argv == 1 ) {
@@ -58,8 +59,9 @@ int main(int argv, char** argc) {
     if(argv >= 8)
         stepLength = (double) atof(argc[7]);
     if(argv >= 9)
-        filename = argc[8];
-
+        analytical = (bool)atoi(argc[8]);
+    if(argv >= 10)
+        filename = argc[9];
 
     // The random engine can also be built without a seed
     auto rng = std::make_unique<Random>(seed);
@@ -75,6 +77,9 @@ int main(int argv, char** argc) {
             std::make_unique<Metropolis>(std::move(rng)),
             // Move the vector of particles to system
             std::move(particles));
+
+    if(!analytical)
+        system->setWaveFunction(std::make_unique<SimpleGaussianNumerical>(alpha));
 
     // Run steps to equilibrate particles
     auto acceptedEquilibrationSteps = system->runEquilibrationSteps(

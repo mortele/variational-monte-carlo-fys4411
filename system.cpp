@@ -79,3 +79,7 @@ const std::vector<double>& System::getWaveFunctionParameters()
     // Helper function
     return m_waveFunction->getParameters();
 }
+
+void System::setWaveFunction(std::unique_ptr<class WaveFunction> waveFunction) {
+    m_waveFunction = std::move(waveFunction);
+}

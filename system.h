@@ -23,6 +23,8 @@ public:
     double computeLocalEnergy();
     const std::vector<double>& getWaveFunctionParameters();
 
+    void setWaveFunction(std::unique_ptr<class WaveFunction> waveFunction);
+
 private:
     unsigned int m_numberOfParticles = 0;
     unsigned int m_numberOfDimensions = 0;
