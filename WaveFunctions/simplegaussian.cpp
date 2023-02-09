@@ -72,7 +72,7 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
 SimpleGaussianNumerical::SimpleGaussianNumerical(double alpha, double dx) : SimpleGaussian(alpha) 
 {
     m_dx=dx;
-    std::cout << "I am now in the correct constructor! but unfortunately my double derivative does nothing :((\n";
+    std::cout << "I am now in the correct constructor! but unfortunately my double derivative does nothing, but create errors :((\n";
 }
 
 double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles)
@@ -99,4 +99,3 @@ double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_
     }
     return der_sum;
     }
-}
