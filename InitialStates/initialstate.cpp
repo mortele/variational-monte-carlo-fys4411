@@ -9,6 +9,7 @@
 
 std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
             double stepLength,
+            double omega,
             unsigned int numberOfDimensions,
             unsigned int numberOfParticles,
             Random& rng
@@ -31,7 +32,7 @@ std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
              * according to their index in the particles list (this is
              * NOT a good idea).
              */
-            double q = rng.nextDouble()-0.5;
+            double q = (rng.nextDouble()-0.5)*omega;
             position.push_back(q);
         }
 
