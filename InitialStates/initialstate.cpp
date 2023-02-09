@@ -1,6 +1,7 @@
 #include <memory>
 #include <iostream>
 #include <cassert>
+#include <cmath>
 
 #include "initialstate.h"
 #include "../particle.h"
@@ -18,6 +19,7 @@ std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
     assert(numberOfDimensions > 0 && numberOfParticles > 0);
 
     auto particles = std::vector<std::unique_ptr<Particle>>();
+    double characteristicLength = 1/std::sqrt(omega);
 
     for (unsigned int i=0; i < numberOfParticles; i++) {
         std::vector<double> position = std::vector<double>();
@@ -32,7 +34,7 @@ std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
              * according to their index in the particles list (this is
              * NOT a good idea).
              */
-            double q = (rng.nextDouble()-0.5)*omega;
+            double q = (rng.nextDouble()-0.5)*characteristicLength;
             position.push_back(q);
         }
 
