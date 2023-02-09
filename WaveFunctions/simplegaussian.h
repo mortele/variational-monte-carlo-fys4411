@@ -10,3 +10,10 @@ public:
     double evaluate(std::vector<std::unique_ptr<class Particle>>& particles);
     double computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles);
 };
+
+class SimpleGaussianNumerical : public SimpleGaussian {
+public:
+    SimpleGaussianNumerical(double alpha);
+    double computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles);
+
+};
