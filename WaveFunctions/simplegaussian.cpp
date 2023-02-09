@@ -69,12 +69,34 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
     return 2*alpha*(2*alpha*r2_sum - num_particles*numberOfDimensions);
 }
 
-SimpleGaussianNumerical::SimpleGaussianNumerical(double alpha) : SimpleGaussian(alpha) 
+SimpleGaussianNumerical::SimpleGaussianNumerical(double alpha, double dx) : SimpleGaussian(alpha) 
 {
+    m_dx=dx;
     std::cout << "I am now in the correct constructor! but unfortunately my double derivative does nothing :((\n";
 }
 
 double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles)
 {
-    return 0.0;
+    int num_particles =particles.size();
+    int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
+    double der_sum=0;
+    for(int i=0; i < numberOfDimensions; i++){
+        Particle particle = *particles.at(i);
+        for(int j=0; j < num_particles; j++){
+
+            double r_j =particle.getPosition().at(j);
+            
+            double gx=evaluate(particles);
+            particle.adjustPosition(m_dx,j);
+            double gxpdx=evaluate(particles);
+            particle.adjustPosition(-2*m_dx, j);
+            double gxmdx =evaluate(particles);
+            double der=(gxpdx-2*gx-gxmdx)/(m_dx*m_dx);
+            particle.setPosition(r_j, j);
+            der_sum +=der;
+
+        }
+    }
+    return der_sum;
+    }
 }

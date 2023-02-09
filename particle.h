@@ -5,6 +5,7 @@ class Particle {
 public:
     Particle(const std::vector<double>& position);
     void adjustPosition(double change, unsigned int dimension);
+    void setPosition(double new_position, unsigned int dimension); 
     std::vector<double> getPosition() { return m_position; }
     unsigned int getNumberOfDimensions() { return m_numberOfDimensions; }
 
