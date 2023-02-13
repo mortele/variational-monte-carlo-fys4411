@@ -33,7 +33,7 @@ int main(int argv, char** argc) {
 
     if( argv == 1 ) {
         cout << "Hello! Usage:" <<endl;
-        cout << "./vmc #dims #particles #log10(metropolis-steps) #log10(equilibriation-steps) omega alpha stepLength" << endl;
+        cout << "./vmc #dims #particles #log10(metropolis-steps) #log10(equilibriation-steps) omega alpha stepLength analytical? filename" << endl;
         cout << "#dims, int: Number of dimensions" << endl;
         cout << "#particles, int: Number of particles" << endl;
         cout << "#log10(metropolis steps), int/double: log10 of number of steps, i.e. 6 gives 1e6 steps" << endl;
@@ -41,6 +41,8 @@ int main(int argv, char** argc) {
         cout << "omega, double: Trap frequency" << endl;
         cout << "alpha, double: WF parameter for simple gaussian. Analytical sol alpha = omega/2" << endl;
         cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
+        cout << "analytical?, bool: If the analytical expression should be used. Defaults to true" <<endl;
+        cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." <<endl;
         return 0;
     }
 
@@ -66,7 +68,7 @@ int main(int argv, char** argc) {
     // The random engine can also be built without a seed
     auto rng = std::make_unique<Random>(seed);
     // Initialize particles
-    auto particles = setupRandomUniformInitialState(stepLength, numberOfDimensions, numberOfParticles, *rng);
+    auto particles = setupRandomUniformInitialState(stepLength, omega, numberOfDimensions, numberOfParticles, *rng);
     // Construct a unique pointer to a new System
     auto system = std::make_unique<System>(
             // Construct unique_ptr to Hamiltonian

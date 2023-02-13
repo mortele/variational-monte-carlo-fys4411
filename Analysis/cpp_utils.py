@@ -34,7 +34,7 @@ def vmcRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, a
         omega,
         alpha,
         stepLength,
-        int(analytical)
+        int(analytical),
         filename_path,
     ]
 
