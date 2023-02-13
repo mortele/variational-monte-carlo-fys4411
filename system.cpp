@@ -83,3 +83,7 @@ const std::vector<double>& System::getWaveFunctionParameters()
 void System::setWaveFunction(std::unique_ptr<class WaveFunction> waveFunction) {
     m_waveFunction = std::move(waveFunction);
 }
+
+void System::setSolver(std::unique_ptr<class MonteCarlo> solver) {
+    m_solver = std::move(solver);
+}

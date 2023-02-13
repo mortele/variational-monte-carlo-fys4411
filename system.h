@@ -24,6 +24,7 @@ public:
     const std::vector<double>& getWaveFunctionParameters();
 
     void setWaveFunction(std::unique_ptr<class WaveFunction> waveFunction);
+	void setSolver(std::unique_ptr<class MonteCarlo> solver);
 
 private:
     unsigned int m_numberOfParticles = 0;
