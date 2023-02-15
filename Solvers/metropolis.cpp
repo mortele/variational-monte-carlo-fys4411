@@ -25,12 +25,12 @@ bool Metropolis::step(
      * this new position with the one at the old position).
      */
 
-    int num_particles = particles.size();
+    int numberOfParticles = particles.size();
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
 
     double Psi_old = waveFunction.evaluate(particles);
     
-    int proposed_particle_idx = m_rng->nextInt(0,num_particles-1);
+    int proposed_particle_idx = m_rng->nextInt(0,numberOfParticles-1);
     Particle& proposed_particle = *particles.at(proposed_particle_idx);
     Particle old_particle = proposed_particle; 
     

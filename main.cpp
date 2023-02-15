@@ -31,6 +31,7 @@ int main(int argv, char** argc) {
     double stepLength = 0.1; // Metropolis step length.
     bool importanceSampling = false;
     bool analytical = true;
+    double D = 0.5;
     string filename = "";
 
     if( argv == 1 ) {
@@ -87,8 +88,10 @@ int main(int argv, char** argc) {
 
     if(!analytical)
         system->setWaveFunction(std::make_unique<SimpleGaussianNumerical>(alpha));
-    if(importanceSampling)
-        system->setSolver(std::make_unique<MetropolisHastings>(std::move(rng)));
+    if(importanceSampling) {
+        auto rng2 = std::make_unique<Random>(seed);
+        system->setSolver(std::make_unique<MetropolisHastings>(std::move(rng2), stepLength, D));
+    }
 
     // Run steps to equilibrate particles
     auto acceptedEquilibrationSteps = system->runEquilibrationSteps(
