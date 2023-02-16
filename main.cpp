@@ -29,6 +29,7 @@ int main(int argv, char** argc) {
     double alpha = omega/2.0; // Variational parameter.
     double stepLength = 0.1; // Metropolis step length.
     bool analytical = true;
+    double dx = 0.0001;
     string filename = "";
 
     if( argv == 1 ) {
@@ -81,7 +82,7 @@ int main(int argv, char** argc) {
             std::move(particles));
 
     if(!analytical)
-        system->setWaveFunction(std::make_unique<SimpleGaussianNumerical>(alpha));
+        system->setWaveFunction(std::make_unique<SimpleGaussianNumerical>(alpha, dx));
 
     // Run steps to equilibrate particles
     auto acceptedEquilibrationSteps = system->runEquilibrationSteps(
