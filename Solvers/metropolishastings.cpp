@@ -42,7 +42,7 @@ bool MetropolisHastings::step(
 
     for(int q = 0; q < numberOfDimensions; q++) {
         proposed_particle.adjustPosition(
-            m_D*qForceOld.at(q) + m_rng->nextGaussian(0.0, 1.0)*m_sqrtTimeStep,
+            m_D*qForceOld.at(q)*m_timeStep + m_rng->nextGaussian(0.0, 1.0)*m_sqrtTimeStep,
             q
         );
     }
