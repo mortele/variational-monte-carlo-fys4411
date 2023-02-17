@@ -29,8 +29,8 @@ bool MetropolisHastings::step(
     int numberOfParticles = particles.size();
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
 
-    std::vector<double> qForceOld(3);
-    std::vector<double> qForceNew(3);
+    std::vector<double> qForceOld(numberOfDimensions);
+    std::vector<double> qForceNew(numberOfDimensions);
 
     int proposed_particle_idx = m_rng->nextInt(0,numberOfParticles-1);
     
@@ -68,6 +68,4 @@ bool MetropolisHastings::step(
         *particles.at(proposed_particle_idx) = old_particle;
         return false;
     }
-
-    return true;
 }
