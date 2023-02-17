@@ -13,7 +13,7 @@ public:
 
     void sample(bool acceptedStep, class System* system);
     void printOutputToTerminal(class System& system);
-    void writeOutToFile(class System& system, std::string filename, double omega);
+    void writeOutToFile(class System& system, std::string filename, double omega, bool analytical, bool importanceSampling);
     void computeAverages();
     double getEnergy() { return m_energy; }
 

@@ -36,7 +36,7 @@ int main(int argv, char** argc) {
 
     if( argv == 1 ) {
         cout << "Hello! Usage:" <<endl;
-        cout << "./vmc #dims #particles #log10(metropolis-steps) #log10(equilibriation-steps) omega alpha stepLength analytical? filename" << endl;
+        cout << "./vmc #dims #particles #log10(metropolis-steps) #log10(equilibriation-steps) omega alpha stepLength importanceSampling? analytical? filename" << endl;
         cout << "#dims, int: Number of dimensions" << endl;
         cout << "#particles, int: Number of particles" << endl;
         cout << "#log10(metropolis steps), int/double: log10 of number of steps, i.e. 6 gives 1e6 steps" << endl;
@@ -44,7 +44,7 @@ int main(int argv, char** argc) {
         cout << "omega, double: Trap frequency" << endl;
         cout << "alpha, double: WF parameter for simple gaussian. Analytical sol alpha = omega/2" << endl;
         cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
-        cout << "Importantce sampling?, bool: If the Metropolis Hasting algorithm should be used" <<endl;
+        cout << "Importantce sampling?, bool: If the Metropolis Hasting algorithm is used. Then stepLength serves as Delta t" <<endl;
         cout << "analytical?, bool: If the analytical expression should be used. Defaults to true" <<endl;
         cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." <<endl;
         return 0;
@@ -76,22 +76,28 @@ int main(int argv, char** argc) {
     // Initialize particles
     auto particles = setupRandomUniformInitialState(stepLength, omega, numberOfDimensions, numberOfParticles, *rng);
     // Construct a unique pointer to a new System
-    auto system = std::make_unique<System>(
-            // Construct unique_ptr to Hamiltonian
-            std::make_unique<HarmonicOscillator>(omega),
-            // Construct unique_ptr to wave function
-            std::make_unique<SimpleGaussian>(alpha),
-            // Construct unique_ptr to solver, and move rng
-            std::make_unique<Metropolis>(std::move(rng)),
-            // Move the vector of particles to system
-            std::move(particles));
+    auto hamiltonian = std::make_unique<HarmonicOscillator>(omega);
+    std::unique_ptr<class WaveFunction> wavefunction = std::make_unique<SimpleGaussian>(alpha);
+    std::unique_ptr<class MonteCarlo> solver;
 
     if(!analytical)
-        system->setWaveFunction(std::make_unique<SimpleGaussianNumerical>(alpha));
+        wavefunction = std::make_unique<SimpleGaussianNumerical>(alpha);
     if(importanceSampling) {
-        auto rng2 = std::make_unique<Random>(seed);
-        system->setSolver(std::make_unique<MetropolisHastings>(std::move(rng2), stepLength, D));
+        solver = std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
     }
+    else {
+        solver = std::make_unique<Metropolis>(std::move(rng));
+    }
+
+    auto system = std::make_unique<System>(
+            // Construct unique_ptr to Hamiltonian
+            std::move(hamiltonian),
+            // Construct unique_ptr to wave function
+            std::move(wavefunction),
+            // Construct unique_ptr to solver, and move rng
+            std::move(solver),
+            // Move the vector of particles to system
+            std::move(particles));
 
     // Run steps to equilibrate particles
     auto acceptedEquilibrationSteps = system->runEquilibrationSteps(
@@ -108,7 +114,7 @@ int main(int argv, char** argc) {
         sampler->printOutputToTerminal(*system);
     }
     else {
-        sampler->writeOutToFile(*system, filename, omega);
+        sampler->writeOutToFile(*system, filename, omega, analytical, importanceSampling);
     }
 
     return 0;

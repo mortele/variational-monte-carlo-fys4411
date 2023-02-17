@@ -76,7 +76,7 @@ void Sampler::printOutputToTerminal(System& system) {
     cout << endl;
 }
 
-void Sampler::writeOutToFile(System& system, std::string filename, double omega) {
+void Sampler::writeOutToFile(System& system, std::string filename, double omega, bool analytical, bool importanceSampling) {
     std::ifstream exsists_file(filename.c_str());
 
     std::fstream outfile;
@@ -99,6 +99,8 @@ void Sampler::writeOutToFile(System& system, std::string filename, double omega)
                 << setw(w) << "Energy_var"
                 << setw(w) << "Accept_number"
                 << setw(w) << "Accept_ratio"
+                << setw(w) << "imposampling"
+                << setw(w) << "analytical"
                 << "\n";
     }
     else {
@@ -120,6 +122,8 @@ void Sampler::writeOutToFile(System& system, std::string filename, double omega)
             << setw(w) << fixed << setprecision(5) << m_energy_variance
             << setw(w) << fixed << setprecision(5) << m_numberOfAcceptedSteps
             << setw(w) << fixed << setprecision(5) << m_acceptRatio
+            << setw(w) << fixed << setprecision(5) << importanceSampling
+            << setw(w) << fixed << setprecision(5) << analytical
             << "\n";
 
     outfile.close();
