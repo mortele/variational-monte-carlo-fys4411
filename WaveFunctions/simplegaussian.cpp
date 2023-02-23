@@ -7,7 +7,7 @@
 #include "../system.h"
 #include "../particle.h"
 
-#include<iostream>
+#include <iostream>
 
 SimpleGaussian::SimpleGaussian(double alpha)
 {
@@ -17,30 +17,34 @@ SimpleGaussian::SimpleGaussian(double alpha)
     m_parameters.push_back(alpha);
 }
 
-double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>>& particles) {
+double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>> &particles)
+{
     /* You need to implement a Gaussian wave function here. The positions of
      * the particles are accessible through the particle[i]->getPosition()
      * function.
      */
     int num_particles = particles.size();
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
-    
+
     double r2 = 0;
     double r_q = 0;
     double alpha = m_parameters.at(0);
 
-    for(int i = 0; i < num_particles; i++) {
+    for (int i = 0; i < num_particles; i++)
+    {
         Particle particle = *particles.at(i);
-        for(int q = 0; q < numberOfDimensions; q++) {
-            r_q =  particle.getPosition().at(q);
+        for (int q = 0; q < numberOfDimensions; q++)
+        {
+            r_q = particle.getPosition().at(q);
             r2 += r_q * r_q;
         }
     }
 
-    return std::exp( -alpha * r2 );
+    return std::exp(-alpha * r2);
 }
 
-double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles) {
+double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
+{
     /* All wave functions need to implement this function, so you need to
      * find the double derivative analytically. Note that by double derivative,
      * we actually mean the sum of the Laplacians with respect to the
@@ -52,54 +56,58 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
     int num_particles = particles.size();
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
     double alpha = m_parameters.at(0);
-    
+
     // double psi_T = evaluate(particles);
 
     double r2_sum = 0;
     double r_q = 0;
 
-    for(int k = 0; k < num_particles; k++) {
+    for (int k = 0; k < num_particles; k++)
+    {
         Particle particle = *particles.at(k);
-        for(int q = 0; q < numberOfDimensions; q++) {
+        for (int q = 0; q < numberOfDimensions; q++)
+        {
             r_q = particle.getPosition().at(q);
             r2_sum += r_q * r_q;
         }
     }
 
     using namespace std;
-    //cout << 2*alpha*(2*alpha*r2_sum - num_particles*numberOfDimensions) << endl;
-    return 2*alpha*(2*alpha*r2_sum - num_particles*numberOfDimensions);
+    // cout << 2*alpha*(2*alpha*r2_sum - num_particles*numberOfDimensions) << endl;
+    return 2 * alpha * (2 * alpha * r2_sum - num_particles * numberOfDimensions);
 }
 
-SimpleGaussianNumerical::SimpleGaussianNumerical(double alpha, double dx) : SimpleGaussian(alpha) 
+SimpleGaussianNumerical::SimpleGaussianNumerical(double alpha, double dx) : SimpleGaussian(alpha)
 {
-    m_dx=dx;
+    m_dx = dx;
     std::cout << "I am now in the correct constructor! but unfortunately my double derivative does nothing, but create errors :((\n";
 }
 
-double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles)
+double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
 {
-    int num_particles =particles.size();
+    int num_particles = particles.size();
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
-    double der_sum=0;
-    for(int i=0; i < num_particles; i++){
-        Particle& particle = *particles.at(i);
+    double der_sum = 0;
+    double r_j, gx, gxpdx, gxmdx, der;
 
-        for(int j=0; j < numberOfDimensions; j++){
+    for (int i = 0; i < num_particles; i++)
+    {
+        Particle &particle = *particles.at(i);
 
-            double r_j =particle.getPosition().at(j);
-            double gx=evaluate(particles);
-            particle.adjustPosition(m_dx,j);
-            double gxpdx=evaluate(particles);
-            particle.adjustPosition(-2*m_dx, j);
-            double gxmdx =evaluate(particles);
-            double der=(gxpdx-2*gx+gxmdx)/(m_dx*m_dx);
+        for (int j = 0; j < numberOfDimensions; j++)
+        {
+
+            r_j = particle.getPosition().at(j);
+            gx = evaluate(particles); // gx = g(x)
+            particle.adjustPosition(m_dx, j);
+            gxpdx = evaluate(particles); // gxpdx = g(x + dx)
+            particle.adjustPosition(-2 * m_dx, j);
+            gxmdx = evaluate(particles);                    // gxmdx = g(x - dx)
+            der = (gxpdx - 2 * gx + gxmdx) / (m_dx * m_dx); // der = double derivative
             particle.setPosition(r_j, j);
-            der_sum +=der;
-
+            der_sum += der;
         }
-        double local_der_sum=der_sum/evaluate(particles);
     }
     /*std::cout<<"der"<<der_sum<<std::endl;*/
-    return der_sum;
-    }
+    return der_sum / evaluate(particles);
+}
