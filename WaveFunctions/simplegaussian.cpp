@@ -67,7 +67,7 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
     }
 
     using namespace std;
-    cout << 2*alpha*(2*alpha*r2_sum - num_particles*numberOfDimensions) << endl;
+    //cout << 2*alpha*(2*alpha*r2_sum - num_particles*numberOfDimensions) << endl;
     return 2*alpha*(2*alpha*r2_sum - num_particles*numberOfDimensions);
 }
 
@@ -84,10 +84,10 @@ double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_
     double der_sum=0;
     for(int i=0; i < num_particles; i++){
         Particle& particle = *particles.at(i);
+
         for(int j=0; j < numberOfDimensions; j++){
 
             double r_j =particle.getPosition().at(j);
-            
             double gx=evaluate(particles);
             particle.adjustPosition(m_dx,j);
             double gxpdx=evaluate(particles);
@@ -98,7 +98,8 @@ double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_
             der_sum +=der;
 
         }
+        double local_der_sum=der_sum/evaluate(particles);
     }
-    std::cout<<"der"<<der_sum<<std::endl;
+    /*std::cout<<"der"<<der_sum<<std::endl;*/
     return der_sum;
     }
