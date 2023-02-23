@@ -13,7 +13,9 @@ public:
 
 class SimpleGaussianNumerical : public SimpleGaussian {
 public:
-    SimpleGaussianNumerical(double alpha);
+    SimpleGaussianNumerical(double alpha, double dx);
     double computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles);
+private:
+    double m_dx;
 
 };
