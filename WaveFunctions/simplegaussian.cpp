@@ -72,16 +72,25 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
         }
     }
 
-    using namespace std;
-    // cout << 2*alpha*(2*alpha*r2_sum - num_particles*numberOfDimensions) << endl;
     return 2 * alpha * (2 * alpha * r2_sum - num_particles * numberOfDimensions);
 }
+
+void SimpleGaussian::quantumForce(Particle& particle, std::vector<double>& force) { 
+    static const int numberOfDimensions = particle.getNumberOfDimensions();
+    static const double alpha = m_parameters.at(0);
+
+    for(int q = 0; q < numberOfDimensions; q++) {
+        force.at(q) = -4.0*alpha * particle.getPosition().at(q);
+    }
+}
+
 
 SimpleGaussianNumerical::SimpleGaussianNumerical(double alpha, double dx) : SimpleGaussian(alpha)
 {
     m_dx = dx;
     std::cout << "I am now in the correct constructor! but unfortunately my double derivative does nothing, but create errors :((\n";
 }
+
 
 double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
 {
