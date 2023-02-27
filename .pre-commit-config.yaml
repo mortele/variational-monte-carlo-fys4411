@@ -1,0 +1,7 @@
+repos:
+-   repo: https://github.com/hkve/variational-monte-carlo-fys4411
+    rev: master
+    hooks:
+    -   id: clang-format
+    -   id: cpplint
+    -   id: cppcheck
