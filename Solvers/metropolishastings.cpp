@@ -24,7 +24,7 @@ bool MetropolisHastings::step(
 {
     /*
     Here the step related to Metroplis-Hasting algo should be performed, using importance sampling.
-    */   
+    */ 
     int numberOfParticles = particles.size();
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
 
@@ -49,6 +49,7 @@ bool MetropolisHastings::step(
     double Psi_new = waveFunction.evaluate(particles);
     waveFunction.quantumForce(proposed_particle, qForceNew);
 
+
     double G_ratio = 0;
     for(int q = 0; q < numberOfDimensions; q++) {
         G_ratio += 0.5*(qForceOld.at(q)+qForceNew.at(q))*(
@@ -56,8 +57,8 @@ bool MetropolisHastings::step(
             + 0.5*m_D*m_timeStep*(qForceOld.at(q) - qForceNew.at(q))
         );
     }
+
     G_ratio = std::exp(G_ratio);
-    
     double w = G_ratio * (Psi_new*Psi_new)/(Psi_old*Psi_old);
 
     if( w >= m_rng->nextDouble() ) {
