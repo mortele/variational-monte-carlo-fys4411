@@ -22,6 +22,7 @@ int main(int argv, char **argc)
     // Seed for the random number generator
     int seed = 2023;
 
+    // Set default paramters
     unsigned int numberOfDimensions = 3;
     unsigned int numberOfParticles = 10;
     unsigned int numberOfMetropolisSteps = (unsigned int) 1e6;
@@ -35,6 +36,7 @@ int main(int argv, char **argc)
     double D = 0.5;
     string filename = "";
 
+    // If no arguments are given, show usage.
     if( argv == 1 ) {
         cout << "Hello! Usage:" <<endl;
         cout << "./vmc #dims #particles #log10(metropolis-steps) #log10(equilibriation-steps) omega alpha stepLength importanceSampling? analytical? filename" << endl;
@@ -51,6 +53,8 @@ int main(int argv, char **argc)
         return 0;
     }
 
+    // Check how many arguments are given and overwrite defaults. Works serially, meaning if 4 parameters are given
+    // the first 4 paramters will be overwritten, the rest will be defaults.
     if(argv >= 2)
         numberOfDimensions = (unsigned int) atoi(argc[1]);
     if(argv >= 3)
@@ -74,15 +78,24 @@ int main(int argv, char **argc)
 
     // The random engine can also be built without a seed
     auto rng = std::make_unique<Random>(seed);
+    
     // Initialize particles
     auto particles = setupRandomUniformInitialState(stepLength, omega, numberOfDimensions, numberOfParticles, *rng);
+    
     // Construct a unique pointer to a new System
     auto hamiltonian = std::make_unique<HarmonicOscillator>(omega);
+    
+    // Initialise SimpleGaussian by default
     std::unique_ptr<class WaveFunction> wavefunction = std::make_unique<SimpleGaussian>(alpha);
+    
+    // Empty solver pointer, since it uses "rng" in its constructor (can only be moved once).
     std::unique_ptr<class MonteCarlo> solver;
 
+    // Check if numerical gaussian should be used.
     if(!analytical)
         wavefunction = std::make_unique<SimpleGaussianNumerical>(alpha, dx);
+    
+    // Set what solver to use, pass on rng and additional parameters
     if(importanceSampling) {
         solver = std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
     }
@@ -90,6 +103,7 @@ int main(int argv, char **argc)
         solver = std::make_unique<Metropolis>(std::move(rng));
     }
 
+    // Create system pointer, passing in all classes.
     auto system = std::make_unique<System>(
             // Construct unique_ptr to Hamiltonian
             std::move(hamiltonian),
@@ -110,7 +124,7 @@ int main(int argv, char **argc)
         stepLength,
         numberOfMetropolisSteps);
 
-    // Output information from the simulation
+    // Output information from the simulation, either as file or print
     if (filename == "")
     {
         sampler->printOutputToTerminal(*system);
