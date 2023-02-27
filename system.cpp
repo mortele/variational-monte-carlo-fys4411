@@ -61,6 +61,9 @@ std::unique_ptr<class Sampler> System::runMetropolisSteps(
         /* Here you should sample the energy (and maybe other things) using the
          * sampler instance of the Sampler class.
          */
+        // compute local energy
+        double localEnergy = computeLocalEnergy();
+
         sampler->sample(acceptedStep, this);
     }
 

@@ -117,3 +117,8 @@ double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_
 
     return der_sum / evaluate(particles); // divide by the value of the wave function at the current position
 }
+
+void SimpleGaussian::setAlpha(double alpha) // allows the variational parameter alpha to be changed
+{
+    m_parameters.at(0) = alpha;
+}

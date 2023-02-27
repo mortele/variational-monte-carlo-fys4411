@@ -11,6 +11,7 @@
 #include "InitialStates/initialstate.h"
 #include "Solvers/metropolis.h"
 #include "Solvers/metropolishastings.h"
+#include "Solvers/gradientmetropolishastings.h"
 #include "Math/random.h"
 #include "particle.h"
 #include "sampler.h"
@@ -28,10 +29,13 @@ int main(int argv, char **argc)
     unsigned int numberOfMetropolisSteps = (unsigned int)1e6;
     unsigned int numberOfEquilibrationSteps = (unsigned int)1e6;
     double omega = 1.0;         // Oscillator frequency.
-    double alpha = omega / 2.0; // Variational parameter.
+    double alpha = omega / 2.0; // Variational parameter. If using gradient descent, this is the initial guess.
     double stepLength = 0.1;    // Metropolis step length.
+    double epochs = 100;        // Number of epochs for gradient descent.
+    double lr = 0.0;            // Learning rate for gradient descent.
     double dx = 10e-6;
     bool importanceSampling = false;
+    bool gradientDescent = false;
     bool analytical = true;
     double D = 0.5;
     string filename = "";
@@ -99,7 +103,14 @@ int main(int argv, char **argc)
     // Set what solver to use, pass on rng and additional parameters
     if (importanceSampling)
     {
-        solver = std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
+        if (gradientDescent)
+        {
+            solver = std::make_unique<GradientMetropolisHastings>(std::move(rng), stepLength, D, epochs, lr);
+        }
+        else
+        {
+            solver = std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
+        }
     }
     else
     {
@@ -122,10 +133,27 @@ int main(int argv, char **argc)
         stepLength,
         numberOfEquilibrationSteps);
 
-    // Run the Metropolis algorithm
-    auto sampler = system->runMetropolisSteps(
-        stepLength,
-        numberOfMetropolisSteps);
+    if gradientDescent // doing this is not super elegant but it is didatic
+    {
+        // Run the Metropolis algorithm epochs times
+        for (int i = 0; i <= epochs; i++)
+        {
+            // set / update alpha
+            alpha = system->getAlpha();          // it might be better to use the get parameter and set parameter functions, let us discuss this.
+            alpha -= lr * solver->getGradient(); // this getGradient is not yet implemented
+            system->setAlpha(alpha);
+            system->runMetropolisSteps(
+                stepLength,
+                numberOfMetropolisSteps);
+        }
+    }
+    else
+    {
+        // Run the Metropolis algorithm
+        system->runMetropolisSteps(
+            stepLength,
+            numberOfMetropolisSteps);
+    }
 
     // Output information from the simulation, either as file or print
     if (filename == "")
