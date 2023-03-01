@@ -43,6 +43,31 @@ double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>> &pa
     return std::exp(-alpha * r2);
 }
 
+std::vector<double> SimpleGaussian::computeDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
+{
+    /* All wave functions need to implement this function, so you need to
+     * find the derivative analytically. Note that by derivative, we actually
+     * mean the derivative with respect to the variational parameters.
+     */
+    int num_particles = particles.size();
+    int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
+    double alpha = m_parameters.at(0);
+
+    double r2_sum = 0;
+    double r_q = 0;
+
+    for (int k = 0; k < num_particles; k++)
+    {
+        Particle particle = *particles.at(k);
+        for (int q = 0; q < numberOfDimensions; q++)
+        {
+            r_q = particle.getPosition().at(q);
+            r2_sum += r_q * r_q;
+        }
+    }
+    return {-2 * alpha * r2_sum}; // analytic derivative with respect to alpha, only one parameter to optimize now
+}
+
 double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
 {
     /* All wave functions need to implement this function, so you need to
@@ -118,7 +143,8 @@ double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_
     return der_sum / evaluate(particles); // divide by the value of the wave function at the current position
 }
 
-void SimpleGaussian::setAlpha(double alpha) // allows the variational parameter alpha to be changed
+void SimpleGaussian::setParameters(std::vector<double> parameters)
 {
-    m_parameters.at(0) = alpha;
+    assert(parameters.size() == m_numberOfParameters);
+    m_parameters = parameters;
 }

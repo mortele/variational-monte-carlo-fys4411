@@ -1,7 +1,7 @@
 #include <memory>
 #include <vector>
 
-#include "metropolishastings.h"
+#include "gradientmetropolishastings.h"
 #include "WaveFunctions/wavefunction.h"
 #include "particle.h"
 #include "Math/random.h"

@@ -7,7 +7,7 @@
 class GradientMetropolisHastings : public MonteCarlo
 {
 public:
-    GradientMetropolisHastings(std::unique_ptr<class Random> rng, double timeStep, double D);
+    GradientMetropolisHastings(std::unique_ptr<class Random> rng, double timeStep, double D, double epochs, double lr);
     bool step(
         double stepLength,
         class WaveFunction &waveFunction,

@@ -31,11 +31,11 @@ int main(int argv, char **argc)
     double omega = 1.0;         // Oscillator frequency.
     double alpha = omega / 2.0; // Variational parameter. If using gradient descent, this is the initial guess.
     double stepLength = 0.1;    // Metropolis step length.
-    double epochs = 100;        // Number of epochs for gradient descent.
+    double epochs = 2;          // Number of epochs for gradient descent.
     double lr = 0.0;            // Learning rate for gradient descent.
     double dx = 10e-6;
     bool importanceSampling = false;
-    bool gradientDescent = false;
+    bool gradientDescent = true;
     bool analytical = true;
     double D = 0.5;
     string filename = "";
@@ -133,27 +133,19 @@ int main(int argv, char **argc)
         stepLength,
         numberOfEquilibrationSteps);
 
-    if gradientDescent // doing this is not super elegant but it is didatic
+    // Run the Metropolis algorithm
+    if (!gradientDescent) // to prevent multiple runs when not using gradient descent
     {
-        // Run the Metropolis algorithm epochs times
-        for (int i = 0; i <= epochs; i++)
-        {
-            // set / update alpha
-            alpha = system->getAlpha();          // it might be better to use the get parameter and set parameter functions, let us discuss this.
-            alpha -= lr * solver->getGradient(); // this getGradient is not yet implemented
-            system->setAlpha(alpha);
-            system->runMetropolisSteps(
-                stepLength,
-                numberOfMetropolisSteps);
-        }
+        lr = 0.0;
+        epochs = 0;
     }
-    else
-    {
-        // Run the Metropolis algorithm
-        system->runMetropolisSteps(
-            stepLength,
-            numberOfMetropolisSteps);
-    }
+
+    auto sampler = system->runMetropolisSteps(
+        stepLength,
+        numberOfMetropolisSteps,
+        gradientDescent,
+        lr = 0.1,    // just for testing
+        epochs = 2); // just for testing
 
     // Output information from the simulation, either as file or print
     if (filename == "")
