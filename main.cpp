@@ -5,6 +5,8 @@
 #include <memory>
 #include <cmath>
 
+#include <chrono>
+
 #include "system.h"
 #include "WaveFunctions/simplegaussian.h"
 #include "Hamiltonians/harmonicoscillator.h"
@@ -34,6 +36,7 @@ int main(int argv, char **argc)
     bool importanceSampling = false;
     bool analytical = true;
     double D = 0.5;
+    bool timing=0;
     string filename = "";
 
     // If no arguments are given, show usage.
@@ -50,7 +53,9 @@ int main(int argv, char **argc)
         cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
         cout << "Importantce sampling?, bool: If the Metropolis Hasting algorithm is used. Then stepLength serves as Delta t" << endl;
         cout << "analytical?, bool: If the analytical expression should be used. Defaults to true" << endl;
+        cout << "timing?, bool: Prints out the time it takes for the equilibrium and metroplolis steps to calculate" << endl;
         cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." << endl;
+        
         return 0;
     }
 
@@ -75,7 +80,9 @@ int main(int argv, char **argc)
     if (argv >= 10)
         analytical = (bool)atoi(argc[9]);
     if (argv >= 11)
-        filename = argc[10];
+        timing=(bool)atoi(argc[10]);
+    if (argv >= 12)
+        filename = argc[11];
 
     // The random engine can also be built without a seed
     auto rng = std::make_unique<Random>(seed);
@@ -118,6 +125,7 @@ int main(int argv, char **argc)
         std::move(particles));
 
     // Run steps to equilibrate particles
+    auto beginning = std::chrono::high_resolution_clock::now(); //Start timer
     auto acceptedEquilibrationSteps = system->runEquilibrationSteps(
         stepLength,
         numberOfEquilibrationSteps);
@@ -126,16 +134,23 @@ int main(int argv, char **argc)
     auto sampler = system->runMetropolisSteps(
         stepLength,
         numberOfMetropolisSteps);
-
+    auto ending = std::chrono::high_resolution_clock::now(); //end timer
+    double timelapse= std::chrono::duration_cast<std::chrono::microseconds>(ending - beginning).count(); //find time
     // Output information from the simulation, either as file or print
-    if (filename == "")
-    {
-        sampler->printOutputToTerminal(*system);
+    if(timing){
+        sampler->WriteTimingToFiles(*system, filename, analytical, numberOfEquilibrationSteps, timelapse);
     }
-    else
-    {
-        sampler->writeOutToFile(*system, filename, omega, analytical, importanceSampling);
+    else{
+        if (filename == "")
+        {
+            sampler->printOutputToTerminal(*system);
+        }
+        else
+        {
+            sampler->writeOutToFile(*system, filename, omega, analytical, importanceSampling);
+        }
     }
 
     return 0;
 }
+

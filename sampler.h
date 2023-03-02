@@ -15,6 +15,7 @@ public:
     void sample(bool acceptedStep, class System* system);
     void printOutputToTerminal(class System& system);
     void writeOutToFile(class System& system, std::string filename, double omega, bool analytical, bool importanceSampling);
+    void WriteTimingToFiles(System& system, std::string filename, bool analytical, unsigned int numberOfEquilibrationSteps, double timing);
     void computeAverages();
     double getEnergy()
     {
@@ -25,6 +26,7 @@ private:
     double m_stepLength = 0;
     unsigned int m_stepNumber = 0;
     unsigned int m_numberOfMetropolisSteps = 0;
+    unsigned int m_numberOfEquilibrationSteps = 0;
     unsigned int m_numberOfParticles = 0;
     unsigned int m_numberOfDimensions = 0;
     unsigned int m_numberOfAcceptedSteps = 0;
