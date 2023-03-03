@@ -2,6 +2,8 @@ import subprocess
 import pathlib as pl
 import pandas as pd
 
+import os
+
 def rootPath():
     cur_path = pl.Path(__file__)
     root_path = cur_path
@@ -19,12 +21,11 @@ def dataPath(filename):
     filename_path = rootPath() / pl.Path(f"Data/{filename}")
     return filename_path
 
-def vmcRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, analytical=True, filename="test.txt"):
+def vmcRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, importance=False, analytical=True, filename=None):
     vmc_path = vmcPath()
     filename_path = dataPath(filename)
 
     assert vmc_path.exists(), f"I cannot find {vmc_path} :((, are you sure you have compiled?"
-
     args = [
         vmc_path,
         D,
@@ -34,9 +35,13 @@ def vmcRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, a
         omega,
         alpha,
         stepLength,
+        int(importance),
         int(analytical),
         filename_path,
     ]
+
+    if not filename:
+        args.pop()
 
     args_run = [str(arg) for arg in args]
 
