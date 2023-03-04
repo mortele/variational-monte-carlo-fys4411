@@ -43,7 +43,7 @@ double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>> &pa
     return std::exp(-alpha * r2);
 }
 
-std::vector<double> SimpleGaussian::computeDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
+double SimpleGaussian::computeParamDerivative(std::vector<std::unique_ptr<class Particle>> &particles, int parameterIndex)
 {
     /* All wave functions need to implement this function, so you need to
      * find the derivative analytically. Note that by derivative, we actually
@@ -51,7 +51,7 @@ std::vector<double> SimpleGaussian::computeDerivative(std::vector<std::unique_pt
      */
     int num_particles = particles.size();
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
-    double alpha = m_parameters.at(0);
+    double parameter = m_parameters.at(parameterIndex);
 
     double r2_sum = 0;
     double r_q = 0;
@@ -65,7 +65,7 @@ std::vector<double> SimpleGaussian::computeDerivative(std::vector<std::unique_pt
             r2_sum += r_q * r_q;
         }
     }
-    return {-2 * alpha * r2_sum}; // analytic derivative with respect to alpha, only one parameter to optimize now
+    return -2 * parameter * r2_sum; // analytic derivative with respect to alpha, only one parameter to optimize now, This needs to be generalized
 }
 
 double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
@@ -145,6 +145,6 @@ double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_
 
 void SimpleGaussian::setParameters(std::vector<double> parameters)
 {
-    assert(parameters.size() == m_numberOfParameters);
+    assert((int)parameters.size() == m_numberOfParameters);
     m_parameters = parameters;
 }

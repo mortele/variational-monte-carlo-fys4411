@@ -37,6 +37,13 @@ Sampler::Sampler(
     m_cumulativeEnergy = 0;
     m_cumulativeEnergy2 = 0;
     m_numberOfAcceptedSteps = 0;
+
+    m_numberOfParams = 1; // this should not be hard coded but we will change it later
+
+    m_cumulativeDerPsiE = std::vector<double>(m_numberOfParams, 0);
+    m_deltaPsi = std::vector<double>(m_numberOfParams, 0);
+    m_derPsiE = std::vector<double>(m_numberOfParams, 0);
+    m_energyDerivative = std::vector<double>(m_numberOfParams, 0);
 }
 
 void Sampler::sample(bool acceptedStep, System *system)
@@ -49,6 +56,13 @@ void Sampler::sample(bool acceptedStep, System *system)
     m_cumulativeEnergy2 += (localEnergy * localEnergy);
     m_stepNumber++;
     m_numberOfAcceptedSteps += acceptedStep;
+
+    for (int i = 0; i < m_numberOfParams; i++)
+    {
+        m_deltaPsi.at(i) = system->computeParamDerivative(i);
+        m_derPsiE.at(i) = m_deltaPsi.at(i) * localEnergy;
+        m_cumulativeDerPsiE.at(i) += m_derPsiE.at(i);
+    }
 }
 
 void Sampler::printOutputToTerminal(System &system)
@@ -78,7 +92,8 @@ void Sampler::printOutputToTerminal(System &system)
     cout << endl;
 }
 
-void Sampler::writeOutToFile(System& system, std::string filename, double omega, bool analytical, bool importanceSampling) {
+void Sampler::writeOutToFile(System &system, std::string filename, double omega, bool analytical, bool importanceSampling)
+{
     std::ifstream exsists_file(filename.c_str());
 
     std::fstream outfile;
@@ -142,4 +157,19 @@ void Sampler::computeAverages()
     m_energy_variance = (m_cumulativeEnergy2 - m_energy * m_energy);
     m_energy_std = sqrt(m_energy_variance);
     m_acceptRatio = ((double)m_numberOfAcceptedSteps) / ((double)m_numberOfMetropolisSteps);
+
+    for (int i = 0; i < m_numberOfParams; i++)
+    {
+        m_derPsiE[i] = m_cumulativeDerPsiE[i] / m_numberOfMetropolisSteps;
+        m_deltaPsi[i] = m_deltaPsi[i] / m_numberOfMetropolisSteps;
+    }
+}
+
+std::vector<double> Sampler::getEnergyDerivative()
+{
+    for (int i = 0; i < m_numberOfParams; i++)
+    {
+        m_energyDerivative[i] = 2 * (m_derPsiE[i] - m_energy * m_deltaPsi[i]);
+    }
+    return m_energyDerivative;
 }

@@ -18,16 +18,21 @@ public:
 
     std::unique_ptr<class Sampler> runMetropolisSteps(
         double stepLength,
+        unsigned int numberOfMetropolisSteps);
+
+    std::unique_ptr<class Sampler> optimizeMetropolis(
+        System &system,
+        double stepLength,
         unsigned int numberOfMetropolisSteps,
-        bool gradientDescent,
-        double learningRate,
-        int epochs);
+        int epochs,
+        double learningRate);
 
     double computeLocalEnergy();
     const std::vector<double> &getWaveFunctionParameters();
 
     void setWaveFunction(std::unique_ptr<class WaveFunction> waveFunction);
     void setSolver(std::unique_ptr<class MonteCarlo> solver);
+    double computeParamDerivative(int paramIndex);
 
 private:
     unsigned int m_numberOfParticles = 0;

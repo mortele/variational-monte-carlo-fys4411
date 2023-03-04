@@ -11,7 +11,6 @@
 #include "InitialStates/initialstate.h"
 #include "Solvers/metropolis.h"
 #include "Solvers/metropolishastings.h"
-#include "Solvers/gradientmetropolishastings.h"
 #include "Math/random.h"
 #include "particle.h"
 #include "sampler.h"
@@ -31,11 +30,11 @@ int main(int argv, char **argc)
     double omega = 1.0;         // Oscillator frequency.
     double alpha = omega / 2.0; // Variational parameter. If using gradient descent, this is the initial guess.
     double stepLength = 0.1;    // Metropolis step length.
-    double epochs = 2;          // Number of epochs for gradient descent.
-    double lr = 0.0;            // Learning rate for gradient descent.
+    int epochs = 5;             // Number of epochs for gradient descent.
+    double lr = 0.001;          // Learning rate for gradient descent.
     double dx = 10e-6;
     bool importanceSampling = false;
-    bool gradientDescent = true;
+    bool gradientDescent = false;
     bool analytical = true;
     double D = 0.5;
     string filename = "";
@@ -103,14 +102,7 @@ int main(int argv, char **argc)
     // Set what solver to use, pass on rng and additional parameters
     if (importanceSampling)
     {
-        if (gradientDescent)
-        {
-            solver = std::make_unique<GradientMetropolisHastings>(std::move(rng), stepLength, D, epochs, lr);
-        }
-        else
-        {
-            solver = std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
-        }
+        solver = std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
     }
     else
     {
@@ -136,25 +128,36 @@ int main(int argv, char **argc)
     // Run the Metropolis algorithm
     if (!gradientDescent) // to prevent multiple runs when not using gradient descent
     {
-        lr = 0.0;
-        epochs = 0;
-    }
-
-    auto sampler = system->runMetropolisSteps(
-        stepLength,
-        numberOfMetropolisSteps,
-        gradientDescent,
-        lr = 0.1,    // just for testing
-        epochs = 2); // just for testing
-
-    // Output information from the simulation, either as file or print
-    if (filename == "")
-    {
-        sampler->printOutputToTerminal(*system);
+        auto sampler = system->runMetropolisSteps(
+            stepLength,
+            numberOfMetropolisSteps);
+        // Output information from the simulation, either as file or print
+        if (filename == "") // this is dumbly duplicated now
+        {
+            sampler->printOutputToTerminal(*system);
+        }
+        else
+        {
+            sampler->writeOutToFile(*system, filename, omega, analytical, importanceSampling);
+        }
     }
     else
     {
-        sampler->writeOutToFile(*system, filename, omega, analytical, importanceSampling);
+        auto sampler = system->optimizeMetropolis(
+            *system,
+            stepLength,
+            numberOfMetropolisSteps,
+            epochs,
+            lr);
+        // Output information from the simulation, either as file or print
+        if (filename == "") // this is dumbly duplicated now
+        {
+            sampler->printOutputToTerminal(*system);
+        }
+        else
+        {
+            sampler->writeOutToFile(*system, filename, omega, analytical, importanceSampling);
+        }
     }
 
     return 0;
