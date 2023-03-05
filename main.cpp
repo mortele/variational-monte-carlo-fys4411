@@ -31,10 +31,10 @@ int main(int argv, char **argc)
     double alpha = omega / 2.0; // Variational parameter. If using gradient descent, this is the initial guess.
     double stepLength = 0.1;    // Metropolis step length.
     int epochs = 5;             // Number of epochs for gradient descent.
-    double lr = 0.001;          // Learning rate for gradient descent.
+    double lr = 0.1;            // Learning rate for gradient descent.
     double dx = 10e-6;
     bool importanceSampling = false;
-    bool gradientDescent = false;
+    bool gradientDescent = true;
     bool analytical = true;
     double D = 0.5;
     string filename = "";
@@ -43,7 +43,7 @@ int main(int argv, char **argc)
     if (argv == 1)
     {
         cout << "Hello! Usage:" << endl;
-        cout << "./vmc #dims #particles #log10(metropolis-steps) #log10(equilibriation-steps) omega alpha stepLength importanceSampling? analytical? filename" << endl;
+        cout << "./vmc #dims #particles #log10(metropolis-steps) #log10(equilibriation-steps) omega alpha stepLength importanceSampling? analytical? gradientDescent? filename" << endl;
         cout << "#dims, int: Number of dimensions" << endl;
         cout << "#particles, int: Number of particles" << endl;
         cout << "#log10(metropolis steps), int/double: log10 of number of steps, i.e. 6 gives 1e6 steps" << endl;
@@ -52,6 +52,7 @@ int main(int argv, char **argc)
         cout << "alpha, double: WF parameter for simple gaussian. Analytical sol alpha = omega/2" << endl;
         cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
         cout << "Importantce sampling?, bool: If the Metropolis Hasting algorithm is used. Then stepLength serves as Delta t" << endl;
+        cout << "gradientDescent?, bool: If the gradient descent algorithm should be used. Defaults to true" << endl;
         cout << "analytical?, bool: If the analytical expression should be used. Defaults to true" << endl;
         cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." << endl;
         return 0;
@@ -78,7 +79,9 @@ int main(int argv, char **argc)
     if (argv >= 10)
         analytical = (bool)atoi(argc[9]);
     if (argv >= 11)
-        filename = argc[10];
+        gradientDescent = argc[10];
+    if (argv >= 12)
+        filename = argc[11];
 
     // The random engine can also be built without a seed
     auto rng = std::make_unique<Random>(seed);
@@ -126,20 +129,13 @@ int main(int argv, char **argc)
         numberOfEquilibrationSteps);
 
     // Run the Metropolis algorithm
-    if (!gradientDescent) // to prevent multiple runs when not using gradient descent
+    if (!gradientDescent)
     {
         auto sampler = system->runMetropolisSteps(
             stepLength,
             numberOfMetropolisSteps);
         // Output information from the simulation, either as file or print
-        if (filename == "") // this is dumbly duplicated now
-        {
-            sampler->printOutputToTerminal(*system);
-        }
-        else
-        {
-            sampler->writeOutToFile(*system, filename, omega, analytical, importanceSampling);
-        }
+        sampler->output(*system, filename, omega, analytical, importanceSampling);
     }
     else
     {
@@ -150,14 +146,7 @@ int main(int argv, char **argc)
             epochs,
             lr);
         // Output information from the simulation, either as file or print
-        if (filename == "") // this is dumbly duplicated now
-        {
-            sampler->printOutputToTerminal(*system);
-        }
-        else
-        {
-            sampler->writeOutToFile(*system, filename, omega, analytical, importanceSampling);
-        }
+        sampler->output(*system, filename, omega, analytical, importanceSampling);
     }
 
     return 0;

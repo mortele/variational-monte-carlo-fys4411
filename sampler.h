@@ -14,6 +14,7 @@ public:
     void sample(bool acceptedStep, class System *system);
     void printOutputToTerminal(class System &system);
     void writeOutToFile(class System &system, std::string filename, double omega, bool analytical, bool importanceSampling);
+    void output(System &system, std::string filename, double omega, bool analytical, bool importanceSampling);
     void computeAverages();
     std::vector<double> getEnergyDerivative();
 
@@ -42,6 +43,7 @@ private:
 
     std::vector<double> m_energyDerivative = std::vector<double>(m_numberOfParams, 0);
     std::vector<double> m_cumulativeDerPsiE = std::vector<double>(m_numberOfParams, 0);
+    std::vector<double> m_cumulativedeltaPsi = std::vector<double>(m_numberOfParams, 0);
     std::vector<double> m_deltaPsi = std::vector<double>(m_numberOfParams, 0);
     std::vector<double> m_derPsiE = std::vector<double>(m_numberOfParams, 0);
 };

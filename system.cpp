@@ -84,8 +84,16 @@ std::unique_ptr<class Sampler> System::optimizeMetropolis(
 
     for (int i = 0; i < epochs; i++)
     {
-        // IMPORTANT: Here I think I should reset the position and quantum force of the particles
-        // but the parameters of the wave function should be what they were at the end of last epoch
+        /*Notice that the positions are reset to what they were at the initial state but the
+        parameters of the wave function should be what they were at the END of last epoch*/
+
+        // reset position and quantum force
+        // (i think the quantum force is reset automatically to 0 and the beggining of the metroplis step)
+        for (unsigned int i = 0; i < m_numberOfParticles; i++)
+        {
+            m_particles[i]->resetPosition();
+            // m_particles[i]->resetQuantumForce();
+        }
 
         // (re)set the sampler cumulative values by calling the constructor
         sampler = std::make_unique<Sampler>(
@@ -100,7 +108,6 @@ std::unique_ptr<class Sampler> System::optimizeMetropolis(
         sampler = runMetropolisSteps(stepLength, numberOfMetropolisSteps);
 
         std::vector<double> m_energyDerivative = sampler->getEnergyDerivative();
-        double m_energy = sampler->getEnergy(); // not necesseary but just to check
 
         // update parameters
         std::vector<double> parameters = getWaveFunctionParameters();
@@ -112,8 +119,6 @@ std::unique_ptr<class Sampler> System::optimizeMetropolis(
         }
         // set new wave function parameters
         m_waveFunction->setParameters(parameters);
-
-        std::cout << "Epoch: " << i << "\nEnergy: " << m_energy << "\n";
     }
     return sampler;
 }

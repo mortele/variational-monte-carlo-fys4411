@@ -41,6 +41,7 @@ Sampler::Sampler(
     m_numberOfParams = 1; // this should not be hard coded but we will change it later
 
     m_cumulativeDerPsiE = std::vector<double>(m_numberOfParams, 0);
+    m_cumulativedeltaPsi = std::vector<double>(m_numberOfParams, 0);
     m_deltaPsi = std::vector<double>(m_numberOfParams, 0);
     m_derPsiE = std::vector<double>(m_numberOfParams, 0);
     m_energyDerivative = std::vector<double>(m_numberOfParams, 0);
@@ -61,6 +62,7 @@ void Sampler::sample(bool acceptedStep, System *system)
     {
         m_deltaPsi.at(i) = system->computeParamDerivative(i);
         m_derPsiE.at(i) = m_deltaPsi.at(i) * localEnergy;
+        m_cumulativedeltaPsi.at(i) += m_deltaPsi.at(i);
         m_cumulativeDerPsiE.at(i) += m_derPsiE.at(i);
     }
 }
@@ -147,6 +149,19 @@ void Sampler::writeOutToFile(System &system, std::string filename, double omega,
     outfile.close();
 }
 
+void Sampler::output(System &system, std::string filename, double omega, bool analytical, bool importanceSampling)
+{
+    // Output information from the simulation, either as file or print
+    if (filename == "") // this is dumbly duplicated now
+    {
+        printOutputToTerminal(system);
+    }
+    else
+    {
+        writeOutToFile(system, filename, omega, analytical, importanceSampling);
+    }
+}
+
 void Sampler::computeAverages()
 {
     /* Compute the averages of the sampled quantities.
@@ -161,7 +176,7 @@ void Sampler::computeAverages()
     for (int i = 0; i < m_numberOfParams; i++)
     {
         m_derPsiE[i] = m_cumulativeDerPsiE[i] / m_numberOfMetropolisSteps;
-        m_deltaPsi[i] = m_deltaPsi[i] / m_numberOfMetropolisSteps;
+        m_deltaPsi[i] = m_cumulativedeltaPsi[i] / m_numberOfMetropolisSteps;
     }
 }
 
