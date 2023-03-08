@@ -1,7 +1,12 @@
 repos:
--   repo: https://github.com/hkve/variational-monte-carlo-fys4411
+-   repo: https://github.com/bmorcos/pre-commit-hooks-cpp
     rev: master
     hooks:
     -   id: clang-format
     -   id: cpplint
     -   id: cppcheck
+
+-   repo: https://github.com/asottile/blacken-docs
+    rev: v1.12.1
+    hooks:
+    -   id: blacken-docs

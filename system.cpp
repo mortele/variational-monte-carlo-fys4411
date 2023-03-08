@@ -61,11 +61,65 @@ std::unique_ptr<class Sampler> System::runMetropolisSteps(
         /* Here you should sample the energy (and maybe other things) using the
          * sampler instance of the Sampler class.
          */
+        // compute local energy
         sampler->sample(acceptedStep, this);
     }
-
     sampler->computeAverages();
 
+    return sampler;
+}
+
+std::unique_ptr<class Sampler> System::optimizeMetropolis(
+    System &system,
+    double stepLength,
+    unsigned int numberOfMetropolisSteps,
+    int epochs,
+    double learningRate)
+{
+    auto sampler = std::make_unique<Sampler>(
+        m_numberOfParticles,
+        m_numberOfDimensions,
+        stepLength,
+        numberOfMetropolisSteps);
+
+    for (int i = 0; i < epochs; i++)
+    {
+        /*Notice that the positions are reset to what they were at the initial state but the
+        parameters of the wave function should be what they were at the END of last epoch*/
+
+        // reset position and quantum force
+        // (i think the quantum force is reset automatically to 0 and the beggining of the metroplis step)
+        for (unsigned int i = 0; i < m_numberOfParticles; i++)
+        {
+            m_particles[i]->resetPosition();
+            // m_particles[i]->resetQuantumForce();
+        }
+
+        // (re)set the sampler cumulative values by calling the constructor
+        sampler = std::make_unique<Sampler>(
+            m_numberOfParticles,
+            m_numberOfDimensions,
+            stepLength,
+            numberOfMetropolisSteps);
+
+        int n_params = m_waveFunction->getNumberOfParameters();
+
+        // call run metropolis steps
+        sampler = runMetropolisSteps(stepLength, numberOfMetropolisSteps);
+
+        std::vector<double> m_energyDerivative = sampler->getEnergyDerivative();
+
+        // update parameters
+        std::vector<double> parameters = getWaveFunctionParameters();
+        for (int i = 0; i < n_params; i++)
+        {
+            parameters[i] -= learningRate * m_energyDerivative[i]; // gradient descent but this gradient is wrong
+            std::cout << "parameters post update: " << parameters[0] << "\n";
+            std::cout << "m_energyDerivative: " << m_energyDerivative[i] << "\n";
+        }
+        // set new wave function parameters
+        m_waveFunction->setParameters(parameters);
+    }
     return sampler;
 }
 
@@ -89,4 +143,10 @@ void System::setWaveFunction(std::unique_ptr<class WaveFunction> waveFunction)
 void System::setSolver(std::unique_ptr<class MonteCarlo> solver)
 {
     m_solver = std::move(solver);
+}
+
+double System::computeParamDerivative(int paramIndex)
+{
+    // Helper function
+    return m_waveFunction->computeParamDerivative(m_particles, paramIndex);
 }
