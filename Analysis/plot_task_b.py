@@ -50,3 +50,4 @@ if __name__ == "__main__":
     plot_simple_HO(D=1, save=True)
     plot_simple_HO(D=2, save=True)
     plot_simple_HO(D=3, save=True)
+

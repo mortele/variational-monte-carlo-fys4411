@@ -19,7 +19,7 @@ def dataPath(filename):
     filename_path = rootPath() / pl.Path(f"Data/{filename}")
     return filename_path
 
-def vmcRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, analytical=True, filename="test.txt"):
+def vmcRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, analytical=True, timing=False, filename="test.txt"):
     vmc_path = vmcPath()
     filename_path = dataPath(filename)
 
@@ -35,6 +35,7 @@ def vmcRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, a
         alpha,
         stepLength,
         int(analytical),
+        int(timing),
         filename_path,
     ]
 

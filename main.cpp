@@ -137,6 +137,7 @@ int main(int argv, char **argc)
     auto ending = std::chrono::high_resolution_clock::now(); //end timer
     double timelapse= std::chrono::duration_cast<std::chrono::microseconds>(ending - beginning).count(); //find time
     // Output information from the simulation, either as file or print
+    std::cout<<"timing"<<timing<<std::endl;
     if(timing){
         sampler->WriteTimingToFiles(*system, filename, analytical, numberOfEquilibrationSteps, timelapse);
     }
