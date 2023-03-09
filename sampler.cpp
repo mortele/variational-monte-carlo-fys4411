@@ -184,30 +184,30 @@ void Sampler::WriteTimingToFiles(System& system, std::string filename, bool anal
     std::fstream outfile;
     auto pa = system.getWaveFunctionParameters();
     int p = pa.size();
-    int w = 15;
+    int w = 20;
 
     if (!exsists_file.good())
     {
     
         outfile.open(filename, std::ios::out);
-        outfile << setw(w) << "Dimensions"
-                << setw(w) << "Particles"
-                << setw(w) << "Metro-steps"
-                << setw(w) << "Eq-steps"
-                << setw(w) << "StepLength"
-                << setw(w) << "Time"
-                << setw(w) << "Analytical"
+        outfile << setw(w) << "Dimensions,"
+                << setw(w) << "Particles,"
+                << setw(w) << "Metro-steps,"
+                << setw(w) << "Eq-steps,"
+                << setw(w) << "StepLength,"
+                << setw(w) << "Time,"
+                << setw(w) << "Analytical,"
                 << "\n";
     }
     else{
         outfile.open(filename, std::ios::out | std::ios::app);
     }
-    outfile << setw(w) << m_numberOfDimensions
-            << setw(w) << m_numberOfParticles
-            << setw(w) << setprecision(5) << m_numberOfMetropolisSteps
-            << setw(w) << setprecision(5) << numberOfEquilibrationSteps
-            << setw(w) << fixed << setprecision(5) << m_stepLength
-            << setw(w) << fixed << setprecision(5) << timing
+    outfile << setw(w) << m_numberOfDimensions << ","
+            << setw(w) << m_numberOfParticles << ","
+            << setw(w) << setprecision(5) << m_numberOfMetropolisSteps << ","
+            << setw(w) << setprecision(5) << numberOfEquilibrationSteps << ","
+            << setw(w) << fixed << setprecision(5) << m_stepLength << ","
+            << setw(w) << fixed << setprecision(5) << timing << ","
             << setw(w) << analytical
             << "\n";
 
