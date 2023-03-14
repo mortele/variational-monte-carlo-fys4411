@@ -12,6 +12,7 @@ public:
     const std::vector<double> &getParameters() { return m_parameters; }
     virtual void setParameters(std::vector<double> parameters) = 0;
     virtual double evaluate(std::vector<std::unique_ptr<class Particle>> &particles) = 0;
+    virtual double evaluate_w(int proposed_particle_idx, class Particle &proposed_particle, class Particle &old_particle, std::vector<std::unique_ptr<class Particle>> &particles) = 0;
     virtual double computeParamDerivative(std::vector<std::unique_ptr<class Particle>> &particles, int parameterIndex) = 0;
     virtual double computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles) = 0;
     virtual void quantumForce(Particle &particles, std::vector<double> &force) = 0;

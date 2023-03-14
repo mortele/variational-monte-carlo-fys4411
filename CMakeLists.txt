@@ -53,5 +53,5 @@ add_library( Vmclib ${LIB_SOURCES} )
 add_executable(vmc main.cpp )
 target_link_libraries( vmc PRIVATE Vmclib )
 
-# add_executable(timing timing.cpp )
-# target_link_libraries( timing PRIVATE Vmclib )
+add_executable(timing timing.cpp )
+target_link_libraries( timing PRIVATE Vmclib )

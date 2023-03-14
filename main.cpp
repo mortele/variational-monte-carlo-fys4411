@@ -55,9 +55,12 @@ int main(int argv, char **argc)
         cout << "alpha, double: WF parameter for simple gaussian. Analytical sol alpha = omega/2" << endl;
         cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
         cout << "Importantce sampling?, bool: If the Metropolis Hasting algorithm is used. Then stepLength serves as Delta t" << endl;
-        cout << "gradientDescent?, bool: If the gradient descent algorithm should be used. Defaults to true" << endl;
         cout << "analytical?, bool: If the analytical expression should be used. Defaults to true" << endl;
+<<<<<<< HEAD
         cout << "timing?, bool: Prints out the time it takes for the equilibrium and metroplolis steps to calculate" << endl;
+=======
+        cout << "gradientDescent?, bool: If the gradient descent algorithm should be used. Defaults to true" << endl;
+>>>>>>> cf0c1d3d8735d71661c585ae8cbd5e3413a2efa9
         cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." << endl;
         
         return 0;

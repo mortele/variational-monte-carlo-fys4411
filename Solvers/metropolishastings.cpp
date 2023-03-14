@@ -35,7 +35,7 @@ bool MetropolisHastings::step(
     Particle &proposed_particle = *particles.at(proposed_particle_idx); // Get a reference to the particle
     Particle old_particle = proposed_particle;
 
-    double Psi_old = waveFunction.evaluate(particles);
+    // double Psi_old = waveFunction.evaluate(particles);
     waveFunction.quantumForce(proposed_particle, qForceOld);
 
     for (int q = 0; q < numberOfDimensions; q++)
@@ -44,7 +44,7 @@ bool MetropolisHastings::step(
             m_D * qForceOld.at(q) * m_timeStep + m_rng->nextGaussian(0.0, 1.0) * m_sqrtTimeStep, q); // Importance sampling. This formula is similar to the Metropolis algorithm (.adjustPosition(stepLength * (m_rng->nextDouble() - .5), q)), but with the addition of the quantum force term.
     }
 
-    double Psi_new = waveFunction.evaluate(particles);
+    // double Psi_new = waveFunction.evaluate(particles);
     waveFunction.quantumForce(proposed_particle, qForceNew); // Calculate the quantum force at the new position
 
     double G_ratio = 0; // The expoents of the ratio of the Greens functions
@@ -54,7 +54,10 @@ bool MetropolisHastings::step(
     }
 
     G_ratio = std::exp(G_ratio);
-    double w = G_ratio * (Psi_new * Psi_new) / (Psi_old * Psi_old); // Metropolis test
+    double w = G_ratio * waveFunction.evaluate_w(proposed_particle_idx,
+                                        proposed_particle,
+                                        old_particle,
+                                        particles); // Metropolis test
 
     if (w >= m_rng->nextDouble()) // Accept the step
     {
