@@ -101,7 +101,7 @@ void Sampler::writeOutToFile(System &system, std::string filename, double omega,
     std::fstream outfile;
     auto pa = system.getWaveFunctionParameters();
     int p = pa.size();
-    int w = 15;
+    int w = 20;
 
     if (!exsists_file.good())
     {
@@ -120,6 +120,7 @@ void Sampler::writeOutToFile(System &system, std::string filename, double omega,
                 << setw(w) << "Accept_number"
                 << setw(w) << "Accept_ratio"
                 << setw(w) << "Imposampling"
+                //<< setw(w) << "Timing"
                 << setw(w) << "Analytical"
                 << "\n";
     }
@@ -142,6 +143,7 @@ void Sampler::writeOutToFile(System &system, std::string filename, double omega,
             << setw(w) << fixed << setprecision(5) << m_numberOfAcceptedSteps
             << setw(w) << fixed << setprecision(5) << m_acceptRatio
             << setw(w) << fixed << setprecision(5) << importanceSampling
+            //<< setw(w) << fixed << setprecision(5) << timing
             << setw(w) << fixed << setprecision(5) << analytical
             << "\n";
 
@@ -178,6 +180,7 @@ void Sampler::computeAverages()
         m_deltaPsi[i] = m_cumulativedeltaPsi[i] / m_numberOfMetropolisSteps;
     }
 }
+
 void Sampler::WriteTimingToFiles(System& system, std::string filename, bool analytical, unsigned int numberOfEquilibrationSteps, double timing){
     std::ifstream exsists_file(filename.c_str());
 
@@ -190,24 +193,24 @@ void Sampler::WriteTimingToFiles(System& system, std::string filename, bool anal
     {
     
         outfile.open(filename, std::ios::out);
-        outfile << setw(w) << "Dimensions,"
-                << setw(w) << "Particles,"
-                << setw(w) << "Metro-steps,"
-                << setw(w) << "Eq-steps,"
-                << setw(w) << "StepLength,"
-                << setw(w) << "Time,"
-                << setw(w) << "Analytical,"
+        outfile << setw(w) << "Dimensions"
+                << setw(w) << "Particles"
+                << setw(w) << "Metro-steps"
+                << setw(w) << "Eq-steps"
+                << setw(w) << "StepLength"
+                << setw(w) << "Time"
+                << setw(w) << "Analytical"
                 << "\n";
     }
     else{
         outfile.open(filename, std::ios::out | std::ios::app);
     }
-    outfile << setw(w) << m_numberOfDimensions << ","
-            << setw(w) << m_numberOfParticles << ","
-            << setw(w) << setprecision(5) << m_numberOfMetropolisSteps << ","
-            << setw(w) << setprecision(5) << numberOfEquilibrationSteps << ","
-            << setw(w) << fixed << setprecision(5) << m_stepLength << ","
-            << setw(w) << fixed << setprecision(5) << timing << ","
+    outfile << setw(w) << m_numberOfDimensions
+            << setw(w) << m_numberOfParticles
+            << setw(w) << setprecision(5) << m_numberOfMetropolisSteps
+            << setw(w) << setprecision(5) << numberOfEquilibrationSteps
+            << setw(w) << fixed << setprecision(5) << m_stepLength
+            << setw(w) << fixed << setprecision(5) << timing
             << setw(w) << analytical
             << "\n";
 
@@ -216,6 +219,7 @@ void Sampler::WriteTimingToFiles(System& system, std::string filename, bool anal
     outfile.close();
 
 }
+
 
 std::vector<double> Sampler::getEnergyDerivative()
 {

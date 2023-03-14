@@ -1,0 +1,4 @@
+         Dimensions           Particles         Metro-steps            Eq-steps          StepLength                Time          Analytical
+                   3                    2              1000000               100000              0.10000       52635766.00000                    0
+                   3                    6              1000000               100000              0.10000      282476777.00000                    0
+                   3                   10              1000000               100000              0.10000      737156072.00000                    0
