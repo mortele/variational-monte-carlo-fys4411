@@ -63,9 +63,6 @@ int main(int argv, char **argc) {
     cout << "Importantce sampling?, bool: If the Metropolis Hasting algorithm "
             "is used. Then stepLength serves as Delta t"
          << endl;
-    cout << "gradientDescent?, bool: If the gradient descent algorithm should "
-            "be used. Defaults to true"
-         << endl;
     cout << "analytical?, bool: If the analytical expression should be used. "
             "Defaults to true"
          << endl;
@@ -88,8 +85,7 @@ int main(int argv, char **argc) {
   if (argv >= 8) stepLength = (double)atof(argc[7]);
   if (argv >= 9) importanceSampling = (bool)atoi(argc[8]);
   if (argv >= 10) analytical = (bool)atoi(argc[9]);
-  if (argv >= 11) gradientDescent = argc[10];
-  if (argv >= 12) filename = argc[11];
+  if (argv >= 11) filename = argc[10];
 
   // The random engine can also be built without a seed
   auto rng = std::make_unique<Random>(seed);
@@ -138,19 +134,12 @@ int main(int argv, char **argc) {
   auto acceptedEquilibrationSteps =
       system->runEquilibrationSteps(stepLength, numberOfEquilibrationSteps);
 
-  // Run the Metropolis algorithm
-  if (!gradientDescent) {
-    auto sampler =
-        system->runMetropolisSteps(stepLength, numberOfMetropolisSteps);
-    // Output information from the simulation, either as file or print
-    sampler->output(*system, filename, omega, analytical, importanceSampling);
-  } else {
-    std ::cout << "Running gradient descent" << std::endl;
-    auto sampler = system->optimizeMetropolis(
-        *system, stepLength, numberOfMetropolisSteps, epsilon, lr);
-    // Output information from the simulation, either as file or print
-    sampler->output(*system, filename, omega, analytical, importanceSampling);
-  }
+  // Run the Metropolis algorithm with GD
+  std ::cout << "Running gradient descent" << std::endl;
+  auto sampler = system->optimizeMetropolis(
+      *system, stepLength, numberOfMetropolisSteps, epsilon, lr);
+  // Output information from the simulation, either as file or print
+  sampler->output(*system, filename, omega, analytical, importanceSampling);
 
   return 0;
 }
