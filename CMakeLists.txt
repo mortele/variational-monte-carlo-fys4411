@@ -36,14 +36,22 @@ include_directories(
 
 # Add sources from all directories
 file(
-    GLOB SOURCES "*.cpp"
-    GLOB SOURCES "Hamiltonians/*.cpp"
-    GLOB SOURCES "InitialStates/*.cpp"
-    GLOB SOURCES "Math/*.cpp"
-    GLOB SOURCES "Solvers/*.cpp"
-    GLOB SOURCES "WaveFunctions/*.cpp"
+    GLOB LIB_SOURCES "particle.cpp"  
+    GLOB LIB_SOURCES "sampler.cpp"  
+    GLOB LIB_SOURCES "system.cpp"
+    GLOB LIB_SOURCES "Hamiltonians/*.cpp"
+    GLOB LIB_SOURCES "InitialStates/*.cpp"
+    GLOB LIB_SOURCES "Math/*.cpp"
+    GLOB LIB_SOURCES "Solvers/*.cpp"
+    GLOB LIB_SOURCES "WaveFunctions/*.cpp"
 )
 
+# Add libary to compile path
+add_library( Vmclib ${LIB_SOURCES} )
 
-# Create executable called "vmc"
-add_executable(vmc ${SOURCES})
+# Create different executables
+add_executable(vmc main.cpp )
+target_link_libraries( vmc PRIVATE Vmclib )
+
+# add_executable(timing timing.cpp )
+# target_link_libraries( timing PRIVATE Vmclib )
