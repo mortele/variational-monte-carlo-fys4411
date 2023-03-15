@@ -100,6 +100,10 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
 
 double SimpleGaussian::evaluate_w(int proposed_particle_idx, class Particle &proposed_particle, class Particle &old_particle, std::vector<std::unique_ptr<class Particle>> &particles)
 {
+    /*
+     This is the wave function ratio for the Metropolis algorithm.
+     It is a clever way to avoid having to evaluate the wave function for all particles at each step.
+     */
     static const int numberOfDimensions = particles.at(0)->getNumberOfDimensions(); // static to avoid redeclaration between calls
     double alpha = m_parameters.at(0);
 

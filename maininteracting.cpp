@@ -33,6 +33,7 @@ int main(int argv, char **argc)
     double epsilon = 0.05;      // Tolerance for gradient descent.
     double lr = 0.02;           // Learning rate for gradient descent.
     double dx = 10e-6;
+    double interactionTerm = 0.5; // Interaction parameter. This should perhaps not be hardcoded!
     bool importanceSampling = false;
     bool gradientDescent = true;
     bool analytical = true;
@@ -98,8 +99,11 @@ int main(int argv, char **argc)
     auto hamiltonian = std::make_unique<HarmonicOscillator>(omega);
 
     // Initialise Interacting Gaussian by default
-    std::unique_ptr<class WaveFunction> wavefunction = std::make_unique<InteractingGaussian>(alpha); // Empty wavefunction pointer, since it uses "alpha" in its
-                                                                                                     // constructor (can only be moved once).
+    std::unique_ptr<class WaveFunction> wavefunction = std::make_unique<InteractingGaussian>(
+        alpha,
+        interactionTerm,
+        numberOfParticles); // Empty wavefunction pointer, since it uses "alpha" in its
+                            // constructor (can only be moved once).
 
     // Empty solver pointer, since it uses "rng" in its constructor (can only be
     // moved once).
@@ -107,7 +111,7 @@ int main(int argv, char **argc)
 
     // Check if numerical gaussian should be used.
     if (!analytical)
-        wavefunction = std::make_unique<InteractingGaussianNumerical>(alpha, dx);
+        wavefunction = std::make_unique<InteractingGaussianNumerical>(alpha, dx, interactionTerm, numberOfParticles);
 
     // Set what solver to use, pass on rng and additional parameters
     if (importanceSampling)

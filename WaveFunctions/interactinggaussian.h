@@ -7,7 +7,7 @@
 class InteractingGaussian : public WaveFunction
 {
 public:
-    InteractingGaussian(double alpha);
+    InteractingGaussian(double alpha, double a, int num_particles); // a is the interaction parameter
     double evaluate(std::vector<std::unique_ptr<class Particle>> &particles);
     double evaluate_w(int proposed_particle_idx, class Particle &proposed_particle, class Particle &old_particle, std::vector<std::unique_ptr<class Particle>> &particles);
     double computeParamDerivative(std::vector<std::unique_ptr<class Particle>> &particles, int parameterIndex);
@@ -19,7 +19,7 @@ public:
 class InteractingGaussianNumerical : public InteractingGaussian
 {
 public:
-    InteractingGaussianNumerical(double alpha, double dx);
+    InteractingGaussianNumerical(double alpha, double dx, double a, int num_particles);
     double computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles);
 
 private:

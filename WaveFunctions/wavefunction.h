@@ -19,5 +19,7 @@ public:
 
 protected:
     int m_numberOfParameters = 0;
+    int m_numberOfParticles = 0;
     std::vector<double> m_parameters = std::vector<double>();
+    double m_interactionTerm = 0; // parameter in the interaction
 };
