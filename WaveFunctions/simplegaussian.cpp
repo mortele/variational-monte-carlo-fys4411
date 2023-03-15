@@ -101,25 +101,25 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
 double SimpleGaussian::evaluate_w(int proposed_particle_idx, class Particle &proposed_particle, class Particle &old_particle, std::vector<std::unique_ptr<class Particle>> &particles)
 {
     static const int numberOfDimensions = particles.at(0)->getNumberOfDimensions(); // static to avoid redeclaration between calls
-    static const double alpha = m_parameters.at(0);
+    double alpha = m_parameters.at(0);
 
     double r2_proposed, r2_old;
     r2_proposed = 0;
     r2_old = 0;
 
-    for(int i = 0; i < numberOfDimensions; i++)
+    for (int i = 0; i < numberOfDimensions; i++)
     {
-        r2_proposed += proposed_particle.getPosition().at(i)*proposed_particle.getPosition().at(i);
-        r2_old += old_particle.getPosition().at(i)*old_particle.getPosition().at(i);
+        r2_proposed += proposed_particle.getPosition().at(i) * proposed_particle.getPosition().at(i);
+        r2_old += old_particle.getPosition().at(i) * old_particle.getPosition().at(i);
     }
 
-    return std::exp( -2.0*alpha * (r2_proposed - r2_old) );
+    return std::exp(-2.0 * alpha * (r2_proposed - r2_old));
 }
 
 void SimpleGaussian::quantumForce(Particle &particle, std::vector<double> &force)
 {
     static const int numberOfDimensions = particle.getNumberOfDimensions(); // static to avoid redeclaration between calls
-    static const double alpha = m_parameters.at(0);
+    double alpha = m_parameters.at(0);
 
     for (int q = 0; q < numberOfDimensions; q++)
     {

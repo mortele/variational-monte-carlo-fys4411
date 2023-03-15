@@ -51,6 +51,9 @@ file(
 # Add libary to compile path
 add_library(Vmclib ${LIB_SOURCES})
 
+# Add libary to compile path
+add_library(Vmclib ${LIB_SOURCES})
+
 # Create different executables
 add_executable(vmc main.cpp)
 target_link_libraries(vmc PRIVATE Vmclib)
