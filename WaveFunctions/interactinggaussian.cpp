@@ -2,14 +2,14 @@
 #include <cmath>
 #include <cassert>
 
-#include "simplegaussian.h"
+#include "interactinggaussian.h"
 #include "wavefunction.h"
 #include "../system.h"
 #include "../particle.h"
 
 #include <iostream>
 
-SimpleGaussian::SimpleGaussian(double alpha)
+InteractingGaussian::InteractingGaussian(double alpha)
 {
     assert(alpha >= 0);
     m_numberOfParameters = 1; // this should not be hard coded
@@ -17,7 +17,7 @@ SimpleGaussian::SimpleGaussian(double alpha)
     m_parameters.push_back(alpha); // m_parameters is the vector of variational parameters
 }
 
-double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>> &particles)
+double InteractingGaussian::evaluate(std::vector<std::unique_ptr<class Particle>> &particles)
 {
     /* You need to implement a Gaussian wave function here. The positions of
      * the particles are accessible through the particle[i]->getPosition()
@@ -39,11 +39,31 @@ double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>> &pa
             r2 += r_q * r_q;
         }
     }
+    double gaussian = std::exp(-alpha * r2); // this is the gaussian part of the wave function
 
-    return std::exp(-alpha * r2);
+    // now we have interaction, so instead of just the gaussian, we have to multiply by the interaction term
+    double interaction = 0;
+    double r_ij = 0; // r_ij is the squared distance between particles i and j. This is important now that we have interaction
+    double r_ij_q = 0;
+    for (int i = 0; i < num_particles; i++)
+    {
+        Particle particle_i = *particles.at(i);
+        for (int j = i + 1; j < num_particles; j++) // we only need to loop over the upper triangle of the matrix
+        {
+            Particle particle_j = *particles.at(j);
+            for (int q = 0; q < numberOfDimensions; q++)
+            {
+                r_ij_q = particle_i.getPosition().at(q) - particle_j.getPosition().at(q);
+                r_ij += r_ij_q * r_ij_q;
+            }
+            interaction += 1.0 / std::sqrt(r_ij);
+        }
+    }
+
+    return gaussian * interaction;
 }
 
-double SimpleGaussian::computeParamDerivative(std::vector<std::unique_ptr<class Particle>> &particles, int parameterIndex)
+double InteractingGaussian::computeParamDerivative(std::vector<std::unique_ptr<class Particle>> &particles, int parameterIndex)
 {
     /* Note that by derivative, we actually
      * mean the derivative with respect to the variational parameters.
@@ -68,7 +88,7 @@ double SimpleGaussian::computeParamDerivative(std::vector<std::unique_ptr<class 
     return -r2_sum; // analytic derivative wrt alpha, only 1 param to optimize now, This needs to be generalized
 }
 
-double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
+double InteractingGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
 {
     /* All wave functions need to implement this function, so you need to
      * find the double derivative analytically. Note that by double derivative,
@@ -98,7 +118,7 @@ double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class
     return 2 * alpha * (2 * alpha * r2_sum - num_particles * numberOfDimensions); // analytic double derivative
 }
 
-double SimpleGaussian::evaluate_w(int proposed_particle_idx, class Particle &proposed_particle, class Particle &old_particle, std::vector<std::unique_ptr<class Particle>> &particles)
+double InteractingGaussian::evaluate_w(int proposed_particle_idx, class Particle &proposed_particle, class Particle &old_particle, std::vector<std::unique_ptr<class Particle>> &particles)
 {
     static const int numberOfDimensions = particles.at(0)->getNumberOfDimensions(); // static to avoid redeclaration between calls
     static const double alpha = m_parameters.at(0);
@@ -107,16 +127,16 @@ double SimpleGaussian::evaluate_w(int proposed_particle_idx, class Particle &pro
     r2_proposed = 0;
     r2_old = 0;
 
-    for(int i = 0; i < numberOfDimensions; i++)
+    for (int i = 0; i < numberOfDimensions; i++)
     {
-        r2_proposed += proposed_particle.getPosition().at(i)*proposed_particle.getPosition().at(i);
-        r2_old += old_particle.getPosition().at(i)*old_particle.getPosition().at(i);
+        r2_proposed += proposed_particle.getPosition().at(i) * proposed_particle.getPosition().at(i);
+        r2_old += old_particle.getPosition().at(i) * old_particle.getPosition().at(i);
     }
 
-    return std::exp( -2.0*alpha * (r2_proposed - r2_old) );
+    return std::exp(-2.0 * alpha * (r2_proposed - r2_old));
 }
 
-void SimpleGaussian::quantumForce(Particle &particle, std::vector<double> &force)
+void InteractingGaussian::quantumForce(Particle &particle, std::vector<double> &force)
 {
     static const int numberOfDimensions = particle.getNumberOfDimensions(); // static to avoid redeclaration between calls
     static const double alpha = m_parameters.at(0);
@@ -127,12 +147,12 @@ void SimpleGaussian::quantumForce(Particle &particle, std::vector<double> &force
     }
 }
 
-SimpleGaussianNumerical::SimpleGaussianNumerical(double alpha, double dx) : SimpleGaussian(alpha)
+InteractingGaussianNumerical::InteractingGaussianNumerical(double alpha, double dx) : InteractingGaussian(alpha)
 {
     m_dx = dx;
 }
 
-double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
+double InteractingGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
 {
     int num_particles = particles.size();
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
@@ -161,7 +181,7 @@ double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_
     return der_sum / evaluate(particles); // divide by the value of the wave function at the current position
 }
 
-void SimpleGaussian::setParameters(std::vector<double> parameters)
+void InteractingGaussian::setParameters(std::vector<double> parameters)
 {
     assert((int)parameters.size() == m_numberOfParameters);
     m_parameters = parameters;

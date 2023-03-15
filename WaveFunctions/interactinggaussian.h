@@ -4,10 +4,10 @@
 
 #include "wavefunction.h"
 
-class SimpleGaussian : public WaveFunction
+class InteractingGaussian : public WaveFunction
 {
 public:
-    SimpleGaussian(double alpha);
+    InteractingGaussian(double alpha);
     double evaluate(std::vector<std::unique_ptr<class Particle>> &particles);
     double evaluate_w(int proposed_particle_idx, class Particle &proposed_particle, class Particle &old_particle, std::vector<std::unique_ptr<class Particle>> &particles);
     double computeParamDerivative(std::vector<std::unique_ptr<class Particle>> &particles, int parameterIndex);
@@ -16,10 +16,10 @@ public:
     void setParameters(std::vector<double> parameters);
 };
 
-class SimpleGaussianNumerical : public SimpleGaussian
+class InteractingGaussianNumerical : public InteractingGaussian
 {
 public:
-    SimpleGaussianNumerical(double alpha, double dx);
+    InteractingGaussianNumerical(double alpha, double dx);
     double computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles);
 
 private:

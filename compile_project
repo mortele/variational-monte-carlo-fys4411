@@ -13,4 +13,4 @@ cmake ../
 make -j2
 
 # Move the executable to the top-directory
-mv vmc ..
+mv vmc .. # Why should we need this?

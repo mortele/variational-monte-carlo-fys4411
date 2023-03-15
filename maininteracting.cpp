@@ -9,7 +9,6 @@
 #include "Math/random.h"
 #include "Solvers/metropolis.h"
 #include "Solvers/metropolishastings.h"
-#include "WaveFunctions/simplegaussian.h"
 #include "WaveFunctions/interactinggaussian.h"
 #include "particle.h"
 #include "sampler.h"
@@ -32,7 +31,7 @@ int main(int argv, char **argc)
                                 // descent, this is the initial guess.
     double stepLength = 0.1;    // Metropolis step length.
     double epsilon = 0.05;      // Tolerance for gradient descent.
-    double lr = 0.01;           // Learning rate for gradient descent.
+    double lr = 0.02;           // Learning rate for gradient descent.
     double dx = 10e-6;
     bool importanceSampling = false;
     bool gradientDescent = true;
@@ -98,9 +97,9 @@ int main(int argv, char **argc)
     // Construct a unique pointer to a new System
     auto hamiltonian = std::make_unique<HarmonicOscillator>(omega);
 
-    // Initialise SimpleGaussian by default
-    std::unique_ptr<class WaveFunction> wavefunction = std::make_unique<SimpleGaussian>(alpha); // Empty wavefunction pointer, since it uses "alpha" in its
-                                                                                                // constructor (can only be moved once).
+    // Initialise Interacting Gaussian by default
+    std::unique_ptr<class WaveFunction> wavefunction = std::make_unique<InteractingGaussian>(alpha); // Empty wavefunction pointer, since it uses "alpha" in its
+                                                                                                     // constructor (can only be moved once).
 
     // Empty solver pointer, since it uses "rng" in its constructor (can only be
     // moved once).
@@ -108,7 +107,7 @@ int main(int argv, char **argc)
 
     // Check if numerical gaussian should be used.
     if (!analytical)
-        wavefunction = std::make_unique<SimpleGaussianNumerical>(alpha, dx);
+        wavefunction = std::make_unique<InteractingGaussianNumerical>(alpha, dx);
 
     // Set what solver to use, pass on rng and additional parameters
     if (importanceSampling)
