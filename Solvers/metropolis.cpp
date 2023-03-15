@@ -27,7 +27,7 @@ bool Metropolis::step(
     int numberOfParticles = particles.size();
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
 
-    double Psi_old = waveFunction.evaluate(particles);
+    // double Psi_old = waveFunction.evaluate(particles);
 
     int proposed_particle_idx = m_rng->nextInt(0, numberOfParticles - 1); // Choose a particle at random
     Particle &proposed_particle = *particles.at(proposed_particle_idx);   // Get a reference to the particle
@@ -36,9 +36,13 @@ bool Metropolis::step(
     for (int q = 0; q < numberOfDimensions; q++)
         proposed_particle.adjustPosition(stepLength * (m_rng->nextDouble() - .5), q);
 
-    double Psi_new = waveFunction.evaluate(particles);
+    // double Psi_new = waveFunction.evaluate(particles);
 
-    double w = (Psi_new * Psi_new) / (Psi_old * Psi_old); // Metropolis test
+    // double w = (Psi_new * Psi_new) / (Psi_old * Psi_old); // Metropolis test
+    double w = waveFunction.evaluate_w(proposed_particle_idx,
+                                        proposed_particle,
+                                        old_particle,
+                                        particles);
 
     if (w >= m_rng->nextDouble()) // Accept the step
     {

@@ -49,31 +49,15 @@ int main(int argv, char **argc)
              << endl;
         cout << "#dims, int: Number of dimensions" << endl;
         cout << "#particles, int: Number of particles" << endl;
-        cout << "#log10(metropolis steps), int/double: log10 of number of steps, "
-                "i.e. 6 gives 1e6 steps"
-             << endl;
-        cout << "#log10(@-steps), int/double: log10 of number of equilibriation "
-                "steps, i.e. 6 gives 1e6 steps"
-             << endl;
+        cout << "#log10(metropolis steps), int/double: log10 of number of steps, i.e. 6 gives 1e6 steps" << endl;
+        cout << "#log10(@-steps), int/double: log10 of number of equilibriation steps, i.e. 6 gives 1e6 steps" << endl;
         cout << "omega, double: Trap frequency" << endl;
-        cout << "alpha, double: WF parameter for simple gaussian. Analytical sol "
-                "alpha = omega/2"
-             << endl;
-        cout << "stepLenght, double: How far should I move a particle at each MC "
-                "cycle?"
-             << endl;
-        cout << "Importantce sampling?, bool: If the Metropolis Hasting algorithm "
-                "is used. Then stepLength serves as Delta t"
-             << endl;
-        cout << "gradientDescent?, bool: If the gradient descent algorithm should "
-                "be used. Defaults to true"
-             << endl;
-        cout << "analytical?, bool: If the analytical expression should be used. "
-                "Defaults to true"
-             << endl;
-        cout << "filename, string: If the results should be dumped to a file, give "
-                "the file name. If none is given, a simple print is performed."
-             << endl;
+        cout << "alpha, double: WF parameter for simple gaussian. Analytical sol alpha = omega/2" << endl;
+        cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
+        cout << "Importantce sampling?, bool: If the Metropolis Hasting algorithm is used. Then stepLength serves as Delta t" << endl;
+        cout << "analytical?, bool: If the analytical expression should be used. Defaults to true" << endl;
+        cout << "gradientDescent?, bool: If the gradient descent algorithm should be used. Defaults to true" << endl;
+        cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." << endl;
         return 0;
     }
 
@@ -99,7 +83,7 @@ int main(int argv, char **argc)
     if (argv >= 10)
         analytical = (bool)atoi(argc[9]);
     if (argv >= 11)
-        gradientDescent = argc[10];
+        gradientDescent = (bool)atoi(argc[10]);
     if (argv >= 12)
         filename = argc[11];
 
