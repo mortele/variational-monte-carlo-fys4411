@@ -40,14 +40,13 @@ int main(int argv, char **argc)
     bool gradientDescent = true;
     bool analytical = true;
     double D = 0.5;
-    bool timing=0;
     string filename = "";
     
     // If no arguments are given, show usage.
     if (argv == 1)
     {
         cout << "Hello! Usage:" << endl;
-        cout << "./vmc #dims #particles #log10(metropolis-steps) #log10(equilibriation-steps) omega alpha stepLength importanceSampling? analytical? gradientDescent? filename" << endl;
+        cout << "./vmc #dims #particles #log10(metropolis-steps) #log10(equilibriation-steps) omega alpha stepLength importanceSampling? analytical? filename" << endl;
         cout << "#dims, int: Number of dimensions" << endl;
         cout << "#particles, int: Number of particles" << endl;
         cout << "#log10(metropolis steps), int/double: log10 of number of steps, i.e. 6 gives 1e6 steps" << endl;
@@ -76,9 +75,8 @@ int main(int argv, char **argc)
     if (argv >= 9)
         analytical = (bool)atoi(argc[8]);
     if (argv >= 10)
-        timing=(bool)atoi(argc[9]);
-    if (argv >= 11)
-        filename = argc[10];
+        filename = argc[9];
+
         // The random engine can also be built without a seed
     auto rng = std::make_unique<Random>(seed);
 
@@ -123,14 +121,10 @@ int main(int argv, char **argc)
     auto ending = std::chrono::high_resolution_clock::now(); //end timer
     double timelapse= std::chrono::duration_cast<std::chrono::microseconds>(ending - beginning).count(); //find time
     // Output information from the simulation, either as file or print
-    std::cout<<"timing:     "<< timelapse*1.0e-6 << " seconds, " << "Analytical? " << analytical << std::endl;
     if (filename=="")
-    {
-        std:cout<<"You need a filename"<<std::endl;
-    }
+        std:cout << "You need a filename" << endl;
+    else
+        sampler->WriteTimingToFiles(*system, filename, analytical, numberOfEquilibrationSteps, timelapse);
     
-    sampler->WriteTimingToFiles(*system, filename, analytical, numberOfEquilibrationSteps, timelapse);
-
-        
-        return 0;
+    return 0;
 }

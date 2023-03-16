@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import plot_utils
 import cpp_utils
 
-import subprocess
 
 def plot_simple_HO(filename="simple_HO", D=1, omega=1.0, alpha_range=(0.1,1.1, 11), save=False):
     alphas = np.linspace(*alpha_range)

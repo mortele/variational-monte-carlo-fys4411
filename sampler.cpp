@@ -120,7 +120,6 @@ void Sampler::writeOutToFile(System &system, std::string filename, double omega,
                 << setw(w) << "Accept_number"
                 << setw(w) << "Accept_ratio"
                 << setw(w) << "Imposampling"
-                //<< setw(w) << "Timing"
                 << setw(w) << "Analytical"
                 << "\n";
     }
@@ -143,7 +142,6 @@ void Sampler::writeOutToFile(System &system, std::string filename, double omega,
             << setw(w) << fixed << setprecision(5) << m_numberOfAcceptedSteps
             << setw(w) << fixed << setprecision(5) << m_acceptRatio
             << setw(w) << fixed << setprecision(5) << importanceSampling
-            //<< setw(w) << fixed << setprecision(5) << timing
             << setw(w) << fixed << setprecision(5) << analytical
             << "\n";
 
@@ -200,6 +198,8 @@ void Sampler::WriteTimingToFiles(System& system, std::string filename, bool anal
                 << setw(w) << "StepLength"
                 << setw(w) << "Time"
                 << setw(w) << "Analytical"
+                << setw(w) << "Energy"
+                << setw(w) << "Energy_std"
                 << "\n";
     }
     else{
@@ -210,8 +210,10 @@ void Sampler::WriteTimingToFiles(System& system, std::string filename, bool anal
             << setw(w) << setprecision(5) << m_numberOfMetropolisSteps
             << setw(w) << setprecision(5) << numberOfEquilibrationSteps
             << setw(w) << fixed << setprecision(5) << m_stepLength
-            << setw(w) << fixed << setprecision(5) << timing
+            << setw(w) << fixed << setprecision(0) << timing
             << setw(w) << analytical
+            << setw(w) << setprecision(5) << m_energy
+            << setw(w) << setprecision(5) << m_energy_std
             << "\n";
 
 

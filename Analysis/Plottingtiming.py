@@ -1,40 +1,94 @@
 import numpy as np 
 import pandas as pd 
-import plot_utils
 import matplotlib.pyplot as plt 
-import cpp_utils as cput
 
-A1=cput.vmcLoad("../Data/1timeana.txt")
+import plot_utils
+import cpp_utils
 
-A2=cput.vmcLoad("../Data/2timeana.txt")
-A3=cput.vmcLoad("../Data/3timeana.txt")
-N1=cput.vmcLoad("../Data/1timenum.txt")
-N2=cput.vmcLoad("../Data/2timenum.txt")
-N3=cput.vmcLoad("../Data/3timenum.txt")
 
-"""
-A1=pd.read_csv("../Data/1timeana.txt")
-A2=pd.read_csv("../Data/2timeana.txt")
-A3=pd.read_csv("../Data/3timeana.txt")
-N1=pd.read_csv("../Data/1timenum.txt")
-N2=pd.read_csv("../Data/2timenum.txt")
-N3=pd.read_csv("../Data/3timenum.txt")
-"""
-print(A1.columns)
-print(A1)
-print(A1.loc[1].at["Time"])
-Aav=np.zeros(len(A1["Time"]))
-Nav=np.zeros(len(N1["Time"]))
-PAav=np.zeros(len(A1["Particles"]))
-PNav=np.zeros(len(N1["Particles"]))
-for i in range(0, len(A1["Time"])):
-    Aav[i]=(A1.loc[i].at["Time"]+A2.loc[i].at["Time"]+A3.loc[i].at["Time"])/3
-    PAav[i]=(A1.loc[i].at["Particles"])
-    Nav[i]=(N1.loc[i].at["Time"]+N2.loc[i].at["Time"]+N3.loc[i].at["Time"])/3
-    PNav[i]=(N1.loc[i].at["Particles"])
-print(Aav)
-print(PAav)
-plt.plot(PAav, Aav, label="Analytical")
-plt.plot(PNav, Nav, label="Numerical")
-plt.legend()
-plt.savefig("testplottiming.pdf")
+def plot_timing(filename="", D=1, Ns = np.arange(2, 10), trials = 2, save=False):
+
+    filename = f"{filename}_{D}D.txt"
+    MCC0 = 1e4
+    if not cpp_utils.dataPath(filename).exists():
+        for i, N in enumerate(Ns):
+            MCC = np.log10(MCC0*N)
+            for _ in range(trials):
+                cpp_utils.timingRun(D=D, filename=filename, N=N, alpha=0.43, stepLength=0.2, analytical=1, logMet=MCC)
+                cpp_utils.timingRun(D=D, filename=filename, N=N, alpha=0.43, stepLength=0.2, analytical=0, logMet=MCC)
+            print(f"Done {i+1}/{len(Ns)}... {N = }")
+
+    df = cpp_utils.vmcLoad(filename=filename)
+    df["Time"] = df["Time"]*1e-6
+    
+
+    # Extract time in seconds
+    df_analytical = df[df["Analytical"] == 1]
+    df_numerical = df[df["Analytical"] == 0]
+
+    group_analytical = df_analytical.groupby("Particles", as_index=False)
+    group_numerical = df_numerical.groupby("Particles", as_index=False)
+
+    time_analytical = group_analytical["Time"].mean().to_numpy()[:,1]
+    std_analytical = group_analytical["Time"].std().to_numpy()[:,1]
+    time_numerical = group_numerical["Time"].mean().to_numpy()[:,1]
+    std_numerical = group_numerical["Time"].std().to_numpy()[:,1]
+    
+    cols = ["Energy", "Energy_std"]
+    E_analytical = group_analytical[cols].mean().to_numpy()[:,1:]
+    E_numerical = group_numerical[cols].mean().to_numpy()[:,1:]
+    energy_analytical, energy_std_analytical = E_analytical[:,0], E_analytical[:,1]
+    energy_numerical, energy_std_numerical = E_numerical[:,0], E_numerical[:,1]
+
+    fig, ax = plt.subplots()
+    ax.errorbar(Ns, time_analytical, std_analytical, label="Analytical")
+    ax.errorbar(Ns, time_numerical, std_numerical, label="Numerical")
+    ax.legend()
+    ax.set(xlabel="N", ylabel="Time [s]", title=f"Derivative comparison D = {D}")
+    print("Energy per particle ana vs num")
+    print(energy_analytical/Ns)
+    print(energy_numerical/Ns)
+    print("\n\n\n")
+    print("Std per particle ana vs num")
+    print(energy_std_analytical/Ns)
+    print(energy_std_numerical/Ns)
+    plt.show()
+
+if __name__ == "__main__":
+    Ns = np.arange(2, 4)
+    plot_timing("timingTest_avrgs_new", Ns=Ns, trials=3)
+
+# A1=cput.vmcLoad("../Data/1timeana.txt")
+
+# A2=cput.vmcLoad("../Data/2timeana.txt")
+# A3=cput.vmcLoad("../Data/3timeana.txt")
+# N1=cput.vmcLoad("../Data/1timenum.txt")
+# N2=cput.vmcLoad("../Data/2timenum.txt")
+# N3=cput.vmcLoad("../Data/3timenum.txt")
+
+# """
+# A1=pd.read_csv("../Data/1timeana.txt")
+# A2=pd.read_csv("../Data/2timeana.txt")
+# A3=pd.read_csv("../Data/3timeana.txt")
+# N1=pd.read_csv("../Data/1timenum.txt")
+# N2=pd.read_csv("../Data/2timenum.txt")
+# N3=pd.read_csv("../Data/3timenum.txt")
+# """
+# print(A1.columns)
+# print(A1)
+# print(A1.loc[1].at["Time"])
+# Aav=np.zeros(len(A1["Time"]))
+# Nav=np.zeros(len(N1["Time"]))
+# PAav=np.zeros(len(A1["Particles"]))
+# PNav=np.zeros(len(N1["Particles"]))
+# for i in range(0, len(A1["Time"])):
+#     Aav[i]=(A1.loc[i].at["Time"]+A2.loc[i].at["Time"]+A3.loc[i].at["Time"])/3
+#     PAav[i]=(A1.loc[i].at["Particles"])
+#     Nav[i]=(N1.loc[i].at["Time"]+N2.loc[i].at["Time"]+N3.loc[i].at["Time"])/3
+#     PNav[i]=(N1.loc[i].at["Particles"])
+# print(Aav)
+# print(PAav)
+# plt.plot(PAav, Aav, label="Analytical")
+# plt.plot(PNav, Nav, label="Numerical")
+# plt.legend()
+# plt.savefig("testplottiming.pdf")
