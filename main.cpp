@@ -1,21 +1,18 @@
-#include <iostream>
-#include <string>
-
-#include <vector>
-#include <memory>
 #include <cmath>
+#include <iostream>
+#include <memory>
+#include <string>
+#include <vector>
 
-#include <chrono>
-
-#include "system.h"
-#include "WaveFunctions/simplegaussian.h"
 #include "Hamiltonians/harmonicoscillator.h"
 #include "InitialStates/initialstate.h"
+#include "Math/random.h"
 #include "Solvers/metropolis.h"
 #include "Solvers/metropolishastings.h"
-#include "Math/random.h"
+#include "WaveFunctions/simplegaussian.h"
 #include "particle.h"
 #include "sampler.h"
+#include "system.h"
 
 using namespace std;
 
@@ -30,23 +27,26 @@ int main(int argv, char **argc)
     unsigned int numberOfMetropolisSteps = (unsigned int)1e6;
     unsigned int numberOfEquilibrationSteps = (unsigned int)1e6;
     double omega = 1.0;         // Oscillator frequency.
-    double alpha = omega / 2.0; // Variational parameter. If using gradient descent, this is the initial guess.
+    double alpha = omega / 2.0; // Variational parameter. If using gradient
+                                // descent, this is the initial guess.
     double stepLength = 0.1;    // Metropolis step length.
-    int epochs = 5;             // Number of epochs for gradient descent.
+    double epsilon = 0.05;      // Number of epochs for gradient descent.
     double lr = 0.1;            // Learning rate for gradient descent.
     double dx = 10e-6;
     bool importanceSampling = false;
     bool gradientDescent = true;
     bool analytical = true;
     double D = 0.5;
-    bool timing=0;
     string filename = "";
 
     // If no arguments are given, show usage.
     if (argv == 1)
     {
         cout << "Hello! Usage:" << endl;
-        cout << "./vmc #dims #particles #log10(metropolis-steps) #log10(equilibriation-steps) omega alpha stepLength importanceSampling? analytical? gradientDescent? filename" << endl;
+        cout << "./vmc #dims #particles #log10(metropolis-steps) "
+                "#log10(equilibriation-steps) omega alpha stepLength "
+                "importanceSampling? analytical? gradientDescent? filename"
+             << endl;
         cout << "#dims, int: Number of dimensions" << endl;
         cout << "#particles, int: Number of particles" << endl;
         cout << "#log10(metropolis steps), int/double: log10 of number of steps, i.e. 6 gives 1e6 steps" << endl;
@@ -56,18 +56,14 @@ int main(int argv, char **argc)
         cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
         cout << "Importantce sampling?, bool: If the Metropolis Hasting algorithm is used. Then stepLength serves as Delta t" << endl;
         cout << "analytical?, bool: If the analytical expression should be used. Defaults to true" << endl;
-<<<<<<< HEAD
-        cout << "timing?, bool: Prints out the time it takes for the equilibrium and metroplolis steps to calculate" << endl;
-=======
         cout << "gradientDescent?, bool: If the gradient descent algorithm should be used. Defaults to true" << endl;
->>>>>>> cf0c1d3d8735d71661c585ae8cbd5e3413a2efa9
         cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." << endl;
-        
         return 0;
     }
 
-    // Check how many arguments are given and overwrite defaults. Works serially, meaning if 4 parameters are given
-    // the first 4 paramters will be overwritten, the rest will be defaults.
+    // Check how many arguments are given and overwrite defaults. Works serially,
+    // meaning if 4 parameters are given the first 4 paramters will be
+    // overwritten, the rest will be defaults.
     if (argv >= 2)
         numberOfDimensions = (unsigned int)atoi(argc[1]);
     if (argv >= 3)
@@ -87,25 +83,28 @@ int main(int argv, char **argc)
     if (argv >= 10)
         analytical = (bool)atoi(argc[9]);
     if (argv >= 11)
-        timing=(bool)atoi(argc[10]);
-    if (argv >=12)
-        gradientDescent = argc[11];
-    if (argv >= 13)
-        filename = argc[12];
+        gradientDescent = (bool)atoi(argc[10]);
+    if (argv >= 12)
+        filename = argc[11];
 
     // The random engine can also be built without a seed
     auto rng = std::make_unique<Random>(seed);
 
     // Initialize particles
-    auto particles = setupRandomUniformInitialState(stepLength, omega, numberOfDimensions, numberOfParticles, *rng);
+    auto particles = setupRandomUniformInitialState(
+        stepLength, omega, numberOfDimensions, numberOfParticles, *rng);
 
     // Construct a unique pointer to a new System
     auto hamiltonian = std::make_unique<HarmonicOscillator>(omega);
 
     // Initialise SimpleGaussian by default
-    std::unique_ptr<class WaveFunction> wavefunction = std::make_unique<SimpleGaussian>(alpha); // Empty wavefunction pointer, since it uses "alpha" in its constructor (can only be moved once).
+    std::unique_ptr<class WaveFunction> wavefunction =
+        std::make_unique<SimpleGaussian>(
+            alpha); // Empty wavefunction pointer, since it uses "alpha" in its
+                    // constructor (can only be moved once).
 
-    // Empty solver pointer, since it uses "rng" in its constructor (can only be moved once).
+    // Empty solver pointer, since it uses "rng" in its constructor (can only be
+    // moved once).
     std::unique_ptr<class MonteCarlo> solver;
 
     // Check if numerical gaussian should be used.
@@ -115,7 +114,8 @@ int main(int argv, char **argc)
     // Set what solver to use, pass on rng and additional parameters
     if (importanceSampling)
     {
-        solver = std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
+        solver =
+            std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
     }
     else
     {
@@ -134,52 +134,25 @@ int main(int argv, char **argc)
         std::move(particles));
 
     // Run steps to equilibrate particles
-    auto beginning = std::chrono::high_resolution_clock::now(); //Start timer
-    auto acceptedEquilibrationSteps = system->runEquilibrationSteps(
-        stepLength,
-        numberOfEquilibrationSteps);
+    auto acceptedEquilibrationSteps =
+        system->runEquilibrationSteps(stepLength, numberOfEquilibrationSteps);
 
     // Run the Metropolis algorithm
-    auto sampler = system->runMetropolisSteps(
-        stepLength,
-        numberOfMetropolisSteps);
-    auto ending = std::chrono::high_resolution_clock::now(); //end timer
-    double timelapse= std::chrono::duration_cast<std::chrono::microseconds>(ending - beginning).count(); //find time
-    // Output information from the simulation, either as file or print
-    std::cout<<"timing"<<timing<<std::endl;
-    if(timing){
-        sampler->WriteTimingToFiles(*system, filename, analytical, numberOfEquilibrationSteps, timelapse);
-    }
-    else{
-        if (filename == "")
-        {
-            sampler->printOutputToTerminal(*system);
-        }
-        else
-        {
-            sampler->writeOutToFile(*system, filename, omega, analytical, importanceSampling);
-        }
     if (!gradientDescent)
     {
-        auto sampler = system->runMetropolisSteps(
-            stepLength,
-            numberOfMetropolisSteps);
+        auto sampler =
+            system->runMetropolisSteps(stepLength, numberOfMetropolisSteps);
         // Output information from the simulation, either as file or print
         sampler->output(*system, filename, omega, analytical, importanceSampling);
     }
     else
     {
+        std ::cout << "Running gradient descent" << std::endl;
         auto sampler = system->optimizeMetropolis(
-            *system,
-            stepLength,
-            numberOfMetropolisSteps,
-            epochs,
-            lr);
+            *system, stepLength, numberOfMetropolisSteps, epsilon, lr);
         // Output information from the simulation, either as file or print
         sampler->output(*system, filename, omega, analytical, importanceSampling);
     }
 
     return 0;
 }
-}
-
