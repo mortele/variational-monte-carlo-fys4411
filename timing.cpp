@@ -17,6 +17,9 @@
 #include "particle.h"
 #include "sampler.h"
 
+
+using namespace std;
+
 int main(int argv, char **argc)
 {
     // Seed for the random number generator
@@ -52,12 +55,11 @@ int main(int argv, char **argc)
         cout << "omega, double: Trap frequency" << endl;
         cout << "alpha, double: WF parameter for simple gaussian. Analytical sol alpha = omega/2" << endl;
         cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
-
-
         cout << "analytical?, bool: If the analytical expression should be used. Defaults to true" << endl;
-
         cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." << endl;
-            if (argv >= 2)
+        return 0;
+    }
+    if (argv >= 2)
         numberOfDimensions = (unsigned int)atoi(argc[1]);
     if (argv >= 3)
         numberOfParticles = (unsigned int)atoi(argc[2]);
@@ -121,7 +123,7 @@ int main(int argv, char **argc)
     auto ending = std::chrono::high_resolution_clock::now(); //end timer
     double timelapse= std::chrono::duration_cast<std::chrono::microseconds>(ending - beginning).count(); //find time
     // Output information from the simulation, either as file or print
-    std::cout<<"timing"<<timing<<std::endl;
+    std::cout<<"timing:     "<< timelapse*1.0e-6 << " seconds, " << "Analytical? " << analytical << std::endl;
     if (filename=="")
     {
         std:cout<<"You need a filename"<<std::endl;
@@ -131,9 +133,4 @@ int main(int argv, char **argc)
 
         
         return 0;
-    }
-
-
-
-
 }
