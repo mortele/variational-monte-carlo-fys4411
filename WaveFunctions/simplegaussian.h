@@ -21,6 +21,7 @@ class SimpleGaussianNumerical : public SimpleGaussian
 public:
     SimpleGaussianNumerical(double alpha, double dx);
     double computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles);
+    double evaluateSingleParticle(class Particle &particle);
 
 private:
     double m_dx;

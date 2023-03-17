@@ -132,6 +132,18 @@ SimpleGaussianNumerical::SimpleGaussianNumerical(double alpha, double dx) : Simp
     m_dx = dx;
 }
 
+double SimpleGaussianNumerical::evaluateSingleParticle(class Particle &particle) 
+{
+    double r2 = 0;
+    static const int numberOfDimensions = particle.getNumberOfDimensions();
+
+    for(int q = 0; q < numberOfDimensions; q++) {
+        r2 += particle.getPosition().at(q)*particle.getPosition().at(q);
+    }
+
+    return std::exp(-m_parameters.at(0)*r2);
+}
+
 double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
 {
     int num_particles = particles.size();
@@ -143,22 +155,21 @@ double SimpleGaussianNumerical::computeDoubleDerivative(std::vector<std::unique_
     {
         Particle &particle = *particles.at(i);
 
+        gx = evaluateSingleParticle(particle);          // gx = g(x) this is the value of the wave function at the current position
         for (int q = 0; q < numberOfDimensions; q++)
         {
-
             r_q = particle.getPosition().at(q);
-            gx = evaluate(particles);                       // gx = g(x) this is the value of the wave function at the current position
             particle.adjustPosition(m_dx, q);               // adjust the position of the particle by dx in the qth dimension
-            gxpdx = evaluate(particles);                    // gxpdx = g(x + dx) this is the value of the wave function at the new position
+            gxpdx = evaluateSingleParticle(particle);                    // gxpdx = g(x + dx) this is the value of the wave function at the new position
             particle.adjustPosition(-2 * m_dx, q);          // adjust the position of the particle by -2dx in the qth dimension
-            gxmdx = evaluate(particles);                    // gxmdx = g(x - dx) this is the value of the wave function at the new position
+            gxmdx = evaluateSingleParticle(particle);                    // gxmdx = g(x - dx) this is the value of the wave function at the new position
             der = (gxpdx - 2 * gx + gxmdx) / (m_dx * m_dx); // der = double derivative
             particle.setPosition(r_q, q);                   // reset the position of the particle to the original value
-            der_sum += der;                                 // sum the double derivatives over all particles and dimensions
+            der_sum += der/gx;                                 // sum the double derivatives over all particles and dimensions
         }
     }
 
-    return der_sum / evaluate(particles); // divide by the value of the wave function at the current position
+    return der_sum; // divide by the value of the wave function at the current position
 }
 
 void SimpleGaussian::setParameters(std::vector<double> parameters)
