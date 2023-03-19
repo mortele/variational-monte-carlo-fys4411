@@ -66,7 +66,7 @@ std::unique_ptr<class Sampler> System::runMetropolisSteps(
 }
 
 std::unique_ptr<class Sampler> System::optimizeMetropolis(
-    System &system, double stepLength, unsigned int numberOfMetropolisSteps,
+    System &system, double stepLength, unsigned int numberOfMetropolisSteps, unsigned int numberOfEquilibrationSteps,
     double epsilon, double learningRate)
 {
   auto sampler =
@@ -76,18 +76,19 @@ std::unique_ptr<class Sampler> System::optimizeMetropolis(
   double gradient = 1;
   while (abs(gradient) > epsilon)
   {
+    // run equilibration steps
+    runEquilibrationSteps(stepLength, numberOfEquilibrationSteps);
+
     gradient = 0;
     /*Notice that the positions are reset to what they were at the initial state
     but the parameters of the wave function should be what they were at the END
     of last epoch*/
 
     // reset position and quantum force
-    // (i think the quantum force is reset automatically to 0 and the beggining
-    // of the metroplis step)
+    // (quantum force is reset automatically to 0 and the beggining of the metroplis step)
     for (unsigned int i = 0; i < m_numberOfParticles; i++)
     {
       m_particles[i]->resetPosition();
-      // m_particles[i]->resetQuantumForce();
     }
 
     // (re)set the sampler cumulative values by calling the constructor

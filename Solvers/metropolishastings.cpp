@@ -36,7 +36,7 @@ bool MetropolisHastings::step(
     Particle old_particle = proposed_particle;
 
     // double Psi_old = waveFunction.evaluate(particles);
-    waveFunction.quantumForce(proposed_particle, qForceOld);
+    waveFunction.quantumForce(particles, proposed_particle, qForceOld); // if wave function is not interecting, particles will be ignored
 
     for (int q = 0; q < numberOfDimensions; q++)
     {
@@ -45,7 +45,7 @@ bool MetropolisHastings::step(
     }
 
     // double Psi_new = waveFunction.evaluate(particles);
-    waveFunction.quantumForce(proposed_particle, qForceNew); // Calculate the quantum force at the new position
+    waveFunction.quantumForce(particles, proposed_particle, qForceNew); // Calculate the quantum force at the new position
 
     double G_ratio = 0; // The expoents of the ratio of the Greens functions
     for (int q = 0; q < numberOfDimensions; q++)
@@ -55,9 +55,9 @@ bool MetropolisHastings::step(
 
     G_ratio = std::exp(G_ratio);
     double w = G_ratio * waveFunction.evaluate_w(proposed_particle_idx,
-                                        proposed_particle,
-                                        old_particle,
-                                        particles); // Metropolis test
+                                                 proposed_particle,
+                                                 old_particle,
+                                                 particles); // Metropolis test
 
     if (w >= m_rng->nextDouble()) // Accept the step
     {

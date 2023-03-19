@@ -120,7 +120,7 @@ double SimpleGaussian::evaluate_w(int proposed_particle_idx, class Particle &pro
     return std::exp(-2.0 * alpha * (r2_proposed - r2_old));
 }
 
-void SimpleGaussian::quantumForce(Particle &particle, std::vector<double> &force)
+void SimpleGaussian::quantumForce(std::vector<std::unique_ptr<class Particle>> &particles, Particle &particle, std::vector<double> &force)
 {
     static const int numberOfDimensions = particle.getNumberOfDimensions(); // static to avoid redeclaration between calls
     double alpha = m_parameters.at(0);

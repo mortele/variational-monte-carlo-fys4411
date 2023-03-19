@@ -26,16 +26,15 @@ int main(int argv, char **argc)
     unsigned int numberOfParticles = 10;
     unsigned int numberOfMetropolisSteps = (unsigned int)1e6;
     unsigned int numberOfEquilibrationSteps = (unsigned int)1e6;
-    double omega = 1.0;         // Oscillator frequency.
-    double alpha = omega / 2.0; // Variational parameter. If using gradient
-                                // descent, this is the initial guess.
-    double stepLength = 0.1;    // Metropolis step length.
-    double epsilon = 0.05;      // Tolerance for gradient descent.
-    double lr = 0.02;           // Learning rate for gradient descent.
-    double dx = 10e-6;
-    double interactionTerm = 0.5; // Interaction parameter. This should perhaps not be hardcoded!
+    double omega = 1.0;                                 // Oscillator frequency.
+    double alpha = omega / 2.0;                         // Variational parameter. If using gradient
+                                                        // descent, this is the initial guess.
+    double stepLength = 0.1;                            // Metropolis step length.
+    double epsilon = 0.05;                              // Tolerance for gradient descent.
+    double lr = 0.02;                                   // Learning rate for gradient descent.
+    double interactionTerm = 0.0043 * sqrt(1. / omega); // Interection constant a. Notice that hbar = m = 1.
     bool importanceSampling = false;
-    bool gradientDescent = true;
+    bool gradientDescent = 1;
     bool analytical = true;
     double D = 0.5;
     string filename = "";
@@ -109,15 +108,10 @@ int main(int argv, char **argc)
     // moved once).
     std::unique_ptr<class MonteCarlo> solver;
 
-    // Check if numerical gaussian should be used.
-    if (!analytical)
-        wavefunction = std::make_unique<InteractingGaussianNumerical>(alpha, dx, interactionTerm, numberOfParticles);
-
     // Set what solver to use, pass on rng and additional parameters
     if (importanceSampling)
     {
-        solver =
-            std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
+        solver = std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
     }
     else
     {
@@ -150,7 +144,7 @@ int main(int argv, char **argc)
     else
     {
         auto sampler = system->optimizeMetropolis(
-            *system, stepLength, numberOfMetropolisSteps, epsilon, lr);
+            *system, stepLength, numberOfMetropolisSteps, numberOfEquilibrationSteps, epsilon, lr);
         // Output information from the simulation, either as file or print
         sampler->output(*system, filename, omega, analytical, importanceSampling);
     }
