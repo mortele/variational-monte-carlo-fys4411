@@ -199,7 +199,7 @@ double InteractingGaussian::evaluate_w(int proposed_particle_idx, class Particle
      Notice that the interaction term does not depend on the proposed particle, so we can just evaluate the gaussian part (I THINK).
     */
     static const int numberOfDimensions = particles.at(0)->getNumberOfDimensions(); // static to avoid redeclaration between calls
-    static const double alpha = m_parameters.at(0);
+    const double alpha = m_parameters.at(0);
 
     double r2_proposed, r2_old;
     r2_proposed = 0;
@@ -218,9 +218,8 @@ double InteractingGaussian::evaluate_w(int proposed_particle_idx, class Particle
 void InteractingGaussian::quantumForce(std::vector<std::unique_ptr<class Particle>> &particles, Particle &particle, std::vector<double> &force)
 {
     static const int numberOfDimensions = particle.getNumberOfDimensions(); // static to avoid redeclaration between calls
-
-    static const double alpha = m_parameters.at(0);
     static const double a = m_interactionTerm;
+    const double alpha = m_parameters.at(0);
 
     for (int q = 0; q < numberOfDimensions; q++)
     {
