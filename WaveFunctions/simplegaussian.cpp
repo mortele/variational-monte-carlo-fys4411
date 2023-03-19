@@ -20,7 +20,17 @@ double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>>& pa
      * the particles are accessible through the particle[i]->getPosition()
      * function.
      */
-    return 0;
+     double psi;
+     double alpha = m_parameters[0]; //alpha is the first and only parameter for now.
+
+     for(int i=0; i<particles.size(); i++){
+         double rx = particles[i]->getPosition()[0]; //Only 1D for now.
+         double g = exp(-alpha*rx*rx);
+         //Trial wave function is product of g for all particles.
+         //f ignored for now, due to considering non interacting particles.
+         psi = psi*g;
+     }
+     return psi;
 }
 
 double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles) {
