@@ -9,7 +9,6 @@
 #include "Math/random.h"
 #include "Solvers/metropolis.h"
 #include "Solvers/metropolishastings.h"
-#include "WaveFunctions/simplegaussian.h"
 #include "WaveFunctions/interactinggaussian.h"
 #include "particle.h"
 #include "sampler.h"
@@ -27,15 +26,15 @@ int main(int argv, char **argc)
     unsigned int numberOfParticles = 10;
     unsigned int numberOfMetropolisSteps = (unsigned int)1e6;
     unsigned int numberOfEquilibrationSteps = (unsigned int)1e6;
-    double omega = 1.0;         // Oscillator frequency.
-    double alpha = omega / 2.0; // Variational parameter. If using gradient
-                                // descent, this is the initial guess.
-    double stepLength = 0.1;    // Metropolis step length.
-    double epsilon = 0.05;      // Tolerance for gradient descent.
-    double lr = 0.1;            // Learning rate for gradient descent.
-    double dx = 10e-6;
+    double omega = 1.0;                                 // Oscillator frequency.
+    double alpha = omega / 2.0;                         // Variational parameter. If using gradient
+                                                        // descent, this is the initial guess.
+    double stepLength = 0.1;                            // Metropolis step length.
+    double epsilon = 0.05;                              // Tolerance for gradient descent.
+    double lr = 0.1;                                    // Learning rate for gradient descent.
+    double interactionTerm = 0.0043 * sqrt(1. / omega); // Interection constant a. Notice that hbar = m = 1.
     bool importanceSampling = false;
-    bool gradientDescent = true;
+    bool gradientDescent = 1;
     bool analytical = true;
     double D = 0.5;
     string filename = "";
@@ -98,23 +97,21 @@ int main(int argv, char **argc)
     // Construct a unique pointer to a new System
     auto hamiltonian = std::make_unique<HarmonicOscillator>(omega);
 
-    // Initialise SimpleGaussian by default
-    std::unique_ptr<class WaveFunction> wavefunction = std::make_unique<SimpleGaussian>(alpha); // Empty wavefunction pointer, since it uses "alpha" in its
-                                                                                                // constructor (can only be moved once).
+    // Initialise Interacting Gaussian by default
+    std::unique_ptr<class WaveFunction> wavefunction = std::make_unique<InteractingGaussian>(
+        alpha,
+        interactionTerm,
+        numberOfParticles); // Empty wavefunction pointer, since it uses "alpha" in its
+                            // constructor (can only be moved once).
 
     // Empty solver pointer, since it uses "rng" in its constructor (can only be
     // moved once).
     std::unique_ptr<class MonteCarlo> solver;
 
-    // Check if numerical gaussian should be used.
-    if (!analytical)
-        wavefunction = std::make_unique<SimpleGaussianNumerical>(alpha, dx);
-
     // Set what solver to use, pass on rng and additional parameters
     if (importanceSampling)
     {
-        solver =
-            std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
+        solver = std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
     }
     else
     {

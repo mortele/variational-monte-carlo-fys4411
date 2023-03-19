@@ -40,9 +40,9 @@ bool Metropolis::step(
 
     // double w = (Psi_new * Psi_new) / (Psi_old * Psi_old); // Metropolis test
     double w = waveFunction.evaluate_w(proposed_particle_idx,
-                                        proposed_particle,
-                                        old_particle,
-                                        particles);
+                                       proposed_particle,
+                                       old_particle,
+                                       particles);
 
     if (w >= m_rng->nextDouble()) // Accept the step
     {

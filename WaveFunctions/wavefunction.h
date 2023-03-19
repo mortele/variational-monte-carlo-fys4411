@@ -15,9 +15,11 @@ public:
     virtual double evaluate_w(int proposed_particle_idx, class Particle &proposed_particle, class Particle &old_particle, std::vector<std::unique_ptr<class Particle>> &particles) = 0;
     virtual double computeParamDerivative(std::vector<std::unique_ptr<class Particle>> &particles, int parameterIndex) = 0;
     virtual double computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles) = 0;
-    virtual void quantumForce(Particle &particles, std::vector<double> &force) = 0;
+    virtual void quantumForce(std::vector<std::unique_ptr<class Particle>> &particles, Particle &particle, std::vector<double> &force) = 0;
 
 protected:
     int m_numberOfParameters = 0;
+    int m_numberOfParticles = 0;
     std::vector<double> m_parameters = std::vector<double>();
+    double m_interactionTerm = 0; // parameter in the interaction
 };
