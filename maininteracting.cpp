@@ -31,7 +31,7 @@ int main(int argv, char **argc)
                                                         // descent, this is the initial guess.
     double stepLength = 0.1;                            // Metropolis step length.
     double epsilon = 0.05;                              // Tolerance for gradient descent.
-    double lr = 0.02;                                   // Learning rate for gradient descent.
+    double lr = 0.1;                                    // Learning rate for gradient descent.
     double interactionTerm = 0.0043 * sqrt(1. / omega); // Interection constant a. Notice that hbar = m = 1.
     bool importanceSampling = false;
     bool gradientDescent = 1;

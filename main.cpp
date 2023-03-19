@@ -32,7 +32,7 @@ int main(int argv, char **argc)
                                 // descent, this is the initial guess.
     double stepLength = 0.1;    // Metropolis step length.
     double epsilon = 0.05;      // Tolerance for gradient descent.
-    double lr = 0.01;           // Learning rate for gradient descent.
+    double lr = 0.1;            // Learning rate for gradient descent.
     double dx = 10e-6;
     bool importanceSampling = false;
     bool gradientDescent = true;
