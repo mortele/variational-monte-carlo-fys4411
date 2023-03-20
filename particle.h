@@ -16,3 +16,6 @@ private:
     std::vector<double> m_position = std::vector<double>();
     std::vector<double> m_initialPosition = std::vector<double>(); // Save initial position to reset in Gradient Descent.
 };
+
+double particle_r2(Particle &p);
+double particle_r2(Particle &p1, Particle &p2);

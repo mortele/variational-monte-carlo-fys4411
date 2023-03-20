@@ -20,3 +20,23 @@ void Particle::resetPosition()
 {
     m_position = m_initialPosition;
 }
+
+double particle_r2(Particle &p) {
+    static const int numberOfDimensions = p.getNumberOfDimensions();
+    double ret = 0;
+    for(int q = 0; q < numberOfDimensions; q++) {
+        ret += p.getPosition().at(q)*p.getPosition().at(q);
+    }
+    return ret;
+}
+
+double particle_r2(Particle &p1, Particle &p2) {
+    static const int numberOfDimensions = p1.getNumberOfDimensions();
+    double rdiff;
+    double ret = 0;
+    for(int q = 0; q < numberOfDimensions; q++) {
+        rdiff = p1.getPosition().at(q) - p2.getPosition().at(q);
+        ret += rdiff*rdiff;
+    }
+    return ret;
+}

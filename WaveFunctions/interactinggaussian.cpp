@@ -1,4 +1,4 @@
-#include <memory>
+ #include <memory>
 #include <cmath>
 #include <cassert>
 
@@ -34,7 +34,6 @@ double InteractingGaussian::evaluate(std::vector<std::unique_ptr<class Particle>
     double alpha = m_parameters.at(0);
     double a = m_interactionTerm; // renaming for simplicity in formulas
 
-    std::cout << "Interaction parameter is : " << a << std::endl;
 
     for (int i = 0; i < m_numberOfParticles; i++)
     {
@@ -45,18 +44,22 @@ double InteractingGaussian::evaluate(std::vector<std::unique_ptr<class Particle>
             r2 += r_q * r_q;
         }
     }
-    double gaussian = std::exp(-alpha * r2); // this is the gaussian part of the wave function
 
+    double gaussian = std::exp(-alpha * r2); // this is the gaussian part of the wave function
+    
     // now we have interaction, so instead of just the gaussian, we have to multiply by the interaction term
-    double interaction = 0;
+    double interaction = 1;
     double r_ij_q = 0;   // r_ij_q is the q'th coordinate of the r_ij vector
     double r_ij = 0;     // r_ij is the squared distance between particles i and j. This is important now that we have interaction
     double norm_rij = 0; // norm_r_ij is the distance between particles i and j
+    
+    
     for (int i = 0; i < m_numberOfParticles; i++)
     {
         Particle particle_i = *particles.at(i);
         for (int j = i + 1; j < m_numberOfParticles; j++) // we only need to loop over the particles with higher index than i because of the symmetry of the interaction
         {
+            r_ij = 0;
             Particle particle_j = *particles.at(j);
             for (int q = 0; q < numberOfDimensions; q++)
             {
@@ -66,7 +69,7 @@ double InteractingGaussian::evaluate(std::vector<std::unique_ptr<class Particle>
             norm_rij = std::sqrt(r_ij); // there might be a more efficient way to do this, using u = ln(f(r_ij)).
             if (norm_rij > a)
             {
-                interaction *= (1 - a / norm_rij);
+                interaction *= (1.0 - a / norm_rij);
             }
         }
     }
@@ -199,19 +202,37 @@ double InteractingGaussian::evaluate_w(int proposed_particle_idx, class Particle
      Notice that the interaction term does not depend on the proposed particle, so we can just evaluate the gaussian part (I THINK).
     */
     static const int numberOfDimensions = particles.at(0)->getNumberOfDimensions(); // static to avoid redeclaration between calls
+    static const double a = m_interactionTerm;
     const double alpha = m_parameters.at(0);
 
     double r2_proposed, r2_old;
     r2_proposed = 0;
     r2_old = 0;
 
-    for (int i = 0; i < numberOfDimensions; i++)
+    r2_proposed = particle_r2(proposed_particle);
+    r2_old = particle_r2(old_particle);
+
+    double gaussian = std::exp(-2.0 * alpha * (r2_proposed - r2_old));
+
+    double interaction = 1;
+    double r_gj_prime = 0;
+    double r_gj = 0;
+    double delta = 0;
+    for(int i = 0; i < proposed_particle_idx; i++) 
     {
-        r2_proposed += proposed_particle.getPosition().at(i) * proposed_particle.getPosition().at(i);
-        r2_old += old_particle.getPosition().at(i) * old_particle.getPosition().at(i);
+        r_gj_prime = std::sqrt( particle_r2(proposed_particle, *particles.at(i)) ); 
+        r_gj = std::sqrt( particle_r2(old_particle, *particles.at(i)) );
+        delta = (r_gj_prime > a)*(r_gj > a);
+        interaction *= (1.0 - a/r_gj_prime) / (1.0 - a/r_gj);
+    }
+    for(int i = proposed_particle_idx+1; i < m_numberOfParameters; i++) {
+        r_gj_prime = std::sqrt( particle_r2(proposed_particle, *particles.at(i)) ); 
+        r_gj = std::sqrt( particle_r2(old_particle, *particles.at(i)) );
+        delta = (r_gj_prime > a)*(r_gj > a);
+        interaction *= (1.0- a/r_gj_prime) / (1.0- a/r_gj);
     }
 
-    return std::exp(-2.0 * alpha * (r2_proposed - r2_old));
+    return gaussian * interaction * interaction;
 }
 
 // Notice that now we need to pass the whole vector of particles, because we need to compute the interaction term.
