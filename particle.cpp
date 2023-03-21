@@ -52,9 +52,9 @@ double dot_product(std::vector<double> &v1, std::vector<double> &v2, int numberO
     return ret;
 }
 
-void particle_rdiff(std::vector<double> &diff, Particle &p1, Particle &p2, double scale = 1.0)
+void particle_add_rdiff(std::vector<double> &diff, Particle &p1, Particle &p2, double scale)
 {
     static const int numberOfDimensions = p1.getNumberOfDimensions();
     for(int i = 0; i < numberOfDimensions; i++)
-        diff.at(i) = scale*(p1.getPosition().at(i) - p2.getPosition().at(i));
+        diff.at(i) += scale*(p1.getPosition().at(i) - p2.getPosition().at(i));
 }
