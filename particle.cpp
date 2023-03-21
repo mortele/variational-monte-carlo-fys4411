@@ -21,8 +21,7 @@ void Particle::resetPosition()
     m_position = m_initialPosition;
 }
 
-double particle_r2(Particle &p) 
-{
+double particle_r2(Particle &p) {
     static const int numberOfDimensions = p.getNumberOfDimensions();
     double ret = 0;
     for(int q = 0; q < numberOfDimensions; q++) {
@@ -31,8 +30,7 @@ double particle_r2(Particle &p)
     return ret;
 }
 
-double particle_r2(Particle &p1, Particle &p2)
-{
+double particle_r2(Particle &p1, Particle &p2) {
     static const int numberOfDimensions = p1.getNumberOfDimensions();
     double rdiff;
     double ret = 0;
@@ -41,20 +39,4 @@ double particle_r2(Particle &p1, Particle &p2)
         ret += rdiff*rdiff;
     }
     return ret;
-}
-
-double dot_product(std::vector<double> &v1, std::vector<double> &v2, int numberOfDimensions) 
-{
-    double ret = 0;
-    for(int i = 0; i < numberOfDimensions; i++)
-        ret += v1.at(i) * v2.at(i);
-
-    return ret;
-}
-
-void particle_rdiff(std::vector<double> &diff, Particle &p1, Particle &p2, double scale = 1.0)
-{
-    static const int numberOfDimensions = p1.getNumberOfDimensions();
-    for(int i = 0; i < numberOfDimensions; i++)
-        diff.at(i) = scale*(p1.getPosition().at(i) - p2.getPosition().at(i));
 }
