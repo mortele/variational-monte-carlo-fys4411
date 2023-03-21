@@ -27,7 +27,10 @@ double InteractingGaussian::evaluate(std::vector<std::unique_ptr<class Particle>
      * the particles are accessible through the particle[i]->getPosition()
      * function.
      */
+    int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
+
     double r2 = 0;  // r2 is the sum of the squared coordinates of the r vector
+    double r_q = 0; // r_q is the q'th coordinate of the r vector
     double alpha = m_parameters.at(0);
     double a = m_interactionTerm; // renaming for simplicity in formulas
 
@@ -35,23 +38,39 @@ double InteractingGaussian::evaluate(std::vector<std::unique_ptr<class Particle>
     for (int i = 0; i < m_numberOfParticles; i++)
     {
         Particle particle = *particles.at(i);
-        r2 += particle_r2(particle);
+        for (int q = 0; q < numberOfDimensions; q++)
+        {
+            r_q = particle.getPosition().at(q);
+            r2 += r_q * r_q;
+        }
     }
 
     double gaussian = std::exp(-alpha * r2); // this is the gaussian part of the wave function
     
     // now we have interaction, so instead of just the gaussian, we have to multiply by the interaction term
     double interaction = 1;
-    double r_ij = 0;     // r_ij is the distance between particles i and j. This is important now that we have interaction
+    double r_ij_q = 0;   // r_ij_q is the q'th coordinate of the r_ij vector
+    double r_ij = 0;     // r_ij is the squared distance between particles i and j. This is important now that we have interaction
+    double norm_rij = 0; // norm_r_ij is the distance between particles i and j
+    
     
     for (int i = 0; i < m_numberOfParticles; i++)
     {
         Particle particle_i = *particles.at(i);
         for (int j = i + 1; j < m_numberOfParticles; j++) // we only need to loop over the particles with higher index than i because of the symmetry of the interaction
         {
-            Particle particle_j = *particles.at(j);        
-            r_ij = std::sqrt(particle_r2(particle_i, particle_j));
-            interaction *= (r_ij > a) ? (1.0 - a/r_ij) : 0; 
+            r_ij = 0;
+            Particle particle_j = *particles.at(j);
+            for (int q = 0; q < numberOfDimensions; q++)
+            {
+                r_ij_q = particle_i.getPosition().at(q) - particle_j.getPosition().at(q); // ex: r_ij_x = r_i_x - r_j_x
+                r_ij += r_ij_q * r_ij_q;                                                  // ex: r_ij = r_ij_x^2 + r_ij_y^2 + r_ij_z^2
+            }
+            norm_rij = std::sqrt(r_ij); // there might be a more efficient way to do this, using u = ln(f(r_ij)).
+            if (norm_rij > a)
+            {
+                interaction *= (1.0 - a / norm_rij);
+            }
         }
     }
 
@@ -66,36 +85,23 @@ double InteractingGaussian::computeParamDerivative(std::vector<std::unique_ptr<c
      * so we can just return the derivative of the gaussian part wrt alpha.
      * Notice we don't even need to multiply by the interaction term, because we then divide by the WF (TRIPLE CHECK THIS!).
      */
+    int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
     double parameter = m_parameters.at(parameterIndex); // this is not used now, but can be used when we generalize
 
     double r2_sum = 0;
+    double r_q = 0;
 
     for (int k = 0; k < m_numberOfParticles; k++)
     {
         Particle particle = *particles.at(k);
-        r2_sum += particle_r2(particle);
+        for (int q = 0; q < numberOfDimensions; q++)
+        {
+            r_q = particle.getPosition().at(q);
+            r2_sum += r_q * r_q;
+        }
     }
     return -r2_sum; // analytic derivative wrt alpha, only 1 param to optimize now, This needs to be generalized
 }
-
-double InteractingGaussian::u_p(double r_ij)
-{
-    static const double a = m_interactionTerm;
-    return a/(r_ij*(r_ij-a));
-};
-
-double InteractingGaussian::u_pp(double r_ij)
-{
-    static const double a = m_interactionTerm;
-    return (a*(2.0*r_ij-a)) / (r_ij*(r_ij-a)*(r_ij-a));
-}
-
-void InteractingGaussian::grad_phi_ratio(std::vector<double> v, Particle &particle, double alpha) {
-    static const int numberOfDimensions = particle.getNumberOfDimensions();
-    for(int i = 0; i < numberOfDimensions; i++)
-        v.at(i) = -2*alpha*particle.getPosition().at(i);
-}
-
 
 // I still need to do this by hand to figure out the terms given our wf.
 double InteractingGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
@@ -106,58 +112,84 @@ double InteractingGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<
      * coordinates of each particle. And also we devide by the wave function because it simplifies the
      * calculations in the Metropolis algorithm and it is all we actually need.
      */
-    static const int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
-    static const double a = m_interactionTerm; // renaming for simplicity in formulas
+    int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
     double alpha = m_parameters.at(0);
+    double a = m_interactionTerm; // renaming for simplicity in formulas
 
-    std::vector<double> grad_phi_ratio_k(3);
-    std::vector<double> v(numberOfDimensions, 0);
-    double r_kj_length;
-    double u_p_kj, u_pp_kj;
+    double r2_sum = 0;
+    double r_q = 0;
+
+    // first we compute the double derivative of the gaussian part
+    for (int k = 0; k < m_numberOfParticles; k++)
+    {
+        Particle particle = *particles.at(k);
+        for (int q = 0; q < numberOfDimensions; q++)
+        {
+            r_q = particle.getPosition().at(q);
+            r2_sum += r_q * r_q;
+        }
+    }
+
+    double gaussian_double_derivative = 2 * alpha * (2 * alpha * r2_sum - m_numberOfParticles * numberOfDimensions); // analytic double derivative
+
+    // now we compute the double derivative of the interaction part
+    double interaction_double_derivative = 0; // this will contain 3 more terms * ONLY if r_ij > a*
 
     double term1 = 0;
     double term2 = 0;
     double term3 = 0;
 
-    double r2_sum_OB = 0;
-    for (int k = 0; k < m_numberOfParticles; k++)
+    for (int k = 0; k < m_numberOfParticles; k++) // we can join the loops later
     {
-        // first we compute the double derivative of the gaussian part
         Particle particle_k = *particles.at(k);
-        r2_sum_OB += particle_r2(particle_k);
-
-        // "Term 1"
-        grad_phi_ratio(grad_phi_ratio_k, particle_k, alpha);
-
-        // Sum over j != k
-        for(int j = 0; j < k; j++) 
+        // loop over all particles but not particle k
+        for (int i = 0; i < m_numberOfParticles; i++)
         {
-            Particle particle_j = *particles.at(j);
-            r_kj_length = std::sqrt(particle_r2(particle_k, particle_j));
-            u_p_kj = (r_kj_length > a) ? u_p(r_kj_length) : 0;
-            u_pp_kj = (r_kj_length > a) ? u_pp(r_kj_length) : 0;
 
-            particle_add_rdiff(v, particle_k, particle_j, u_p_kj/r_kj_length);
+            Particle particle_i = *particles.at(i);
+            double r_ik = 0;
+            double r_ik_q = 0;
+            double r_ik_norm = 0;
+            double r_jk_norm = 0;
+            double r_jk_r_ik = 0;
+            double r_ik_q_r_k_q = 0; //  q'th coordinate of the r_ik * r_k vector
+            double r_ik_rk = 0;      // r_ik * r_k
+            for (int q = 0; q < numberOfDimensions; q++)
+            {
+                r_ik_q = particle_k.getPosition().at(q) - particle_i.getPosition().at(q);
+                r_ik += r_ik_q * r_ik_q;
 
-            term3 += u_pp_kj + (2/r_kj_length) * u_p_kj;
+                r_ik_q_r_k_q = r_ik_q * r_ik_q * particle_k.getPosition().at(q);
+                r_ik_rk += r_ik_q_r_k_q * r_ik_q_r_k_q;
+            }
+            r_ik_norm = std::sqrt(r_ik);
+            if (r_ik_norm > a) // notice this eliminates the self-interaction term
+            {
+                term1 += r_ik_rk / (r_ik_norm * r_ik_norm * (r_ik_norm - a));
+                term2 += 1 / (r_ik_norm * r_ik_norm) * (r_ik_norm - a) * (r_ik_norm - a);
+
+                for (int j = 0; j < m_numberOfParticles; j++)
+                {
+                    Particle particle_j = *particles.at(j);
+                    double r_jk = 0;
+                    double r_jk_q = 0;
+                    for (int q = 0; q < numberOfDimensions; q++)
+                    {
+                        r_jk_q = particle_k.getPosition().at(q) - particle_j.getPosition().at(q);
+                        r_jk += r_jk_q * r_jk_q;
+
+                        r_jk_r_ik += r_jk_q * r_ik_q; // this is the dot product of r_jk and r_ik
+                    }
+                    r_jk_norm = std::sqrt(r_jk);
+                    if (r_jk_norm > a)
+                    {
+                        term3 += r_jk_r_ik / (r_ik_norm * r_jk_norm * (r_ik_norm - a) * (r_jk_norm - a));
+                    }
+                }
+            }
         }
-        for(int j = k+1; j < m_numberOfParticles; j++)
-        {
-            Particle particle_j = *particles.at(j);
-            r_kj_length = std::sqrt(particle_r2(particle_k, particle_j));
-            u_p_kj = (r_kj_length > a) ? u_p(r_kj_length) : 0;
-            u_pp_kj = (r_kj_length > a) ? u_pp(r_kj_length) : 0;
-
-            particle_add_rdiff(v, particle_k, particle_j, u_p_kj/r_kj_length);
-            term3 += u_pp_kj + (2/r_kj_length) * u_p_kj;
-        }
-
-        term1 = 2*dot_product(grad_phi_ratio_k, v, numberOfDimensions);
-        term2 = dot_product(v, v, numberOfDimensions);
     }
-
-    double gaussian_double_derivative = 2 * alpha * (2 * alpha * r2_sum_OB - m_numberOfParticles * numberOfDimensions); // analytic double derivative
-    double interaction_double_derivative = term1 + term2 + term3; // this will contain 3 more terms * ONLY if r_ij > a*
+    interaction_double_derivative = -4 * alpha * a * term1 - a * a * term2 + a * a * term3;
 
     return gaussian_double_derivative + interaction_double_derivative;
 }
@@ -169,6 +201,7 @@ double InteractingGaussian::evaluate_w(int proposed_particle_idx, class Particle
      It is a clever way to avoid having to evaluate the wave function for all particles at each step.
      Notice that the interaction term does not depend on the proposed particle, so we can just evaluate the gaussian part (I THINK).
     */
+    static const int numberOfDimensions = particles.at(0)->getNumberOfDimensions(); // static to avoid redeclaration between calls
     static const double a = m_interactionTerm;
     const double alpha = m_parameters.at(0);
 
@@ -190,13 +223,13 @@ double InteractingGaussian::evaluate_w(int proposed_particle_idx, class Particle
         r_gj_prime = std::sqrt( particle_r2(proposed_particle, *particles.at(i)) ); 
         r_gj = std::sqrt( particle_r2(old_particle, *particles.at(i)) );
         delta = (r_gj_prime > a)*(r_gj > a);
-        interaction *= (1.0 - a/r_gj_prime) / (1.0 - a/r_gj) * delta;
+        interaction *= (1.0 - a/r_gj_prime) / (1.0 - a/r_gj);
     }
     for(int i = proposed_particle_idx+1; i < m_numberOfParameters; i++) {
         r_gj_prime = std::sqrt( particle_r2(proposed_particle, *particles.at(i)) ); 
         r_gj = std::sqrt( particle_r2(old_particle, *particles.at(i)) );
         delta = (r_gj_prime > a)*(r_gj > a);
-        interaction *= (1.0- a/r_gj_prime) / (1.0- a/r_gj) * delta;
+        interaction *= (1.0- a/r_gj_prime) / (1.0- a/r_gj);
     }
 
     return gaussian * interaction * interaction;

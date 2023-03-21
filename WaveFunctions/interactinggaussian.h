@@ -14,8 +14,4 @@ public:
     double computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles);
     void quantumForce(std::vector<std::unique_ptr<class Particle>> &particles, Particle &particle, std::vector<double> &force);
     void setParameters(std::vector<double> parameters);
-private:
-    double u_p(double r_ij); // u'(r_ij)
-    double u_pp(double r_ij); // u''(r_ij)
-    void grad_phi_ratio(std::vector<double> v, Particle &particle, double alpha);
 };
