@@ -17,5 +17,5 @@ public:
 private:
     double u_p(double r_ij); // u'(r_ij)
     double u_pp(double r_ij); // u''(r_ij)
-    void grad_phi_ratio(std::vector<double> v, Particle &particle, double alpha);
+    void grad_phi_ratio(std::vector<double> &v, Particle &particle, double alpha);
 };

@@ -8,6 +8,7 @@
 #include "../particle.h"
 
 #include <iostream>
+using namespace std;
 
 InteractingGaussian::InteractingGaussian(double alpha, double a, int num_particles) // a is the parameter in the interaction
 {
@@ -87,10 +88,10 @@ double InteractingGaussian::u_p(double r_ij)
 double InteractingGaussian::u_pp(double r_ij)
 {
     static const double a = m_interactionTerm;
-    return (a*(2.0*r_ij-a)) / (r_ij*(r_ij-a)*(r_ij-a));
+    return -(a*(2.0*r_ij-a)) / (r_ij*r_ij*(r_ij-a)*(r_ij-a));
 }
 
-void InteractingGaussian::grad_phi_ratio(std::vector<double> v, Particle &particle, double alpha) {
+void InteractingGaussian::grad_phi_ratio(std::vector<double> &v, Particle &particle, double alpha) {
     static const int numberOfDimensions = particle.getNumberOfDimensions();
     for(int i = 0; i < numberOfDimensions; i++)
         v.at(i) = -2*alpha*particle.getPosition().at(i);
@@ -111,7 +112,6 @@ double InteractingGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<
     double alpha = m_parameters.at(0);
 
     std::vector<double> grad_phi_ratio_k(3);
-    std::vector<double> v(numberOfDimensions, 0);
     double r_kj_length;
     double u_p_kj, u_pp_kj;
 
@@ -123,6 +123,7 @@ double InteractingGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<
     for (int k = 0; k < m_numberOfParticles; k++)
     {
         // first we compute the double derivative of the gaussian part
+        std::vector<double> v(numberOfDimensions, 0);
         Particle particle_k = *particles.at(k);
         r2_sum_OB += particle_r2(particle_k);
 
@@ -134,6 +135,7 @@ double InteractingGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<
         {
             Particle particle_j = *particles.at(j);
             r_kj_length = std::sqrt(particle_r2(particle_k, particle_j));
+        
             u_p_kj = (r_kj_length > a) ? u_p(r_kj_length) : 0;
             u_pp_kj = (r_kj_length > a) ? u_pp(r_kj_length) : 0;
 
@@ -145,19 +147,23 @@ double InteractingGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<
         {
             Particle particle_j = *particles.at(j);
             r_kj_length = std::sqrt(particle_r2(particle_k, particle_j));
+        
             u_p_kj = (r_kj_length > a) ? u_p(r_kj_length) : 0;
             u_pp_kj = (r_kj_length > a) ? u_pp(r_kj_length) : 0;
 
             particle_add_rdiff(v, particle_k, particle_j, u_p_kj/r_kj_length);
+
             term3 += u_pp_kj + (2/r_kj_length) * u_p_kj;
         }
 
-        term1 = 2*dot_product(grad_phi_ratio_k, v, numberOfDimensions);
-        term2 = dot_product(v, v, numberOfDimensions);
+        term1 += 2*dot_product(grad_phi_ratio_k, v, numberOfDimensions);
+        term2 += dot_product(v, v, numberOfDimensions);
     }
+    // exit(1);
 
     double gaussian_double_derivative = 2 * alpha * (2 * alpha * r2_sum_OB - m_numberOfParticles * numberOfDimensions); // analytic double derivative
     double interaction_double_derivative = term1 + term2 + term3; // this will contain 3 more terms * ONLY if r_ij > a*
+    // cout << gaussian_double_derivative << " " << term1 << " " << term2 << " " << term3 << endl; 
 
     return gaussian_double_derivative + interaction_double_derivative;
 }
