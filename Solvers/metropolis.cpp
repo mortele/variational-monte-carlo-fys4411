@@ -16,11 +16,34 @@ bool Metropolis::step(
     class WaveFunction &waveFunction,
     std::vector<std::unique_ptr<class Particle>> &particles)
 {
-    /* Perform the actual Metropolis step: Choose a particle at random and
-     * change its position by a random amount, and check if the step is
-     * accepted by the Metropolis test (compare the wave function evaluated at
-     * this new position with the one at the old position).
-     */
+    // Choose a random particle
+    auto particle_index = m_rng->nextInt(particles.size() - 1);
+    auto particle = *particles[particle_index];
+
+    // Save old particle
+    auto new_particle = particle;
+
+    // Propose a new position
+    for (auto pos_index = 0; pos_index < particle.getNumberOfDimensions(); ++pos_index)
+        new_particle.adjustPosition(m_rng->nextGaussian(0, stepLength), pos_index);
+
+    // copy particles array 
+    auto new_particles = std::vector<std::unique_ptr<class Particle>>(particles.size());
+    for (auto i = 0; i < particles.size(); ++i)
+        new_particles[i] = std::make_unique<Particle>(*particles[i]);
+
+    new_particles[particle_index] = std::make_unique<Particle>(new_particle);
+
+    // Calculate the ratio of the new and old wave functions
+    auto ratio = waveFunction.evaluateRatio(new_particles, particles);
+
+    // Accept or reject the move
+    if (m_rng->nextDouble() < ratio * ratio)
+    {
+        // Accept the move
+        particles[particle_index] = std::make_unique<Particle>(new_particle);
+        return true;
+    }
 
     return false;
 }

@@ -58,6 +58,8 @@ std::unique_ptr<class Sampler> System::runMetropolisSteps(
         /* Here you should sample the energy (and maybe other things) using the
          * sampler instance of the Sampler class.
          */
+        // ...like what?
+
         sampler->sample(acceptedStep, this);
     }
 
