@@ -81,17 +81,26 @@ double InteractingGaussian::computeParamDerivative(std::vector<std::unique_ptr<c
 
 double InteractingGaussian::u_p(double r_ij)
 {
+    /*
+    Closed form derivative, u'(r_ij)
+    */
     static const double a = m_interactionTerm;
     return a/(r_ij*(r_ij-a));
 };
 
 double InteractingGaussian::u_pp(double r_ij)
 {
+    /*
+    Closed form derivative, u''(r_ij)
+    */
     static const double a = m_interactionTerm;
     return -(a*(2.0*r_ij-a)) / (r_ij*r_ij*(r_ij-a)*(r_ij-a));
 }
 
 void InteractingGaussian::grad_phi_ratio(std::vector<double> &v, Particle &particle, double alpha) {
+    /*
+    Calculates the ratio of the OB gradient wrt. to "particle"'s coordinate. Divided by OB wf
+    */
     static const int numberOfDimensions = particle.getNumberOfDimensions();
     for(int i = 0; i < numberOfDimensions; i++)
         v.at(i) = -2*alpha*particle.getPosition().at(i);
@@ -104,45 +113,52 @@ double InteractingGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<
     /*All wave functions need to implement this function, so you need to
      * find the double derivative analytically. Note that by double derivative,
      * we actually mean the sum of the Laplacians with respect to the
-     * coordinates of each particle. And also we devide by the wave function because it simplifies the
+     * coordinates of each particle. And also we divide by the wave function because it simplifies the
      * calculations in the Metropolis algorithm and it is all we actually need.
      */
     static const int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
     static const double a = m_interactionTerm; // renaming for simplicity in formulas
     double alpha = m_parameters.at(0);
 
-    std::vector<double> grad_phi_ratio_k(3);
-    double r_kj_length;
-    double u_p_kj, u_pp_kj;
+    std::vector<double> grad_phi_ratio_k(3); // Storing the OB gradient divided by OB wf
+    double r_kj_length; // The length of the r_k - r_j vector
+    double u_p_kj, u_pp_kj; // Store u' and u'' evaluated at r_kj
 
-    double term1 = 0;
-    double term2 = 0;
-    double term3 = 0;
+    double term1 = 0; // First TB term, dot product of v and gradient wf
+    double term2 = 0; // Second TB term, simply v dot v
+    double term3 = 0; // Third TB term, sum of scalar u' and u''
 
-    double r2_sum_OB = 0;
+    double r2_sum_OB = 0; // The sum of all squared coordinates
     for (int k = 0; k < m_numberOfParticles; k++)
     {
+        std::vector<double> v(numberOfDimensions, 0); // For each k, reset v vector
+
         // first we compute the double derivative of the gaussian part
-        std::vector<double> v(numberOfDimensions, 0);
         Particle particle_k = *particles.at(k);
+
+        // Add r_k^2 for OB term
         r2_sum_OB += particle_r2(particle_k);
 
-        // "Term 1"
+        // Calculate OB gradient and wf ratio
         grad_phi_ratio(grad_phi_ratio_k, particle_k, alpha);
 
-        // Sum over j != k
+        // Sum over j != k, divded into two parts to avoid if-statement. First do all particles up to k
         for(int j = 0; j < k; j++) 
         {
             Particle particle_j = *particles.at(j);
-            r_kj_length = std::sqrt(particle_r2(particle_k, particle_j));
+            r_kj_length = std::sqrt(particle_r2(particle_k, particle_j)); // r_kj = |r_k - r_j|
         
-            u_p_kj = (r_kj_length > a) ? u_p(r_kj_length) : 0;
-            u_pp_kj = (r_kj_length > a) ? u_pp(r_kj_length) : 0;
+            u_p_kj = (r_kj_length > a) ? u_p(r_kj_length) : 0; // Calculate u'(r_kj) if r_kj is less than a. Else evalute to 0
+            u_pp_kj = (r_kj_length > a) ? u_pp(r_kj_length) : 0; // Same for u''(r_kj)
 
+            // Here we add a term of the j != k sum to the vector v. This vector term to add is scaled by a factor u'(r_kj)/r_kj
+            // Note that this ADDS to v, not overwriting (cumulative)
             particle_add_rdiff(v, particle_k, particle_j, u_p_kj/r_kj_length);
 
+            // For this j, add the third term constribution
             term3 += u_pp_kj + (2/r_kj_length) * u_p_kj;
         }
+        // The rest of the particles, from k+1 to N. The giblets of the loop is the same.
         for(int j = k+1; j < m_numberOfParticles; j++)
         {
             Particle particle_j = *particles.at(j);
@@ -156,14 +172,13 @@ double InteractingGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<
             term3 += u_pp_kj + (2/r_kj_length) * u_p_kj;
         }
 
+        // Now that we are done with a j != k sum, perform the dot products for first and second term. Add this to the total
         term1 += 2*dot_product(grad_phi_ratio_k, v, numberOfDimensions);
         term2 += dot_product(v, v, numberOfDimensions);
     }
-    // exit(1);
 
-    double gaussian_double_derivative = 2 * alpha * (2 * alpha * r2_sum_OB - m_numberOfParticles * numberOfDimensions); // analytic double derivative
-    double interaction_double_derivative = term1 + term2 + term3; // this will contain 3 more terms * ONLY if r_ij > a*
-    // cout << gaussian_double_derivative << " " << term1 << " " << term2 << " " << term3 << endl; 
+    double gaussian_double_derivative = 2 * alpha * (2 * alpha * r2_sum_OB - m_numberOfParticles * numberOfDimensions); // OB double derivative, just like SimpleGaussian
+    double interaction_double_derivative = term1 + term2 + term3; // Adding the contribution from the three TB terms
 
     return gaussian_double_derivative + interaction_double_derivative;
 }
@@ -173,7 +188,7 @@ double InteractingGaussian::evaluate_w(int proposed_particle_idx, class Particle
     /*
      This is the wave function ratio for the Metropolis algorithm.
      It is a clever way to avoid having to evaluate the wave function for all particles at each step.
-     Notice that the interaction term does not depend on the proposed particle, so we can just evaluate the gaussian part (I THINK).
+     The gaussian part is still present, but we also have to recalculate every term where the proposed particle is present (one N product with f_ij)
     */
     static const double a = m_interactionTerm;
     const double alpha = m_parameters.at(0);
@@ -185,27 +200,30 @@ double InteractingGaussian::evaluate_w(int proposed_particle_idx, class Particle
     r2_proposed = particle_r2(proposed_particle);
     r2_old = particle_r2(old_particle);
 
-    double gaussian = std::exp(-2.0 * alpha * (r2_proposed - r2_old));
+    double gaussian = std::exp(-2.0 * alpha * (r2_proposed - r2_old)); // Same as non-interactive
 
     double interaction = 1;
-    double r_gj_prime = 0;
-    double r_gj = 0;
-    double delta = 0;
+    double r_gj_prime = 0; // |r_g - r_j| in proposed R configuration
+    double r_gj = 0; // |r_g - r_j| in old R configuration
+    double delta = 0; // If any particle distances are less than a, evalute interaction term to 0
+
+    // proposed_idx != i product. Divided into two loops to avoid if statments
     for(int i = 0; i < proposed_particle_idx; i++) 
     {
         r_gj_prime = std::sqrt( particle_r2(proposed_particle, *particles.at(i)) ); 
         r_gj = std::sqrt( particle_r2(old_particle, *particles.at(i)) );
         delta = (r_gj_prime > a)*(r_gj > a);
-        interaction *= (1.0 - a/r_gj_prime) / (1.0 - a/r_gj) * delta;
+        interaction *= (1.0 - a/r_gj_prime) / (1.0 - a/r_gj) * delta; // ratio for relative r_gj distance
     }
-    for(int i = proposed_particle_idx+1; i < m_numberOfParameters; i++) {
+    // Same as above but for the indicies after proposed_particle_idx
+    for(int i = proposed_particle_idx+1; i < m_numberOfParticles; i++) {
         r_gj_prime = std::sqrt( particle_r2(proposed_particle, *particles.at(i)) ); 
         r_gj = std::sqrt( particle_r2(old_particle, *particles.at(i)) );
         delta = (r_gj_prime > a)*(r_gj > a);
         interaction *= (1.0- a/r_gj_prime) / (1.0- a/r_gj) * delta;
     }
 
-    return gaussian * interaction * interaction;
+    return gaussian * interaction * interaction; // Dont forget to square the interaction part :)
 }
 
 // Notice that now we need to pass the whole vector of particles, because we need to compute the interaction term.
