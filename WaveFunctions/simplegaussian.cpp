@@ -11,36 +11,62 @@ SimpleGaussian::SimpleGaussian(double alpha)
 {
     assert(alpha >= 0);
     m_numberOfParameters = 1;
-    m_parameters.reserve(1);
     m_parameters.push_back(alpha);
 }
 
-double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>>& particles) {
-    /* You need to implement a Gaussian wave function here. The positions of
-     * the particles are accessible through the particle[i]->getPosition()
-     * function.
-     */
-     double psi;
-     double alpha = m_parameters[0]; //alpha is the first and only parameter for now.
+double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>> &particles)
+{
+    double psi = 1.0;
+    double alpha = m_parameters[0]; // alpha is the first and only parameter for now.
 
-     for(int i=0; i<particles.size(); i++){
-         double rx = particles[i]->getPosition()[0]; //Only 1D for now.
-         double g = exp(-alpha*rx*rx);
-         //Trial wave function is product of g for all particles.
-         //f ignored for now, due to considering non interacting particles.
-         psi = psi*g;
-     }
-     return psi;
+    for (int i = 0; i < particles.size(); i++)
+    {
+        // Let's support as many dimensions as we want.
+        double r2 = 0;
+        for (int j = 0; j < particles[i]->getPosition().size(); j++)
+            r2 += particles[i]->getPosition()[j] * particles[i]->getPosition()[j];
+        // spherical ansatz
+        double g = exp(-alpha * r2);
+
+        // Trial wave function is product of g for all particles.
+        // f ignored for now, due to considering non interacting particles.
+        psi = psi * g;
+    }
+    return psi;
 }
 
-double SimpleGaussian::computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>>& particles) {
-    /* All wave functions need to implement this function, so you need to
-     * find the double derivative analytically. Note that by double derivative,
-     * we actually mean the sum of the Laplacians with respect to the
-     * coordinates of each particle.
-     *
-     * This quantity is needed to compute the (local) energy (consider the
-     * Schrödinger equation to see how the two are related).
-     */
-    return 0;
+double SimpleGaussian::computeLocalLaplasian(std::vector<std::unique_ptr<class Particle>> &particles)
+{
+    // The expression I got for a single laplasian is, in invariant form, follows:
+    // (4 * alpha^2 * r_i^2 - 2 * alpha * NDIM)
+    // so it takes to sum over all particles.
+    double alpha = m_parameters[0];
+    double sum_laplasian = 0.0;
+    for (int i = 0; i < particles.size(); i++)
+    {
+        double r2 = 0.0;
+        for (int j = 0; j < particles[i]->getPosition().size(); ++j)
+            r2 += particles[i]->getPosition()[j] * particles[i]->getPosition()[j];
+        sum_laplasian += 4 * alpha * alpha * r2 - 2 * alpha * particles[i]->getPosition().size();
+    }
+    return sum_laplasian;
+}
+
+double SimpleGaussian::evaluateRatio(std::vector<std::unique_ptr<class Particle>> &particles_numerator, std::vector<std::unique_ptr<class Particle>> &particles_denominator)
+{
+    assert(particles_numerator.size() == particles_denominator.size());
+    double ratio = 1.0;
+    double alpha = m_parameters[0];
+
+    for (int i = 0; i < particles_numerator.size(); i++)
+    {
+        double r2_numerator = 0.0;
+        double r2_denominator = 0.0;
+        for (int j = 0; j < particles_numerator[i]->getPosition().size(); j++)
+        {
+            r2_numerator += particles_numerator[i]->getPosition()[j] * particles_numerator[i]->getPosition()[j];
+            r2_denominator += particles_denominator[i]->getPosition()[j] * particles_denominator[i]->getPosition()[j];
+        }
+        ratio *= exp(-alpha * (r2_numerator - r2_denominator));
+    }
 }
