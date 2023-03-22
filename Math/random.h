@@ -11,23 +11,26 @@
  *  double bar = rng->nextDouble(); // Draw random uniform doubles in [0, 1)
  */
 
-
-class Random {
+class Random
+{
 
 private:
     std::mt19937_64 m_engine;
 
 public:
-    Random() {
+    Random()
+    {
         std::random_device rd;
         m_engine = std::mt19937_64(rd());
     }
 
-    Random(int seed) {
+    Random(int seed)
+    {
         m_engine = std::mt19937_64(seed);
     }
 
-    int nextInt(const int &lowerLimit, const int &upperLimit) {
+    int nextInt(const int &lowerLimit, const int &upperLimit)
+    {
         // Produces uniformly distributed random integers in the closed interval
         // [lowerLimit, upperLimit].
 
@@ -35,7 +38,8 @@ public:
         return dist(m_engine);
     }
 
-    int nextInt(const int &upperLimit) {
+    int nextInt(const int &upperLimit)
+    {
         // Produces uniformly distributed random integers in the closed interval
         // [0, upperLimit].
 
@@ -43,7 +47,8 @@ public:
         return dist(m_engine);
     }
 
-    double nextDouble() {
+    double nextDouble()
+    {
         // Produces uniformly distributed random floating-point values in the
         // half-open interval [0, 1).
 
@@ -52,8 +57,8 @@ public:
     }
     double nextGaussian(
         const double &mean,
-        const double &standardDeviation
-    ) {
+        const double &standardDeviation)
+    {
         // Produces normal distributed random floating-point values with mean
         // ``mean`` and standard deviation ``standardDeviation``.
 
@@ -61,4 +66,3 @@ public:
         return dist(m_engine);
     }
 };
-

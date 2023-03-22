@@ -1,7 +1,8 @@
 #pragma once
 #include <memory>
 
-class Sampler {
+class Sampler
+{
 public:
     Sampler(
         unsigned int numberOfParticles,
@@ -9,9 +10,8 @@ public:
         double stepLength,
         unsigned int numberOfMetropolisSteps);
 
-
-    void sample(bool acceptedStep, class System* system);
-    void printOutputToTerminal(class System& system);
+    void sample(bool acceptedStep, class System *system);
+    void printOutputToTerminal(class System &system);
     void computeAverages();
     double getEnergy() { return m_energy; }
 

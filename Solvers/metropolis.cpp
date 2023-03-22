@@ -6,17 +6,15 @@
 #include "particle.h"
 #include "Math/random.h"
 
-
 Metropolis::Metropolis(std::unique_ptr<class Random> rng)
     : MonteCarlo(std::move(rng))
 {
 }
 
-
 bool Metropolis::step(
-        double stepLength,
-        class WaveFunction& waveFunction,
-        std::vector<std::unique_ptr<class Particle>>& particles)
+    double stepLength,
+    class WaveFunction &waveFunction,
+    std::vector<std::unique_ptr<class Particle>> &particles)
 {
     /* Perform the actual Metropolis step: Choose a particle at random and
      * change its position by a random amount, and check if the step is

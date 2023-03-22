@@ -3,25 +3,25 @@
 #include <memory>
 #include <vector>
 
-
-class System {
+class System
+{
 public:
     System(
-            std::unique_ptr<class Hamiltonian> hamiltonian,
-            std::unique_ptr<class WaveFunction> waveFunction,
-            std::unique_ptr<class MonteCarlo> solver,
-            std::vector<std::unique_ptr<class Particle>> particles);
+        std::unique_ptr<class Hamiltonian> hamiltonian,
+        std::unique_ptr<class WaveFunction> waveFunction,
+        std::unique_ptr<class MonteCarlo> solver,
+        std::vector<std::unique_ptr<class Particle>> particles);
 
     unsigned int runEquilibrationSteps(
-            double stepLength,
-            unsigned int numberOfEquilibrationSteps);
+        double stepLength,
+        unsigned int numberOfEquilibrationSteps);
 
     std::unique_ptr<class Sampler> runMetropolisSteps(
-            double stepLength,
-            unsigned int numberOfMetropolisSteps);
+        double stepLength,
+        unsigned int numberOfMetropolisSteps);
 
     double computeLocalEnergy();
-    const std::vector<double>& getWaveFunctionParameters();
+    const std::vector<double> &getWaveFunctionParameters();
 
 private:
     unsigned int m_numberOfParticles = 0;
@@ -32,4 +32,3 @@ private:
     std::unique_ptr<class MonteCarlo> m_solver;
     std::vector<std::unique_ptr<class Particle>> m_particles;
 };
-
