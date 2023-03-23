@@ -8,18 +8,18 @@
 
 std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
     double stepLength,
-    unsigned int numberOfDimensions,
-    unsigned int numberOfParticles,
+    size_t numberOfDimensions,
+    size_t numberOfParticles,
     Random &rng)
 {
     assert(numberOfDimensions > 0 && numberOfParticles > 0);
 
     auto particles = std::vector<std::unique_ptr<Particle>>();
 
-    for (unsigned int i = 0; i < numberOfParticles; i++)
+    for (size_t i = 0; i < numberOfParticles; i++)
     {
         std::vector<double> position = std::vector<double>();
-        for (unsigned int j = 0; j < numberOfDimensions; j++)
+        for (size_t j = 0; j < numberOfDimensions; j++)
         {
             //uniformly distributed random number between -stepLength/2 and stepLength/2
             double pos = -stepLength / 2 + rng.nextDouble() * stepLength;

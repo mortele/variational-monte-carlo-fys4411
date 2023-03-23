@@ -14,6 +14,6 @@
 /// @return uniformly random vector of particles
 std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
     double stepLength,
-    unsigned int numberOfDimensions,
-    unsigned int numberOfParticles,
+    size_t numberOfDimensions,
+    size_t numberOfParticles,
     Random &randomEngine);

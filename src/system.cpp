@@ -24,13 +24,13 @@ System::System(
     m_particles = std::move(particles);
 }
 
-unsigned int System::runEquilibrationSteps(
+size_t System::runEquilibrationSteps(
     double stepLength,
-    unsigned int numberOfEquilibrationSteps)
+    size_t numberOfEquilibrationSteps)
 {
-    unsigned int acceptedSteps = 0;
+    size_t acceptedSteps = 0;
 
-    for (unsigned int i = 0; i < numberOfEquilibrationSteps; i++)
+    for (size_t i = 0; i < numberOfEquilibrationSteps; i++)
     {
         acceptedSteps += m_solver->step(stepLength, *m_waveFunction, m_particles);
     }
@@ -40,7 +40,7 @@ unsigned int System::runEquilibrationSteps(
 
 std::unique_ptr<class Sampler> System::runMetropolisSteps(
     double stepLength,
-    unsigned int numberOfMetropolisSteps)
+    size_t numberOfMetropolisSteps)
 {
     auto sampler = std::make_unique<Sampler>(
         m_numberOfParticles,
@@ -48,7 +48,7 @@ std::unique_ptr<class Sampler> System::runMetropolisSteps(
         stepLength,
         numberOfMetropolisSteps);
 
-    for (unsigned int i = 0; i < numberOfMetropolisSteps; i++)
+    for (size_t i = 0; i < numberOfMetropolisSteps; i++)
     {
         /* Call solver method to do a single Monte-Carlo step.
          */

@@ -18,20 +18,20 @@ public:
         std::unique_ptr<class MonteCarlo> solver,
         std::vector<std::unique_ptr<class Particle>> particles);
 
-    unsigned int runEquilibrationSteps(
+    size_t runEquilibrationSteps(
         double stepLength,
-        unsigned int numberOfEquilibrationSteps);
+        size_t numberOfEquilibrationSteps);
 
     std::unique_ptr<class Sampler> runMetropolisSteps(
         double stepLength,
-        unsigned int numberOfMetropolisSteps);
+        size_t numberOfMetropolisSteps);
 
     double computeLocalEnergy();
     const std::vector<double> &getWaveFunctionParameters();
 
 private:
-    unsigned int m_numberOfParticles = 0;
-    unsigned int m_numberOfDimensions = 0;
+    size_t m_numberOfParticles = 0;
+    size_t m_numberOfDimensions = 0;
 
     std::unique_ptr<class Hamiltonian> m_hamiltonian;
     std::unique_ptr<class WaveFunction> m_waveFunction;
