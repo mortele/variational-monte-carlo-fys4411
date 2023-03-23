@@ -1,6 +1,18 @@
-RM := rm -r
+CXX:=g++
 
-.PHONY: clean
+CXX_FLAGS:=-O3 -Wall -Wextra
+
+HEADERS:=$(wildcard include/*.h)
+
+APP_NAME = ${app}
+SOURCES:=$(wildcard src/*.cpp)
+
+OBJECTS:=$(SOURCES:.cpp=.o)
+
+$(APP_NAME) : $(OBJECTS)
+	@mkdir -p $(dir bin/$@)
+	$(CXX) $(APP_NAME).cpp $^ -o bin/$@.out -I$(HEADERS) $(CXX_FLAGS)
 
 clean:
-	$(RM) build vmc
+	rm -f src/*.o
+	rm -f bin/$(APP_NAME).out

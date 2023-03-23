@@ -14,39 +14,18 @@ If you want to write your own code from scratch, you are of course welcome to do
 ## Compiling and running the project
 The recommend way to compile this project is by using CMake to create a Makefile that you can then run. You can install CMake through one of the Linux package managers, e.g., `apt install cmake`, `pacman -S cmake`, etc. For Mac you can install using `brew install cmake`. Other ways of installing are shown here: [https://cmake.org/install/](https://cmake.org/install/).
 
-### Compiling the project using CMake
+### Compiling the project using Make
 In a Linux/Mac terminal this can be done by the following commands
 ```bash
-# Create build-directory
-mkdir build
-
-# Move into the build-directory
-cd build
-
-# Run CMake to create a Makefile
-cmake ../
-
-# Make the Makefile using two threads
-make -j2
-
-# Move the executable to the top-directory
-mv vmc ..
+make app=path_to_app/app_name_no_ext
 ```
-Or, simply run the script `compile_project` via
+and this can be executed with
 ```bash
-./compile_project
+./bin/path_to_app/app_name_no_ext.out
 ```
-and the same set of commands are done for you. Now the project can be run by executing
-```bash
-./vmc
-```
-in the top-directory.
 
 #### Cleaning the directory
-Run `make clean` in the top-directory to remove the executable `vmc` and the `build`-directory.
-
-#### Windows
-Compilation of the project using Windows should work using CMake as it is OS-independent, but `make` does not work on Windows so the `compile_project`-script will not work.
+Run `make clean` in the top-directory to clean up generated object files. For cleaning program binaries as well, specify the `app`-argument, e.g., `make clean app=path_to_app/app_name_no_ext`.
 
 ## Completing the missing parts ##
 Here follows a suggestion for how you can work to complete the missing parts of the code:
