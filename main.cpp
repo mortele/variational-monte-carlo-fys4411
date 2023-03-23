@@ -50,8 +50,8 @@ int main(int argv, char **argc)
              << endl;
         cout << "#dims, int: Number of dimensions" << endl;
         cout << "#particles, int: Number of particles" << endl;
-        cout << "#log10(metropolis steps), int/double: log10 of number of steps, i.e. 6 gives 1e6 steps" << endl;
-        cout << "#log10(@-steps), int/double: log10 of number of equilibriation steps, i.e. 6 gives 1e6 steps" << endl;
+        cout << "#log2(metropolis steps), int/double: log2 of number of steps, i.e. 6 gives 2^6 steps" << endl;
+        cout << "#log2(@-steps), int/double: log2 of number of equilibriation steps, i.e. 6 gives 2^6 steps" << endl;
         cout << "omega, double: Trap frequency" << endl;
         cout << "alpha, double: WF parameter for simple gaussian. Analytical sol alpha = omega/2" << endl;
         cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
@@ -70,9 +70,9 @@ int main(int argv, char **argc)
     if (argv >= 3)
         numberOfParticles = (unsigned int)atoi(argc[2]);
     if (argv >= 4)
-        numberOfMetropolisSteps = (unsigned int)pow(10, atof(argc[3]));
+        numberOfMetropolisSteps = (unsigned int)pow(2, atof(argc[3]));
     if (argv >= 5)
-        numberOfEquilibrationSteps = (unsigned int)pow(10, atof(argc[4]));
+        numberOfEquilibrationSteps = (unsigned int)pow(2, atof(argc[4]));
     if (argv >= 6)
         omega = (double)atof(argc[5]);
     if (argv >= 7)
