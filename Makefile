@@ -11,7 +11,7 @@ OBJECTS:=$(SOURCES:.cpp=.o)
 
 $(APP_NAME) : $(OBJECTS)
 	@mkdir -p $(dir bin/$@)
-	$(CXX) $(APP_NAME).cpp $^ -o bin/$@.out -I$(HEADERS) $(CXX_FLAGS)
+	$(CXX) $(APP_NAME).cpp $^ -o bin/$@.out $(CXX_FLAGS)
 
 clean:
 	rm -f src/*.o
