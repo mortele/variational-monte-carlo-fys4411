@@ -70,4 +70,5 @@ double SimpleGaussian::evaluateRatio(std::vector<std::unique_ptr<class Particle>
         }
         ratio *= exp(-alpha * (r2_numerator - r2_denominator));
     }
+    return ratio;
 }
