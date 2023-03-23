@@ -8,10 +8,10 @@ import cpp_utils
 
 def plot_timing(filename="", D=1, Ns = np.arange(2, 10), trials = 2, save=False):
     filename = f"{filename}_{D}D.txt"
-    MCC0 = 1e4
+    MCC0 = 2**13
     if not cpp_utils.dataPath(filename).exists():
         for i, N in enumerate(Ns):
-            MCC = np.log10(MCC0*N)
+            MCC = np.log2(MCC0*N)
             for _ in range(trials):
                 cpp_utils.timingRun(D=D, filename=filename, N=N, alpha=0.43, stepLength=0.2, analytical=1, logMet=MCC, logEq=4)
                 cpp_utils.timingRun(D=D, filename=filename, N=N, alpha=0.43, stepLength=0.2, analytical=0, logMet=MCC)
