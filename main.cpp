@@ -13,17 +13,17 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char **argv)
 {
     // Seed for the random number generator
     int seed = 2023;
 
-    size_t numberOfDimensions = 3;
-    size_t numberOfParticles = 3;
-    size_t numberOfMetropolisSteps = 1e6;
-    size_t numberOfEquilibrationSteps = 1e5;
+    size_t numberOfDimensions = argc > 1 ? stoi(argv[1]) : 1;
+    size_t numberOfParticles = argc > 2 ? stoi(argv[2]) : 1;
+    size_t numberOfMetropolisSteps = argc > 3 ? stoi(argv[3]) : 1e6;
+    size_t numberOfEquilibrationSteps = numberOfMetropolisSteps/10;
     double omega = 1.0;      // Oscillator frequency.
-    double alpha = 0.5;      // Variational parameter.
+    double alpha = argc > 4 ? stod(argv[4]) : 0.5;      // Variational parameter.
     double stepLength = 0.1; // Metropolis step length.
 
     // The random engine can also be built without a seed
