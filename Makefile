@@ -1,6 +1,6 @@
 CXX:=g++
 
-CXX_FLAGS:=-O3 -Wall -Wextra
+CXX_FLAGS:=-Wall -Wextra -O3
 
 HEADERS:=$(wildcard include/*.h)
 
@@ -11,7 +11,7 @@ OBJECTS:=$(SOURCES:.cpp=.o)
 
 $(APP_NAME) : $(OBJECTS)
 	@mkdir -p $(dir bin/$@)
-	$(CXX) $(APP_NAME).cpp $^ -o bin/$@.out $(CXX_FLAGS)
+	$(CXX) -g $(APP_NAME).cpp $^ -o bin/$@.out $(CXX_FLAGS)
 
 clean:
 	rm -f src/*.o
