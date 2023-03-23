@@ -1,5 +1,5 @@
-#include "wavefunction.h"
-#include "../particle.h"
+#include "../include/wavefunction.h"
+#include "../include/particle.h"
 
 double WaveFunction::computeLocalLaplasian(std::vector<std::unique_ptr<class Particle>> &particles)
 {

@@ -3,8 +3,8 @@
 #include <memory>
 #include <vector>
 
-#include "../particle.h"
-#include "Math/random.h"
+#include "particle.h"
+#include "random.h"
 
 /// @brief Setup a random uniform initial state for the particles
 /// @param stepLength Effective box size for particle placement

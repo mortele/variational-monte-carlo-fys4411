@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "hamiltonian.h"
+#include "particle.h"
 
 class HarmonicOscillator : public Hamiltonian
 {

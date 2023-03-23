@@ -2,6 +2,8 @@
 #include <memory>
 #include <vector>
 
+#include "particle.h"
+
 /// @brief The WaveFunction class is the base class for all trial wave functions.
 /// @details It contains the number of parameters and the parameters themselves.
 class WaveFunction

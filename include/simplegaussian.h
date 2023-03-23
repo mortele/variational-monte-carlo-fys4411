@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "wavefunction.h"
+#include "particle.h"
 
 /// @brief The SimpleGaussian class is a gaussian product trial wave function.
 /// @details The trial wave function is a product of gaussian functions

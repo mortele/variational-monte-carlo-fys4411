@@ -1,10 +1,10 @@
 #include <memory>
 #include <vector>
 
-#include "metropolis.h"
-#include "WaveFunctions/wavefunction.h"
-#include "particle.h"
-#include "Math/random.h"
+#include "../include/metropolis.h"
+#include "../include/wavefunction.h"
+#include "../include/particle.h"
+#include "../include/random.h"
 
 Metropolis::Metropolis(std::unique_ptr<class Random> rng)
     : MonteCarlo(std::move(rng))

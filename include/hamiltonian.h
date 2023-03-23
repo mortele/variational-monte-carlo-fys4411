@@ -2,6 +2,8 @@
 #include <memory>
 #include <vector>
 
+#include "particle.h"
+
 class Hamiltonian
 {
 public:

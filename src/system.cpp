@@ -2,13 +2,12 @@
 #include <memory>
 #include <cassert>
 
-#include "system.h"
-#include "sampler.h"
-#include "particle.h"
-#include "WaveFunctions/wavefunction.h"
-#include "Hamiltonians/hamiltonian.h"
-#include "InitialStates/initialstate.h"
-#include "Solvers/montecarlo.h"
+#include "../include/system.h"
+#include "../include/sampler.h"
+#include "../include/particle.h"
+#include "../include/wavefunction.h"
+#include "../include/hamiltonian.h"
+#include "../include/montecarlo.h"
 
 System::System(
     std::unique_ptr<class Hamiltonian> hamiltonian,

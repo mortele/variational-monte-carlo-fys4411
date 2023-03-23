@@ -3,6 +3,12 @@
 #include <memory>
 #include <vector>
 
+#include "hamiltonian.h"
+#include "montecarlo.h"
+#include "particle.h"
+#include "sampler.h"
+#include "wavefunction.h"
+
 class System
 {
 public:

@@ -1,4 +1,4 @@
-#include "particle.h"
+#include "../include/particle.h"
 #include <cassert>
 
 Particle::Particle(const std::vector<double> &position)
@@ -7,7 +7,7 @@ Particle::Particle(const std::vector<double> &position)
     m_position = position;
 }
 
-void Particle::adjustPosition(double change, unsigned int dimension)
+void Particle::adjustPosition(double change, size_t dimension)
 {
     m_position.at(dimension) += change;
 }

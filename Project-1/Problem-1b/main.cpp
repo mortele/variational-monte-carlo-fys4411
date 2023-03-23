@@ -2,14 +2,14 @@
 #include <vector>
 #include <memory>
 
-#include "system.h"
-#include "WaveFunctions/simplegaussian.h"
-#include "Hamiltonians/harmonicoscillator.h"
-#include "InitialStates/initialstate.h"
-#include "Solvers/metropolis.h"
-#include "Math/random.h"
-#include "particle.h"
-#include "sampler.h"
+#include "../../include/system.h"
+#include "../../include/simplegaussian.h"
+#include "../../include/harmonicoscillator.h"
+#include "../../include/initialstate.h"
+#include "../../include/metropolis.h"
+#include "../../include/random.h"
+#include "../../include/particle.h"
+#include "../../include/sampler.h"
 
 using namespace std;
 

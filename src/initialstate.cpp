@@ -2,9 +2,9 @@
 #include <iostream>
 #include <cassert>
 
-#include "initialstate.h"
-#include "../particle.h"
-#include "Math/random.h"
+#include "../include/initialstate.h"
+#include "../include/particle.h"
+#include "../include/random.h"
 
 std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
     double stepLength,

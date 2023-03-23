@@ -3,6 +3,10 @@
 #include <vector>
 #include <memory>
 
+#include "particle.h"
+#include "random.h"
+#include "wavefunction.h"
+
 /// @brief Base class for Monte Carlo solvers
 class MonteCarlo
 {

@@ -2,10 +2,8 @@
 #include <cmath>
 #include <cassert>
 
-#include "simplegaussian.h"
-#include "wavefunction.h"
-#include "../system.h"
-#include "../particle.h"
+#include "../include/simplegaussian.h"
+#include "../include/particle.h"
 
 SimpleGaussian::SimpleGaussian(double alpha)
 {

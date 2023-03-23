@@ -2,9 +2,9 @@
 #include <cassert>
 #include <iostream>
 
-#include "harmonicoscillator.h"
-#include "../particle.h"
-#include "../WaveFunctions/wavefunction.h"
+#include "../include/harmonicoscillator.h"
+#include "../include/particle.h"
+#include "../include/wavefunction.h"
 
 using std::cout;
 using std::endl;

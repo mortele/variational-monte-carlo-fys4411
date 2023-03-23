@@ -2,20 +2,20 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include "system.h"
-#include "sampler.h"
-#include "particle.h"
-#include "Hamiltonians/hamiltonian.h"
-#include "WaveFunctions/wavefunction.h"
+#include "../include/system.h"
+#include "../include/sampler.h"
+#include "../include/particle.h"
+#include "../include/hamiltonian.h"
+#include "../include/wavefunction.h"
 
 using std::cout;
 using std::endl;
 
 Sampler::Sampler(
-    unsigned int numberOfParticles,
-    unsigned int numberOfDimensions,
+    size_t numberOfParticles,
+    size_t numberOfDimensions,
     double stepLength,
-    unsigned int numberOfMetropolisSteps)
+    size_t numberOfMetropolisSteps)
 {
     m_stepNumber = 0;
     m_numberOfMetropolisSteps = numberOfMetropolisSteps;
@@ -53,7 +53,7 @@ void Sampler::printOutputToTerminal(System &system)
     cout << endl;
     cout << "  -- Wave function parameters -- " << endl;
     cout << " Number of parameters : " << p << endl;
-    for (unsigned int i = 0; i < p; i++)
+    for (size_t i = 0; i < p; i++)
     {
         cout << " Parameter " << i + 1 << " : " << pa.at(i) << endl;
     }

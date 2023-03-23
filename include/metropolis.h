@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "montecarlo.h"
+#include "particle.h"
 
 /// @brief Metropolis Monte Carlo solver
 class Metropolis : public MonteCarlo
