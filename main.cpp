@@ -30,12 +30,12 @@ int main(int argv, char **argc)
     double omega = 1.0;         // Oscillator frequency.
     double alpha = omega / 2.0; // Variational parameter. If using gradient
                                 // descent, this is the initial guess.
-    double stepLength = 0.1;    // Metropolis step length.
+    double stepLength = 0.6;    // Metropolis step length.
     double epsilon = 0.05;      // Tolerance for gradient descent.
     double lr = 0.1;            // Learning rate for gradient descent.
     double dx = 10e-6;
     bool importanceSampling = false;
-    bool gradientDescent = true;
+    bool gradientDescent = false;
     bool analytical = true;
     double D = 0.5;
     string filename = "";
