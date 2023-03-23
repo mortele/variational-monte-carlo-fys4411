@@ -24,12 +24,12 @@ bool Metropolis::step(
     auto new_particle = particle;
 
     // Propose a new position
-    for (auto pos_index = 0; pos_index < particle.getNumberOfDimensions(); ++pos_index)
+    for (size_t pos_index = 0; pos_index < particle.getNumberOfDimensions(); ++pos_index)
         new_particle.adjustPosition(m_rng->nextGaussian(0, stepLength), pos_index);
 
     // copy particles array 
     auto new_particles = std::vector<std::unique_ptr<class Particle>>(particles.size());
-    for (auto i = 0; i < particles.size(); ++i)
+    for (size_t i = 0; i < particles.size(); ++i)
         new_particles[i] = std::make_unique<Particle>(*particles[i]);
 
     new_particles[particle_index] = std::make_unique<Particle>(new_particle);

@@ -18,10 +18,10 @@ int main()
     // Seed for the random number generator
     int seed = 2023;
 
-    unsigned int numberOfDimensions = 1;
-    unsigned int numberOfParticles = 1;
-    unsigned int numberOfMetropolisSteps = (unsigned int)1e6;
-    unsigned int numberOfEquilibrationSteps = (unsigned int)1e5;
+    size_t numberOfDimensions = 3;
+    size_t numberOfParticles = 3;
+    size_t numberOfMetropolisSteps = 1e6;
+    size_t numberOfEquilibrationSteps = 1e5;
     double omega = 1.0;      // Oscillator frequency.
     double alpha = 0.5;      // Variational parameter.
     double stepLength = 0.1; // Metropolis step length.

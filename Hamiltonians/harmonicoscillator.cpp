@@ -25,7 +25,7 @@ double HarmonicOscillator::computeLocalEnergy(
     for (auto &particle : particles)
     {
         auto position = particle->getPosition();
-        for (auto pos_index = 0; pos_index < particle->getNumberOfDimensions(); ++pos_index)
+        for (size_t pos_index = 0; pos_index < particle->getNumberOfDimensions(); ++pos_index)
             potentialEnergy += position[pos_index] * position[pos_index];
     }
     potentialEnergy *= 0.5 * m_omega * m_omega;

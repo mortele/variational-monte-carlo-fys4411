@@ -19,11 +19,11 @@ double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>> &pa
     double psi = 1.0;
     double alpha = m_parameters[0]; // alpha is the first and only parameter for now.
 
-    for (int i = 0; i < particles.size(); i++)
+    for (size_t i = 0; i < particles.size(); i++)
     {
         // Let's support as many dimensions as we want.
         double r2 = 0;
-        for (int j = 0; j < particles[i]->getPosition().size(); j++)
+        for (size_t j = 0; j < particles[i]->getPosition().size(); j++)
             r2 += particles[i]->getPosition()[j] * particles[i]->getPosition()[j];
         // spherical ansatz
         double g = exp(-alpha * r2);
@@ -35,6 +35,7 @@ double SimpleGaussian::evaluate(std::vector<std::unique_ptr<class Particle>> &pa
     return psi;
 }
 
+
 double SimpleGaussian::computeLocalLaplasian(std::vector<std::unique_ptr<class Particle>> &particles)
 {
     // The expression I got for a single laplasian is, in invariant form, follows:
@@ -42,10 +43,10 @@ double SimpleGaussian::computeLocalLaplasian(std::vector<std::unique_ptr<class P
     // so it takes to sum over all particles.
     double alpha = m_parameters[0];
     double sum_laplasian = 0.0;
-    for (int i = 0; i < particles.size(); i++)
+    for (size_t i = 0; i < particles.size(); i++)
     {
         double r2 = 0.0;
-        for (int j = 0; j < particles[i]->getPosition().size(); ++j)
+        for (size_t j = 0; j < particles[i]->getPosition().size(); ++j)
             r2 += particles[i]->getPosition()[j] * particles[i]->getPosition()[j];
         sum_laplasian += 4 * alpha * alpha * r2 - 2 * alpha * particles[i]->getPosition().size();
     }
@@ -58,11 +59,11 @@ double SimpleGaussian::evaluateRatio(std::vector<std::unique_ptr<class Particle>
     double ratio = 1.0;
     double alpha = m_parameters[0];
 
-    for (int i = 0; i < particles_numerator.size(); i++)
+    for (size_t i = 0; i < particles_numerator.size(); i++)
     {
         double r2_numerator = 0.0;
         double r2_denominator = 0.0;
-        for (int j = 0; j < particles_numerator[i]->getPosition().size(); j++)
+        for (size_t j = 0; j < particles_numerator[i]->getPosition().size(); j++)
         {
             r2_numerator += particles_numerator[i]->getPosition()[j] * particles_numerator[i]->getPosition()[j];
             r2_denominator += particles_denominator[i]->getPosition()[j] * particles_denominator[i]->getPosition()[j];
