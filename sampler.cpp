@@ -286,8 +286,3 @@ std::vector<double> Sampler::getEnergyDerivative()
     }
     return m_energyDerivative;
 }
-
-double Sampler::getEnergyVariance() // this is for test only. REMOVE LATER!
-{
-    return m_energy_variance;
-}

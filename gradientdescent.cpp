@@ -51,12 +51,12 @@ int main(int argv, char **argc)
         cout << "#particles, int: Number of particles" << endl;
         cout << "#log2(metropolis steps), int/double: log2 of number of steps, i.e. 6 gives 2^6 steps" << endl;
         cout << "#log2(@-steps), int/double: log2 of number of equilibriation steps, i.e. 6 gives 2^6 steps" << endl;
-        cout << "omega, double: Trap frequency" << endl;
         cout << "alpha, double: WF parameter for simple gaussian. Analytical sol alpha = omega/2" << endl;
         cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
         cout << "Importantce sampling?, bool: If the Metropolis Hasting algorithm is used. Then stepLength serves as Delta t" << endl;
         cout << "analytical?, bool: If the analytical expression should be used. Defaults to true" << endl;
-        cout << "gradientDescent?, bool: If the gradient descent algorithm should be used. Defaults to true" << endl;
+        cout << "learningRate *(ln(#particles) + 1)^-1, double: Learning rate for gradient descent. Defaults to 0.01*(ln(#particles) + 1)^-1" << endl;
+        cout << "epsilon, double: Tolerance for gradient descent. Defaults to 0.01" << endl;
         cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." << endl;
         return 0;
     }
@@ -73,21 +73,19 @@ int main(int argv, char **argc)
     if (argv >= 5)
         numberOfEquilibrationSteps = (unsigned int)pow(2, atof(argc[4]));
     if (argv >= 6)
-        omega = (double)atof(argc[5]);
+        alpha = (double)atof(argc[5]);
     if (argv >= 7)
-        alpha = (double)atof(argc[6]);
+        stepLength = (double)atof(argc[6]);
     if (argv >= 8)
-        stepLength = (double)atof(argc[7]);
+        importanceSampling = (bool)atoi(argc[7]);
     if (argv >= 9)
-        importanceSampling = (bool)atoi(argc[8]);
+        analytical = (bool)atoi(argc[8]);
     if (argv >= 10)
-        analytical = (bool)atoi(argc[9]);
+        lr = (double)atof(argc[9]) / (log(numberOfParticles) + 1);
     if (argv >= 11)
-        lr = (double)atof(argc[10]);
+        epsilon = (double)atof(argc[10]);
     if (argv >= 12)
-        epsilon = (double)atof(argc[11]);
-    if (argv >= 13)
-        filename = argc[12];
+        filename = argc[11];
 
     // The random engine can also be built without a seed
     auto rng = std::make_unique<Random>(seed);

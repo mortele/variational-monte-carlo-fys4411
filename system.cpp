@@ -87,32 +87,18 @@ std::unique_ptr<class Sampler> System::optimizeMetropolis(
   {
 
     gradient = 0;
-    /*Notice that the positions are reset to what they were at the initial state
-    but the parameters of the wave function should be what they were at the END
-    of last epoch*/
+    /*Positions are reset to what they were after equilibration, but the parameters of the wave function should be what they were at the END of last epoch*/
 
-    // reset position and quantum force
-    // (quantum force is reset automatically to 0 and the beggining of the metroplis step)
+    // reset position and quantum force (quantum force is reset automatically to 0 at the beggining of the metroplis step)
+
     for (unsigned int i = 0; i < m_numberOfParticles; i++)
     {
       m_particles[i]->resetEquilibrationPosition();
     }
 
-    // sampler = std::make_unique<Sampler>(m_numberOfParticles, m_numberOfDimensions,
-    //                                     stepLength, numberOfMetropolisSteps);
-
-    // PRINT POSITIONS AFTER EQUILIBRATION
-    // for (int i = 0; i < m_numberOfParticles; i++)
-    //{
-    //  std::cout << "Particle " << i << " position: " << m_particles[i]->getPosition()[0] << "\n";
-    //}
-
-    // call run metropolis steps
-    // print energy variance
     sampler = system.runMetropolisSteps(stepLength, numberOfMetropolisSteps);
 
     std::vector<double> parameters = getWaveFunctionParameters();
-
     sampler->writeGradientSearchToFile(system, filename, alpha_0, epoch, parameters[0], beta);
 
     std::vector<double> m_energyDerivative = sampler->getEnergyDerivative();

@@ -18,7 +18,6 @@ public:
     void writeGradientSearchToFile(System &system, std::string filename, double alpha_0, int epoch, double alpha, double beta);
     void output(System &system, std::string filename, double omega, bool analytical, bool importanceSampling);
     void computeAverages();
-    double getEnergyVariance(); // this is for test, REMOVE IT
     std::vector<double> getEnergyDerivative();
 
     double getEnergy()

@@ -11,13 +11,13 @@ mpl.rcParams.update(mpl.rcParamsDefault)
 cmap = plot_utils.cmap 
 
 
-def plot_alpha_search(filename="gradientSearch", D=3, omega=1.0, alpha_range=(0.1,1.1, 11), save=False):
+def plot_alpha_search(filename="gradientSearch", D=3, omega=1.0, alpha_range=(0.2,1.2, 11), save=False):
     alphas = np.linspace(*alpha_range)
-    Ns = [3] # Number of particles
-    stepLengths = [1.8]#, 0.1, 0.5, 1.0]
+    Ns = [10] # Number of particles
+    stepLengths = [1.5]#, 0.1, 0.5, 1.0]
     epsilon = 0.01
-    logMet = 16
-    logEq = 14
+    logMet = 16 # 2 ^ 20 = 1048576
+    logEq = 14 # 2 ^ 16 = 65536
 
     filename = f"{filename}_{D}D.txt" # prolly a good idea to add the dimension
     if not cpp_utils.dataPath(filename).exists(): # If the file does not exist, run the gradient search code
@@ -110,9 +110,9 @@ def plot_energy_search_comparison(filename="gradientSearch_comparison", D=3, ome
 """
 
 if __name__ == "__main__":
-    df, df_detailed, info = plot_alpha_search(filename="GD_test",D=3, save=False)
+    df, df_detailed, info = plot_alpha_search(filename="GD",D=3, save=True)
 
-    plot_energy_var(df_detailed, info, save=False)
+    plot_energy_var(df_detailed, info, save=True)
 
 
 

@@ -57,7 +57,7 @@ def vmcRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, i
 
     subprocess.run(args_run)
 
-def gradientRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, epsilon=0.01, lr= 0.01, importance=False, analytical=True, filename="gradientSearch.txt"):
+def gradientRun(D=3, N=10, logMet=16, logEq=14, alpha=0.5, stepLength=0.1, epsilon=0.01, lr= 0.01, importance=False, analytical=True, filename="gradientSearch.txt"):
     """
     This funcitons will run the gradient search for the best alpha parameter, as asked in the project description.
     Notice the regular VMC can run gradient descent, but this function will run the gradient search.
@@ -72,7 +72,6 @@ def gradientRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0
         N,
         logMet,
         logEq,
-        omega,
         alpha,
         stepLength,
         int(importance),
