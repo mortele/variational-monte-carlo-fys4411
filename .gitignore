@@ -36,3 +36,5 @@ build
 
 # Ignore default executable
 vmc
+
+.vscode
