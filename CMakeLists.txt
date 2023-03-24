@@ -58,5 +58,8 @@ target_link_libraries(vmc PRIVATE Vmclib)
 add_executable(interact maininteracting.cpp)
 target_link_libraries(interact PRIVATE Vmclib)
 
-add_executable(timing timing.cpp )
-target_link_libraries( timing PRIVATE Vmclib )
+add_executable(timing timing.cpp)
+target_link_libraries(timing PRIVATE Vmclib)
+
+add_executable(gradient gradientdescent.cpp)
+target_link_libraries(gradient PRIVATE Vmclib)

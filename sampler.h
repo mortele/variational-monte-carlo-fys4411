@@ -11,11 +11,11 @@ public:
         double stepLength,
         unsigned int numberOfMetropolisSteps);
 
-
-    void sample(bool acceptedStep, class System* system);
-    void printOutputToTerminal(class System& system);
-    void writeOutToFile(class System& system, std::string filename, double omega, bool analytical, bool importanceSampling);
-    void WriteTimingToFiles(System& system, std::string filename, bool analytical, unsigned int numberOfEquilibrationSteps, double timing);
+    void sample(bool acceptedStep, class System *system);
+    void printOutputToTerminal(class System &system);
+    void writeOutToFile(class System &system, std::string filename, double omega, bool analytical, bool importanceSampling);
+    void WriteTimingToFiles(System &system, std::string filename, bool analytical, unsigned int numberOfEquilibrationSteps, double timing);
+    void writeGradientSearchToFile(System &system, std::string filename, double alpha_0, int epoch, double alpha, double beta);
     void output(System &system, std::string filename, double omega, bool analytical, bool importanceSampling);
     void computeAverages();
     std::vector<double> getEnergyDerivative();

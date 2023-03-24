@@ -19,6 +19,7 @@ public:
 
     std::unique_ptr<class Sampler> optimizeMetropolis(
         System &system,
+        std::string filename,
         double stepLength,
         unsigned int numberOfMetropolisSteps,
         unsigned int numberOfEquilibrationSteps,

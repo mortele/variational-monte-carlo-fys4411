@@ -179,7 +179,8 @@ void Sampler::computeAverages()
     }
 }
 
-void Sampler::WriteTimingToFiles(System& system, std::string filename, bool analytical, unsigned int numberOfEquilibrationSteps, double timing){
+void Sampler::WriteTimingToFiles(System &system, std::string filename, bool analytical, unsigned int numberOfEquilibrationSteps, double timing)
+{
     std::ifstream exsists_file(filename.c_str());
 
     std::fstream outfile;
@@ -189,7 +190,7 @@ void Sampler::WriteTimingToFiles(System& system, std::string filename, bool anal
 
     if (!exsists_file.good())
     {
-    
+
         outfile.open(filename, std::ios::out);
         outfile << setw(w) << "Dimensions"
                 << setw(w) << "Particles"
@@ -202,7 +203,8 @@ void Sampler::WriteTimingToFiles(System& system, std::string filename, bool anal
                 << setw(w) << "Energy_std"
                 << "\n";
     }
-    else{
+    else
+    {
         outfile.open(filename, std::ios::out | std::ios::app);
     }
     outfile << setw(w) << m_numberOfDimensions
@@ -216,18 +218,71 @@ void Sampler::WriteTimingToFiles(System& system, std::string filename, bool anal
             << setw(w) << setprecision(5) << m_energy_std
             << "\n";
 
-
-
     outfile.close();
-
 }
 
+void Sampler::writeGradientSearchToFile(System &system, std::string filename, double alpha_0, int epoch, double alpha, double beta)
+{
+    // break filename to add "detailed_" to the beginning, after the path
+    std::string path = filename.substr(0, filename.find_last_of("/\\") + 1);
+    std::string filename_only = filename.substr(filename.find_last_of("/\\") + 1);
+    filename = path + "detailed_" + filename_only;
+
+    std::ifstream exsists_file(filename.c_str());
+
+    std::fstream outfile;
+    auto pa = system.getWaveFunctionParameters();
+    int p = pa.size();
+    int w = 20;
+
+    if (!exsists_file.good())
+    {
+        outfile.open(filename, std::ios::out);
+        outfile << setw(w) << "Dimensions"
+                << setw(w) << "Particles"
+                << setw(w) << "Metro-steps"
+                << setw(w) << "StepLength";
+        for (int i = 0; i < p; i++)
+            outfile << setw(w - 1) << "WF" << (i + 1);
+
+        outfile << setw(w) << "Energy"
+                << setw(w) << "Energy_std"
+                << setw(w) << "Energy_var"
+                << setw(w) << "Alpha_0"
+                << setw(w) << "Epoch"
+                << setw(w) << "Alpha"
+                << setw(w) << "Beta"
+                << "\n";
+    }
+    else
+    {
+        outfile.open(filename, std::ios::out | std::ios::app);
+    }
+    outfile << setw(w) << m_numberOfDimensions
+            << setw(w) << m_numberOfParticles
+            << setw(w) << setprecision(5) << m_numberOfMetropolisSteps
+            << setw(w) << fixed << setprecision(5) << m_stepLength;
+
+    for (int i = 0; i < p; i++)
+        outfile << setw(w) << fixed << setprecision(5) << pa.at(i);
+
+    outfile << setw(w) << fixed << setprecision(5) << m_energy
+            << setw(w) << fixed << setprecision(5) << m_energy_std
+            << setw(w) << fixed << setprecision(5) << m_energy_variance
+            << setw(w) << fixed << setprecision(5) << alpha_0
+            << setw(w) << fixed << setprecision(5) << epoch
+            << setw(w) << fixed << setprecision(5) << alpha
+            << setw(w) << fixed << setprecision(5) << beta
+            << "\n";
+
+    outfile.close();
+}
 
 std::vector<double> Sampler::getEnergyDerivative()
 {
     for (int i = 0; i < m_numberOfParams; i++)
     {
-        m_energyDerivative[i] = 2 * (m_derPsiE[i] - m_energy * m_deltaPsi[i]);
+        m_energyDerivative[i] = 2 * (m_derPsiE[i] - m_deltaPsi[i] * m_energy);
     }
     return m_energyDerivative;
 }

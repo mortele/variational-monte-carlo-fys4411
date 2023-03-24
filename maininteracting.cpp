@@ -144,7 +144,7 @@ int main(int argv, char **argc)
     else
     {
         auto sampler = system->optimizeMetropolis(
-            *system, stepLength, numberOfMetropolisSteps, numberOfEquilibrationSteps, epsilon, lr);
+            *system, filename, stepLength, numberOfMetropolisSteps, numberOfEquilibrationSteps, epsilon, lr);
         // Output information from the simulation, either as file or print
         sampler->output(*system, filename, omega, analytical, importanceSampling);
     }
