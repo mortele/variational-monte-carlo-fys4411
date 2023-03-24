@@ -39,5 +39,5 @@ def plot_acceptance(filename="acceptance", stepLength_range=(0.1, 10, 10), save=
     plt.show()
 
 if __name__ == '__main__':
-    plot_acceptance(stepLength_range=(0.1, 10, 100), impo=False, save=True)
+    # plot_acceptance(stepLength_range=(0.1, 10, 100), impo=False, save=True)
     plot_acceptance(stepLength_range=(0.1, 10, 100), impo=True, save=True)

@@ -3,50 +3,33 @@ import matplotlib.pyplot as plt
 import plot_utils
 import cpp_utils
 
-def number_of_mccs(filename="increase_mccs", D=3, omega=1.0, mccs_range=(0,22, 20), save=False):
+def number_of_mccs(filename="increase_mccs", D=3, omega=1.0, mccs_range=(5,22, 50), save=False):
     mccs = np.linspace(*mccs_range)
 
     N = 3
-    stepLength = 0.6
-    deltaT = 0.1
-    filename_noeq = f"{filename}_{D}_noeq.txt"
-    filename_eq = f"{filename}_{D}_eq.txt"
+    stepLength = 1.5
+    deltaT = 0.5
+    filename = f"{filename}_{D}.txt"
     n = len(mccs)
-    if not cpp_utils.dataPath(filename_noeq).exists():
+    if not cpp_utils.dataPath(filename).exists():
         for i, mcc in enumerate(mccs):
-            cpp_utils.vmcRun(logMet=mcc, logEq=-1, D=D, filename=filename_noeq, N=N, alpha=0.6, stepLength=deltaT, importance=True)
-            cpp_utils.vmcRun(logMet=mcc, logEq=-1, D=D, filename=filename_noeq, N=N, alpha=0.6, stepLength=stepLength, importance=False)
+            cpp_utils.vmcRun(logMet=mcc, logEq=15, D=D, filename=filename, N=N, alpha=0.51, stepLength=deltaT, importance=True)
+            cpp_utils.vmcRun(logMet=mcc, logEq=15, D=D, filename=filename, N=N, alpha=0.51, stepLength=stepLength, importance=False)
             print(f"{i+1}/{n}")
-    if not cpp_utils.dataPath(filename_eq).exists():
-        for i, mcc in enumerate(mccs):
-            cpp_utils.vmcRun(logMet=mcc, logEq=16, D=D, filename=filename_eq, N=N, alpha=0.6, stepLength=deltaT, importance=True)
-            cpp_utils.vmcRun(logMet=mcc, logEq=16, D=D, filename=filename_eq, N=N, alpha=0.6, stepLength=stepLength, importance=False)
-            print(f"{int(n/2)+i+1}/{n}")
     
 
+    df = cpp_utils.vmcLoad(filename=filename)
 
-    df = cpp_utils.vmcLoad(filename=filename_noeq)
+    df["Metro-steps"] = np.log2(df["Metro-steps"])
+    df_impo = df[df["Imposampling"] == 1]
+    df_brute = df[df["Imposampling"] == 0]
+
     fig, ax = plt.subplots()
-
-    df["Metro-steps"] = np.log2(df["Metro-steps"])
-    df_impo = df[df["Imposampling"] == 1]
-    df_brute = df[df["Imposampling"] == 0]
-
-    c = plot_utils.colors
-    ax.plot(df_impo["Metro-steps"], df_impo["Energy"], ls="--", c=c[0])
-    ax.plot(df_brute["Metro-steps"], df_brute["Energy"], ls="--", c=c[1])
-   
-    df = cpp_utils.vmcLoad(filename=filename_eq)
-
-    df["Metro-steps"] = np.log2(df["Metro-steps"])
-    df_impo = df[df["Imposampling"] == 1]
-    df_brute = df[df["Imposampling"] == 0]
-
-    ax.plot(df_impo["Metro-steps"], df_impo["Energy"], label="Metropolis-Hastings", c=c[0])
-    ax.plot(df_brute["Metro-steps"], df_brute["Energy"], label="Metropolis", c=c[1])
-    ax.hlines(y=0.5*N*D, xmin=mccs_range[0], xmax=mccs_range[1], ls="-.", color="gray", alpha=.5)
-    ax.set(xlabel=r"$log_{10}(M)$", ylabel=r"$\langle E_L \rangle [\hbar \omega]$",ylim=(0.5*N*D-0.5, 5.5))
+    ax.plot(df_impo["Metro-steps"], df_impo["Energy_var"], label="Metropolis-Hastings")
+    ax.plot(df_brute["Metro-steps"], df_brute["Energy_var"], label="Metropolis")
+    ax.set(xlabel=r"$log_{2}(M)$", ylabel=r"$Var(E_L) [\hbar^2 \omega^2]$")
     ax.legend()
     plt.show()
+
 if __name__ == "__main__":
-    number_of_mccs()
+    number_of_mccs(filename="increase_mccs")
