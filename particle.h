@@ -22,3 +22,5 @@ private:
 
 double particle_r2(Particle &p);
 double particle_r2(Particle &p1, Particle &p2);
+double dot_product(std::vector<double> &v1, std::vector<double> &v2, int numberOfDimensions);
+void particle_add_rdiff(std::vector<double> &diff, Particle &p1, Particle &p2, double scale);

@@ -76,7 +76,7 @@ void Sampler::printOutputToTerminal(System &system)
     cout << "  -- System info -- " << endl;
     cout << " Number of particles  : " << m_numberOfParticles << endl;
     cout << " Number of dimensions : " << m_numberOfDimensions << endl;
-    cout << " Number of Metropolis steps run : 10^" << std::log10(m_numberOfMetropolisSteps) << endl;
+    cout << " Number of Metropolis steps run : 10^" << std::log10(m_numberOfMetropolisSteps) << " = 2^" << std::log2(m_numberOfMetropolisSteps) << endl;
     cout << " Step length used : " << m_stepLength << endl;
     cout << " Ratio of accepted steps: " << ((double)m_numberOfAcceptedSteps) / ((double)m_numberOfMetropolisSteps) << endl;
     cout << endl;

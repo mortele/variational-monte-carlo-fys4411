@@ -25,11 +25,16 @@ def timingPath():
     timing_path = rootPath() / pl.Path("build/timing")
     return timing_path
 
+def interactPath():
+    filename_interact = rootPath() / pl.Path(f"build/interact")
+    return filename_interact
+
 def dataPath(filename):
     filename_path = rootPath() / pl.Path(f"Data/{filename}")
     return filename_path
 
-def vmcRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, importance=False, analytical=True, timing=False, GD=False, filename="test.txt"):
+
+def vmcRun(D=3, N=10, logMet=20, logEq=16, omega=1.0, alpha=0.5, stepLength=0.1, importance=False, analytical=True, timing=False, GD=False, filename="test.txt"):
     vmc_path = vmcPath()
     filename_path = dataPath(filename)
 
@@ -45,7 +50,6 @@ def vmcRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, i
         stepLength,
         int(importance),
         int(analytical),
-        int(timing),
         int(GD),
         filename_path,
     ]
@@ -113,6 +117,34 @@ def timingRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1
     args_run = [str(arg) for arg in args]
 
     subprocess.run(args_run)
+
+def interactRun(D=3, N=10, logMet=20, logEq=16, omega=1.0, alpha=0.5, stepLength=0.1, importance=False, analytical=True, timing=False, GD=False, filename="test.txt"):
+    interact_path = interactPath()
+    filename_path = dataPath(filename)
+
+    assert interact_path.exists(), f"I cannot find {interact_path} :((, are you sure you have compiled?"
+    args = [
+        interact_path,
+        D,
+        N,
+        logMet,
+        logEq,
+        omega,
+        alpha,
+        stepLength,
+        int(importance),
+        int(analytical),
+        int(GD),
+        filename_path,
+    ]
+
+    if not filename:
+        args.pop()
+
+    args_run = [str(arg) for arg in args]
+
+    subprocess.run(args_run)
+
 
 def vmcLoad(filename):
     filename_path = dataPath(filename)

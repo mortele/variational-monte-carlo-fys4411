@@ -30,12 +30,12 @@ int main(int argv, char **argc)
     double omega = 1.0;         // Oscillator frequency.
     double alpha = omega / 2.0; // Variational parameter. If using gradient
                                 // descent, this is the initial guess.
-    double stepLength = 0.1;    // Metropolis step length.
+    double stepLength = 0.6;    // Metropolis step length.
     double epsilon = 0.05;      // Tolerance for gradient descent.
     double lr = 0.1;            // Learning rate for gradient descent.
     double dx = 10e-6;
     bool importanceSampling = false;
-    bool gradientDescent = true;
+    bool gradientDescent = false;
     bool analytical = true;
     double D = 0.5;
     string filename = "";
@@ -50,8 +50,8 @@ int main(int argv, char **argc)
              << endl;
         cout << "#dims, int: Number of dimensions" << endl;
         cout << "#particles, int: Number of particles" << endl;
-        cout << "#log10(metropolis steps), int/double: log10 of number of steps, i.e. 6 gives 1e6 steps" << endl;
-        cout << "#log10(@-steps), int/double: log10 of number of equilibriation steps, i.e. 6 gives 1e6 steps" << endl;
+        cout << "#log2(metropolis steps), int/double: log2 of number of steps, i.e. 6 gives 2^6 steps" << endl;
+        cout << "#log2(@-steps), int/double: log2 of number of equilibriation steps, i.e. 6 gives 2^6 steps" << endl;
         cout << "omega, double: Trap frequency" << endl;
         cout << "alpha, double: WF parameter for simple gaussian. Analytical sol alpha = omega/2" << endl;
         cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
@@ -70,9 +70,9 @@ int main(int argv, char **argc)
     if (argv >= 3)
         numberOfParticles = (unsigned int)atoi(argc[2]);
     if (argv >= 4)
-        numberOfMetropolisSteps = (unsigned int)pow(10, atof(argc[3]));
+        numberOfMetropolisSteps = (unsigned int)pow(2, atof(argc[3]));
     if (argv >= 5)
-        numberOfEquilibrationSteps = (unsigned int)pow(10, atof(argc[4]));
+        numberOfEquilibrationSteps = (unsigned int)pow(2, atof(argc[4]));
     if (argv >= 6)
         omega = (double)atof(argc[5]);
     if (argv >= 7)
