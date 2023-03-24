@@ -6,6 +6,7 @@ Particle::Particle(const std::vector<double> &position)
     m_numberOfDimensions = position.size();
     m_position = position;
     m_initialPosition = position; // Save initial position. Notice that this is a copy, not a reference.
+    m_EquilibrationPosition = position;
 }
 
 void Particle::adjustPosition(double change, unsigned int dimension)
@@ -21,22 +22,36 @@ void Particle::resetPosition()
     m_position = m_initialPosition;
 }
 
-double particle_r2(Particle &p) {
+void Particle::saveEquilibrationPosition()
+{
+    m_EquilibrationPosition = m_position;
+}
+
+void Particle::resetEquilibrationPosition()
+{
+    m_position = m_EquilibrationPosition;
+}
+
+double particle_r2(Particle &p)
+{
     static const int numberOfDimensions = p.getNumberOfDimensions();
     double ret = 0;
-    for(int q = 0; q < numberOfDimensions; q++) {
-        ret += p.getPosition().at(q)*p.getPosition().at(q);
+    for (int q = 0; q < numberOfDimensions; q++)
+    {
+        ret += p.getPosition().at(q) * p.getPosition().at(q);
     }
     return ret;
 }
 
-double particle_r2(Particle &p1, Particle &p2) {
+double particle_r2(Particle &p1, Particle &p2)
+{
     static const int numberOfDimensions = p1.getNumberOfDimensions();
     double rdiff;
     double ret = 0;
-    for(int q = 0; q < numberOfDimensions; q++) {
+    for (int q = 0; q < numberOfDimensions; q++)
+    {
         rdiff = p1.getPosition().at(q) - p2.getPosition().at(q);
-        ret += rdiff*rdiff;
+        ret += rdiff * rdiff;
     }
     return ret;
 }

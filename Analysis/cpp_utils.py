@@ -17,6 +17,10 @@ def vmcPath():
     vmc_path = rootPath() / pl.Path("build/vmc")
     return vmc_path
 
+def gradientPath():
+    gradient_path = rootPath() / pl.Path("build/gradient")
+    return gradient_path
+
 def timingPath():
     timing_path = rootPath() / pl.Path("build/timing")
     return timing_path
@@ -53,6 +57,39 @@ def vmcRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, i
 
     subprocess.run(args_run)
 
+def gradientRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, epsilon=0.01, lr= 0.01, importance=False, analytical=True, filename="gradientSearch.txt"):
+    """
+    This funcitons will run the gradient search for the best alpha parameter, as asked in the project description.
+    Notice the regular VMC can run gradient descent, but this function will run the gradient search.
+    """
+    gradient_path = gradientPath()
+    filename_path = dataPath(filename)
+
+    assert gradient_path.exists(), f"I cannot find {gradient_path} :((, are you sure you have compiled?"
+    args = [
+        gradient_path,
+        D,
+        N,
+        logMet,
+        logEq,
+        omega,
+        alpha,
+        stepLength,
+        int(importance),
+        int(analytical),
+        lr,
+        epsilon,
+        filename_path,
+    ]
+
+    if not filename:
+        args.pop()
+
+    args_run = [str(arg) for arg in args]
+
+    subprocess.run(args_run)
+
+
 def timingRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1, analytical=True, filename="timing.txt"):
     timing_path = timingPath()
     filename_path = dataPath(filename)
@@ -86,6 +123,19 @@ def vmcLoad(filename):
     int_cols = ["Dimensions", "Particles" ,"Metro-steps", "Analytical", "Imposampling"]
     numeric_cols = [col for col in df.columns if col not in int_cols]
     
+    for col in numeric_cols:
+        df[col] = df[col].astype(float)
+
+    return df
+
+def gradientLoad(filename):
+    filename_path = dataPath(filename)
+
+    df = pd.read_csv(filename_path, delim_whitespace=True)
+
+    int_cols = ["Dimensions", "Particles" ,"Metro-steps", "Analytical", "Imposampling"]
+    numeric_cols = [col for col in df.columns if col not in int_cols]
+
     for col in numeric_cols:
         df[col] = df[col].astype(float)
 
