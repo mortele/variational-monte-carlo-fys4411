@@ -1,4 +1,4 @@
- #include <memory>
+#include <memory>
 #include <cmath>
 #include <cassert>
 
@@ -39,11 +39,7 @@ double InteractingGaussian::evaluate(std::vector<std::unique_ptr<class Particle>
     for (int i = 0; i < m_numberOfParticles; i++)
     {
         Particle particle = *particles.at(i);
-        for (int q = 0; q < numberOfDimensions; q++)
-        {
-            r_q = particle.getPosition().at(q);
-            r2 += r_q * r_q;
-        }
+        r2 += particle_r2(particle);
     }
 
     double gaussian = std::exp(-alpha * r2); // this is the gaussian part of the wave function
@@ -247,7 +243,7 @@ double InteractingGaussian::evaluate_w(int proposed_particle_idx, class Particle
         r_gj_prime = std::sqrt( particle_r2(proposed_particle, *particles.at(i)) ); 
         r_gj = std::sqrt( particle_r2(old_particle, *particles.at(i)) );
         delta = (r_gj_prime > a)*(r_gj > a);
-        interaction *= (1.0- a/r_gj_prime) / (1.0- a/r_gj);
+        interaction *= (1.0- a/r_gj_prime) / (1.0- a/r_gj) * delta;
     }
 
     return gaussian * interaction * interaction; // Dont forget to square the interaction part :)
@@ -282,7 +278,7 @@ void InteractingGaussian::quantumForce(std::vector<std::unique_ptr<class Particl
             for (int q = 0; q < numberOfDimensions; q++)
             {
                 r_ij_q = particle.getPosition().at(q) - other_particle.getPosition().at(q); // NOTICE THIS IS INEFFICIENT, WE ALREADY COMPUTED IT BUT WAS NOT STORED
-                force.at(q) *= a * r_ij_q / (norm_rij * norm_rij * (norm_rij - a));
+                force.at(q) += 2 * a * r_ij_q / (norm_rij * norm_rij * (norm_rij - a));
             }
         }
     }
