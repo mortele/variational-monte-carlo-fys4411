@@ -13,6 +13,7 @@
 #include "sampler.h"
 #include <fstream>
 
+using namespace std;
 System::System(std::unique_ptr<class Hamiltonian> hamiltonian,
                std::unique_ptr<class WaveFunction> waveFunction,
                std::unique_ptr<class MonteCarlo> solver,
@@ -82,7 +83,7 @@ std::unique_ptr<class Sampler> System::optimizeMetropolis(
     m_particles[i]->saveEquilibrationPosition(); // by doind this, we just need to do equilibriation once in the GD
   }
 
-  while (abs(gradient) > epsilon)
+  while (std::abs(gradient) > epsilon)
   {
 
     gradient = 0;
@@ -108,7 +109,7 @@ std::unique_ptr<class Sampler> System::optimizeMetropolis(
 
     // call run metropolis steps
     // print energy variance
-    sampler = system.runMetropolisSteps(0.1, numberOfMetropolisSteps);
+    sampler = system.runMetropolisSteps(stepLength, numberOfMetropolisSteps);
 
     std::vector<double> parameters = getWaveFunctionParameters();
 
