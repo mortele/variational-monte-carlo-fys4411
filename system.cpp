@@ -66,7 +66,6 @@ std::unique_ptr<class Sampler> System::optimizeMetropolis(
     System &system, std::string filename, double stepLength, unsigned int numberOfMetropolisSteps, unsigned int numberOfEquilibrationSteps,
     double epsilon, double learningRate)
 {
-
   double gradient = 1;
   int epoch = 0;
   double alpha_0 = getWaveFunctionParameters()[0];
