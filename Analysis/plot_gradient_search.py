@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import plot_utils
 import cpp_utils
 import seaborn as sns
+import time
 
 import matplotlib as mpl
 mpl.rcParams.update(mpl.rcParamsDefault)
@@ -16,8 +17,8 @@ def plot_alpha_search(filename="gradientSearch", D=3, omega=1.0, alpha_range=(0.
     Ns = [10] # Number of particles
     stepLengths = [1.5]#, 0.1, 0.5, 1.0]
     epsilon = 0.01
-    logMet = 16 # 2 ^ 20 = 1048576
-    logEq = 14 # 2 ^ 16 = 65536
+    logMet = 16 # 2 ^ 16 = 65536
+    logEq = 14 # 2 ^ 14 = 16384
 
     filename = f"{filename}_{D}D.txt" # prolly a good idea to add the dimension
     if not cpp_utils.dataPath(filename).exists(): # If the file does not exist, run the gradient search code
@@ -63,56 +64,50 @@ def plot_energy_var(df_detailed, info, save=False):
     plt.show()
 
 
-### the following function might not be usefull for plotting, but it helped me catch some potential problems, so i will leave it now so i can test things later.
-"""
-def plot_energy_search_comparison(filename="gradientSearch_comparison", D=3, omega=1.0, alpha_range=(0.1,1.1, 11), save=False):
-    #select alpha randomly from the range
-    Ns = [1,10,100,500]
+def plot_energy_per_particle(filename="GD_energy_per_particle", D=3, interacting=False, save=False):
+    Ns = np.array([1, 10, 30, 50])
+    alphas = [0.51]
+    epsilon = 0.01 # this does not need to be super small. This is a tolerance with respect to the gradient, but notice 
+                     # that this gets multiplied by the learning rate, so the paramaeter update at the end is what matters
+    lr = 0.01 # this is scaled by the number of particles as epsilon = 1/(ln(N) + 1)
+    stepLength = 1.5
+    logMet = 2^19 # 2^19 = 524288
+    logEq = 2^14 # 2 ^ 14 = 16384
 
-    # make alphas be a list of length len(Ns) with random alphas between alpha_range
-    alphas = [np.random.choice(np.linspace(*alpha_range)) for _ in range(len(Ns))]
-    stepLengths = [0.05]#, 0.1, 0.5, 1.0]
-    stepLength = stepLengths[0]
-    epsilon = 0.0001
-    logMet = 6
-    logEq = 5
-
-    filename = f"{filename}_{D}D.txt" # prolly a good idea to add the dimension
-    if not cpp_utils.dataPath(filename).exists(): # If the file does not exist, run the gradient search code
-        for N in Ns:
-            # select alpha according to N index
-            alpha = alphas[Ns.index(N)]
-            cpp_utils.gradientRun(logMet=logMet, logEq=logEq, lr=0.05, D=D, N=N, alpha=alpha, stepLength=stepLength, epsilon=epsilon, filename=filename)
-            print(f"Gradient run done for alpha = {alpha} and N = {N}...")
-
-    info = f"_D={D}_N={Ns}_stepLength={stepLengths[0]}_met={logMet}_eq={logEq}_eps={epsilon}"
+    # start time measurement
+    start = time.time()
+    filename = f"{filename}_{D}D_interac{interacting}.txt"
+    if not cpp_utils.dataPath(filename).exists():
+        total = len(Ns)*len(alphas)
+        for i, N in enumerate(Ns):
+            for j, alpha in enumerate(alphas):
+                cpp_utils.gradientRun(logMet=logMet, logEq=logEq, D=D, epsilon=epsilon, filename=filename, N=N, alpha=alpha, stepLength=stepLength, interacting=interacting, lr = lr)
+                print(f"Done N = {N}, alpha = {alpha} {i*len(alphas)+j+1}/{total}...")
+                print(f"Time elapsed: {time.time() - start}")
+                print("Expected time if linear: ", (time.time() - start)/(i*len(alphas)+j+1)*total / 60, "min")
 
     df_detailed = cpp_utils.gradientLoad(filename=f"../Data/detailed_{filename}")
 
     c = plot_utils.colors
     fig, ax = plt.subplots()
     for i, N in enumerate(Ns):
-        df_N = df_detailed[ df_detailed.Particles == N ]
-        E, E_var, alpha, MCCs = df_N.Energy.to_numpy(), df_N.Energy_var.to_numpy(), df_N["WF1"].to_numpy(), df_N["Metro-steps"].to_numpy()
-        print("E",E)
-        exit()
-        Error = np.sqrt(E_var/MCCs)
-        ax.plot(alpha, E, c=c[i], label=f"{N =}", marker="o")
-        ax.plot(alpha, E+Error, c=c[i], ls="--")
-        ax.plot(alpha, E-Error, c=c[i], ls="--")
-        print(f"Minimum energy at alpha = {alpha[np.argmin(E)]}")
+        df_detailed_N = df_detailed[ df_detailed.Particles == N ]
+        E, E_std, alpha, MCCs = df_detailed_N["Energy"].to_numpy(), df_detailed_N["Energy_var"].to_numpy(), df_detailed_N["WF1"].to_numpy(), df_detailed_N["Metro-steps"].to_numpy()
+        ax.errorbar(alpha, E/N, np.sqrt(E_std)/(MCCs), c=c[i], label=f"{N =}")
+        #print(f"Minimum energy at alpha = {alphas[np.argmin(E)]}")
+
+    ax.legend(ncol=4, bbox_to_anchor=(1.05, 1.15))
+    ax.set(xlabel=r"$\alpha$", ylabel="$expectation E_L [\hbar \omega]$")
 
     if save:
-        plot_utils.save("minimize_energy_search" + info)
+        plot_utils.save(filename.replace(".txt",f"_plot"))
     plt.show()
-
-    return df, df_detailed, info    
-"""
 
 if __name__ == "__main__":
     df, df_detailed, info = plot_alpha_search(filename="GD",D=3, save=True)
 
     plot_energy_var(df_detailed, info, save=True)
 
+    plot_energy_per_particle(filename="GD_energy_per_particle", D=3, interacting=True, save=False)
 
 

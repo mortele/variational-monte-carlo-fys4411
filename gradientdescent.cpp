@@ -27,15 +27,17 @@ int main(int argv, char **argc)
     unsigned int numberOfParticles = 10;
     unsigned int numberOfMetropolisSteps = (unsigned int)pow(2, 20);
     unsigned int numberOfEquilibrationSteps = (unsigned int)pow(2, 20);
-    double omega = 1.0;         // Oscillator frequency.
-    double alpha = omega / 2.0; // Variational parameter. If using gradient
-                                // descent, this is the initial guess.
-    double stepLength = 0.1;    // Metropolis step length.
-    double epsilon = 0.01;      // Tolerance for gradient descent.
-    double lr = 0.01;           // Learning rate for gradient descent.
+    double omega = 1.0;                                 // Oscillator frequency.
+    double alpha = omega / 2.0;                         // Variational parameter. If using gradient
+                                                        // descent, this is the initial guess.
+    double stepLength = 0.1;                            // Metropolis step length.
+    double epsilon = 0.01;                              // Tolerance for gradient descent.
+    double lr = 0.01;                                   // Learning rate for gradient descent.
+    double interactionTerm = 0.0043 * sqrt(1. / omega); // Interection constant a. Notice that hbar = m = 1.
     double dx = 10e-6;
     bool importanceSampling = false;
     bool analytical = true;
+    bool interacting = false;
     double D = 0.5;
     string filename = "";
 
@@ -57,6 +59,7 @@ int main(int argv, char **argc)
         cout << "analytical?, bool: If the analytical expression should be used. Defaults to true" << endl;
         cout << "learningRate *(ln(#particles) + 1)^-1, double: Learning rate for gradient descent. Defaults to 0.01*(ln(#particles) + 1)^-1" << endl;
         cout << "epsilon, double: Tolerance for gradient descent. Defaults to 0.01" << endl;
+        cout << "interaction?, bool: If the interacting gaussian should be used. Defaults to false" << endl;
         cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." << endl;
         return 0;
     }
@@ -85,7 +88,9 @@ int main(int argv, char **argc)
     if (argv >= 11)
         epsilon = (double)atof(argc[10]);
     if (argv >= 12)
-        filename = argc[11];
+        interacting = (bool)atoi(argc[11]);
+    if (argv >= 13)
+        filename = argc[12];
 
     // The random engine can also be built without a seed
     auto rng = std::make_unique<Random>(seed);
@@ -98,22 +103,29 @@ int main(int argv, char **argc)
     auto hamiltonian = std::make_unique<HarmonicOscillator>(omega);
 
     // Initialise SimpleGaussian by default
-    std::unique_ptr<class WaveFunction> wavefunction = std::make_unique<SimpleGaussian>(alpha); // Empty wavefunction pointer, since it uses "alpha" in its
-                                                                                                // constructor (can only be moved once).
+    std::unique_ptr<class WaveFunction> wavefunction;
 
+    if (!analytical)
+        wavefunction = std::make_unique<SimpleGaussianNumerical>(alpha, dx); // constructor (can only be moved once).
+
+    if (!interacting)
+        wavefunction = std::make_unique<SimpleGaussian>(
+            alpha);
+    else
+    {
+        wavefunction = std::make_unique<InteractingGaussian>(
+            alpha,
+            interactionTerm,
+            numberOfParticles);
+    }
     // Empty solver pointer, since it uses "rng" in its constructor (can only be
     // moved once).
     std::unique_ptr<class MonteCarlo> solver;
 
-    // Check if numerical gaussian should be used.
-    if (!analytical)
-        wavefunction = std::make_unique<SimpleGaussianNumerical>(alpha, dx);
-
     // Set what solver to use, pass on rng and additional parameters
     if (importanceSampling)
     {
-        solver =
-            std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
+        solver = std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
     }
     else
     {
@@ -131,9 +143,7 @@ int main(int argv, char **argc)
         // Move the vector of particles to system
         std::move(particles));
 
-    // Notice that the equilibration steps for GD is done inside Optimizer
-
-    // Run the Metropolis algorithm with gradient descent
+    // Run the Metropolis algorithm with gradient descent. Notice that the equilibration steps for GD is done inside Optimizer
     auto sampler = system->optimizeMetropolis(
         *system, filename, stepLength, numberOfMetropolisSteps, numberOfEquilibrationSteps, epsilon, lr);
 
