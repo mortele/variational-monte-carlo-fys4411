@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.9)
 
 project(project_1_fys4411)
 
@@ -26,6 +26,9 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g")
 # -O0, -O1, -O2.
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
+set(OpenMP_CXX_FLAGS "-fopenmp")
+set(OpenMP_CXX_LIB_NAMES "omp")
+
 # Add directories containing header-files
 include_directories(
   .
@@ -51,12 +54,26 @@ file(
 # Add libary to compile path
 add_library(Vmclib ${LIB_SOURCES})
 
+# find openmp
+find_package(OpenMP)
+include(FindOpenMP)
+
+if(OPENMP_FOUND)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+endif()
+
 # Create different executables
 add_executable(vmc main.cpp)
 target_link_libraries(vmc PRIVATE Vmclib)
 
 add_executable(interact maininteracting.cpp)
 target_link_libraries(interact PRIVATE Vmclib)
+
+if(OpenMP_CXX_FOUND)
+  target_link_libraries(interact PUBLIC OpenMP::OpenMP_CXX)
+endif()
 
 add_executable(timing timing.cpp)
 target_link_libraries(timing PRIVATE Vmclib)
