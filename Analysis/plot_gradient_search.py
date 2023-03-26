@@ -7,9 +7,9 @@ import cpp_utils
 import seaborn as sns
 import time
 
-import matplotlib as mpl
-mpl.rcParams.update(mpl.rcParamsDefault)
-cmap = plot_utils.cmap 
+# import matplotlib as mpl
+# mpl.rcParams.update(mpl.rcParamsDefault)
+# cmap = plot_utils.cmap 
 
 
 def plot_alpha_search(filename="gradientSearch", D=3, omega=1.0, alpha_range=(0.2,1.2, 11), save=False):
@@ -33,10 +33,10 @@ def plot_alpha_search(filename="gradientSearch", D=3, omega=1.0, alpha_range=(0.
     df = cpp_utils.gradientLoad(filename=f"../Data/{filename}") # Load the data
     df_detailed = cpp_utils.gradientLoad(filename=f"../Data/detailed_{filename}")
 
-    ax = sns.lineplot(data=df_detailed, x="Epoch", y="Alpha", hue="Alpha_0", legend="full", palette=cmap)
+    ax = sns.lineplot(data=df_detailed, x="Epoch", y="Alpha", hue="Alpha_0", legend="full", palette=plot_utils.cmap)
     ax.get_legend().remove()
     plt.xlabel("Epoch")
-    plt.ylabel("Alpha")
+    plt.ylabel(r"$\alpha$")
 
     if save:
         plot_utils.save("alpha_search" + info)
@@ -47,16 +47,16 @@ def plot_alpha_search(filename="gradientSearch", D=3, omega=1.0, alpha_range=(0.
 
 def plot_energy_var(df_detailed, info, save=False):
     # Plot the energy variance
-    ax = sns.lineplot(data=df_detailed, x="Alpha", y="Energy_var", hue="Alpha_0", legend=False, palette=cmap)
+    ax = sns.lineplot(data=df_detailed, x="Alpha", y="Energy_var", hue="Alpha_0", legend=False, palette=plot_utils.cmap)
 
     norm = plt.Normalize(df_detailed["Alpha_0"].min(), df_detailed["Alpha_0"].max())
 
-    sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
+    sm = plt.cm.ScalarMappable(cmap=plot_utils.cmap, norm=norm)
     sm.set_array([])
-    plt.colorbar(sm, label="$Alpha_0$", cmap=cmap)
+    plt.colorbar(sm, label=r"$\alpha_0$", cmap=plot_utils.cmap)
 
-    plt.xlabel("Alpha")
-    plt.ylabel("$Var(E)[(\hbar \omega)^2]$")
+    plt.xlabel(r"$\alpha$")
+    plt.ylabel(r"Var$(E_L)[(\hbar \omega)^2]$")
 
 
     if save:
@@ -97,7 +97,7 @@ def plot_energy_per_particle(filename="GD_energy_per_particle", D=3, interacting
         #print(f"Minimum energy at alpha = {alphas[np.argmin(E)]}")
 
     ax.legend(ncol=4, bbox_to_anchor=(1.05, 1.15))
-    ax.set(xlabel=r"$\alpha$", ylabel="$expectation E_L [\hbar \omega]$")
+    ax.set(xlabel=r"$\alpha$", ylabel=r"$\langle E_L \rangle [\hbar \omega]$")
 
     if save:
         plot_utils.save(filename.replace(".txt",f"_plot"))
