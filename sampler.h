@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
 #include <string>
+#include <fstream>
+#include <string>
 
 class Sampler
 {
@@ -24,6 +26,11 @@ public:
     {
         return m_energy;
     }
+
+    // Save samples during calculation
+    void openSaveSample(std::string filename);
+    void saveSample(unsigned int iteration);
+    void closeSaveSample();
 
 private:
     double m_stepLength = 0;
@@ -49,4 +56,7 @@ private:
     std::vector<double> m_cumulativedeltaPsi = std::vector<double>(m_numberOfParams, 0);
     std::vector<double> m_deltaPsi = std::vector<double>(m_numberOfParams, 0);
     std::vector<double> m_derPsiE = std::vector<double>(m_numberOfParams, 0);
+
+    // Save samples during calculation
+    std::ofstream m_saveSamplesFile;
 };

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <iomanip>
+#include <string>
 
 #include "Hamiltonians/hamiltonian.h"
 #include "InitialStates/initialstate.h"
@@ -47,6 +48,9 @@ std::unique_ptr<class Sampler> System::runMetropolisSteps(
       std::make_unique<Sampler>(m_numberOfParticles, m_numberOfDimensions,
                                 stepLength, numberOfMetropolisSteps);
 
+  if(m_saveSamples)
+    sampler->openSaveSample(m_saveSamplesFilename);
+
   for (unsigned int i = 0; i < numberOfMetropolisSteps; i++)
   {
     /* Call solver method to do a single Monte-Carlo step.
@@ -56,8 +60,14 @@ std::unique_ptr<class Sampler> System::runMetropolisSteps(
 
     // compute local energy
     sampler->sample(acceptedStep, this);
+
+    if(m_saveSamples)
+      sampler->saveSample(i);
   }
+
   sampler->computeAverages();
+  if(m_saveSamples)
+    sampler->closeSaveSample();
 
   return sampler;
 }
@@ -150,4 +160,26 @@ double System::computeParamDerivative(int paramIndex)
 {
   // Helper function
   return m_waveFunction->computeParamDerivative(m_particles, paramIndex);
+}
+
+void System::saveSamples(std::string filename, int skip) 
+{
+  // Tells system to save local energy estimates during run
+  m_saveSamples = true;
+  m_saveSamplesFilename = filename;
+
+  // Due to powers of two being just a single bit 1, use bitwise AND to check if skip is a power of 2.
+  bool isPow2 = false;
+  if(skip == 0)
+    isPow2 = true;
+  else
+    isPow2 = skip > 0 && !(skip & (skip-1) );
+  
+  assert(isPow2);
+  m_skip = skip;
+}
+
+int System::getSkip()
+{
+  return m_skip;
 }

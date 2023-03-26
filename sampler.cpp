@@ -151,7 +151,7 @@ void Sampler::writeOutToFile(System &system, std::string filename, double omega,
 void Sampler::output(System &system, std::string filename, double omega, bool analytical, bool importanceSampling)
 {
     // Output information from the simulation, either as file or print
-    if (filename == "") // this is dumbly duplicated now
+    if (filename == ".txt") // this is dumbly duplicated now
     {
         printOutputToTerminal(system);
     }
@@ -285,4 +285,23 @@ std::vector<double> Sampler::getEnergyDerivative()
         m_energyDerivative[i] = 2 * (m_derPsiE[i] - m_deltaPsi[i] * m_energy);
     }
     return m_energyDerivative;
+}
+
+
+void Sampler::openSaveSample(std::string filename) 
+{
+    m_saveSamplesFile = std::ofstream(filename, std::ios::out | std::ios::binary | std::ios::trunc); // create binary file
+    if (!m_saveSamplesFile) {
+        std::cerr << "Error: could not open file " << filename << " to store samples." << std::endl;
+        exit(1);
+    }
+}
+void Sampler::saveSample(unsigned int iteration)
+{
+    double energy = m_cumulativeEnergy/double(iteration+1);
+    m_saveSamplesFile.write(reinterpret_cast<const char*>(&energy), sizeof(double));
+}
+void Sampler::closeSaveSample()
+{
+    m_saveSamplesFile.close();
 }
