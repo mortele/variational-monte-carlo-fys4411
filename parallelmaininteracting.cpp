@@ -13,15 +13,15 @@
 #include "particle.h"
 #include "sampler.h"
 #include "system.h"
+#include <omp.h>
 
 using namespace std;
 
 int main(int argv, char **argc)
 {
-    // Seed for the random number generator
-    int seed = 2023;
-
     // Set default paramters
+    int numberOfWalkers = 3;
+
     unsigned int numberOfDimensions = 3;
     unsigned int numberOfParticles = 10;
     unsigned int numberOfMetropolisSteps = (unsigned int)pow(2, 20);
@@ -43,8 +43,8 @@ int main(int argv, char **argc)
     if (argv == 1)
     {
         cout << "Hello! Usage:" << endl;
-        cout << "./vmc #dims #particles #log10(metropolis-steps) "
-                "#log10(equilibriation-steps) omega alpha stepLength "
+        cout << "./vmc #dims #particles #log2(metropolis-steps) "
+                "#log2(equilibriation-steps) omega alpha stepLength "
                 "importanceSampling? analytical? gradientDescent? filename"
              << endl;
         cout << "#dims, int: Number of dimensions" << endl;
@@ -87,67 +87,77 @@ int main(int argv, char **argc)
     if (argv >= 12)
         filename = argc[11];
 
-    // The random engine can also be built without a seed
-    auto rng = std::make_unique<Random>(seed);
-
-    // Initialize particles
-    auto particles = setupRandomUniformInitialState(
-        stepLength, omega, numberOfDimensions, numberOfParticles, *rng);
-
-    // Construct a unique pointer to a new System
-    auto hamiltonian = std::make_unique<HarmonicOscillator>(omega);
-
-    // Initialise Interacting Gaussian by default
-    std::unique_ptr<class WaveFunction> wavefunction = std::make_unique<InteractingGaussian>(
-        alpha,
-        interactionTerm,
-        numberOfParticles); // Empty wavefunction pointer, since it uses "alpha" in its
-                            // constructor (can only be moved once).
-
-    // Empty solver pointer, since it uses "rng" in its constructor (can only be
-    // moved once).
-    std::unique_ptr<class MonteCarlo> solver;
-
-    // Set what solver to use, pass on rng and additional parameters
-    if (importanceSampling)
+#pragma omp parallel for firstprivate(alpha, lr, filename)
+    for (int i = 0; i < numberOfWalkers; i++)
     {
-        solver = std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
-    }
-    else
-    {
-        solver = std::make_unique<Metropolis>(std::move(rng));
-    }
+        int thread_id = omp_get_thread_num();
+        filename = filename + "_" + to_string(thread_id) + ".txt";
 
-    // Create system pointer, passing in all classes.
-    auto system = std::make_unique<System>(
-        // Construct unique_ptr to Hamiltonian
-        std::move(hamiltonian),
-        // Construct unique_ptr to wave function
-        std::move(wavefunction),
-        // Construct unique_ptr to solver, and move rng
-        std::move(solver),
-        // Move the vector of particles to system
-        std::move(particles));
+        std::cout << "STARTING WALK FROM THREAD " << thread_id << std::endl;
 
-    // Run steps to equilibrate particles
-    auto acceptedEquilibrationSteps =
-        system->runEquilibrationSteps(stepLength, numberOfEquilibrationSteps);
+        // Seed for the random number generator
+        int seed = 2023 * thread_id;
+        // The random engine can also be built without a seed
+        auto rng = std::make_unique<Random>(seed);
 
-    // Run the Metropolis algorithm
-    if (!gradientDescent)
-    {
-        auto sampler =
-            system->runMetropolisSteps(stepLength, numberOfMetropolisSteps);
-        // Output information from the simulation, either as file or print
-        sampler->output(*system, filename, omega, analytical, importanceSampling);
+        // Initialize particles
+        auto particles = setupRandomUniformInitialState(
+            stepLength, omega, numberOfDimensions, numberOfParticles, *rng);
+
+        // Construct a unique pointer to a new System
+        auto hamiltonian = std::make_unique<HarmonicOscillator>(omega);
+
+        // Initialise Interacting Gaussian by default
+        std::unique_ptr<class WaveFunction> wavefunction = std::make_unique<InteractingGaussian>(
+            alpha,
+            interactionTerm,
+            numberOfParticles); // Empty wavefunction pointer, since it uses "alpha" in its
+                                // constructor (can only be moved once).
+
+        // Empty solver pointer, since it uses "rng" in its constructor (can only be
+        // moved once).
+        std::unique_ptr<class MonteCarlo> solver;
+
+        // Set what solver to use, pass on rng and additional parameters
+        if (importanceSampling)
+        {
+            solver = std::make_unique<MetropolisHastings>(std::move(rng), stepLength, D);
+        }
+        else
+        {
+            solver = std::make_unique<Metropolis>(std::move(rng));
+        }
+
+        // Create system pointer, passing in all classes.
+        auto system = std::make_unique<System>(
+            // Construct unique_ptr to Hamiltonian
+            std::move(hamiltonian),
+            // Construct unique_ptr to wave function
+            std::move(wavefunction),
+            // Construct unique_ptr to solver, and move rng
+            std::move(solver),
+            // Move the vector of particles to system
+            std::move(particles));
+
+        // Run steps to equilibrate particles
+        auto acceptedEquilibrationSteps =
+            system->runEquilibrationSteps(stepLength, numberOfEquilibrationSteps);
+
+        // Run the Metropolis algorithm
+        if (!gradientDescent)
+        {
+            auto sampler =
+                system->runMetropolisSteps(stepLength, numberOfMetropolisSteps);
+            // Output information from the simulation, either as file or print
+            sampler->output(*system, filename, omega, analytical, importanceSampling);
+        }
+        else
+        {
+            auto sampler = system->optimizeMetropolis(
+                *system, filename, stepLength, numberOfMetropolisSteps, numberOfEquilibrationSteps, epsilon, lr);
+            // Output information from the simulation, either as file or print
+            sampler->output(*system, filename, omega, analytical, importanceSampling);
+        }
     }
-    else
-    {
-        auto sampler = system->optimizeMetropolis(
-            *system, filename, stepLength, numberOfMetropolisSteps, numberOfEquilibrationSteps, epsilon, lr);
-        // Output information from the simulation, either as file or print
-        sampler->output(*system, filename, omega, analytical, importanceSampling);
-    }
-
     return 0;
 }

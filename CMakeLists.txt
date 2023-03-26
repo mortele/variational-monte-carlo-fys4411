@@ -71,8 +71,11 @@ target_link_libraries(vmc PRIVATE Vmclib)
 add_executable(interact maininteracting.cpp)
 target_link_libraries(interact PRIVATE Vmclib)
 
+add_executable(parallelinteract maininteracting.cpp)
+target_link_libraries(parallelinteract PRIVATE Vmclib)
+
 if(OpenMP_CXX_FOUND)
-  target_link_libraries(interact PUBLIC OpenMP::OpenMP_CXX)
+  target_link_libraries(parallelinteract PUBLIC OpenMP::OpenMP_CXX)
 endif()
 
 add_executable(timing timing.cpp)
