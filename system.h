@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 
 class System
 {
@@ -33,6 +34,8 @@ public:
     void setSolver(std::unique_ptr<class MonteCarlo> solver);
     double computeParamDerivative(int paramIndex);
 
+    void saveSamples(std::string filename, int skip);
+    int getSkip();
 private:
     unsigned int m_numberOfParticles = 0;
     unsigned int m_numberOfDimensions = 0;
@@ -41,4 +44,8 @@ private:
     std::unique_ptr<class WaveFunction> m_waveFunction;
     std::unique_ptr<class MonteCarlo> m_solver;
     std::vector<std::unique_ptr<class Particle>> m_particles;
+
+    bool m_saveSamples = false;
+    int m_skip = 0;
+    std::string m_saveSamplesFilename;
 };

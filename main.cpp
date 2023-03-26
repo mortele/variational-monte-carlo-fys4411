@@ -132,6 +132,9 @@ int main(int argv, char **argc)
         // Move the vector of particles to system
         std::move(particles));
 
+    // TO SAVE SAMPLES RUN THE FOLLOWING::::
+    // system->saveSamples("filename_to_save_samples.dat", 0);
+
     // Run steps to equilibrate particles
     auto acceptedEquilibrationSteps =
         system->runEquilibrationSteps(stepLength, numberOfEquilibrationSteps);

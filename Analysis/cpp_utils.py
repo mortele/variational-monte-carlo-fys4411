@@ -1,6 +1,7 @@
 import subprocess
 import pathlib as pl
 import pandas as pd
+import numpy as np
 
 import os
 
@@ -172,3 +173,12 @@ def gradientLoad(filename):
         df[col] = df[col].astype(float)
 
     return df
+
+def binaryLoad(filename):
+    filename = dataPath(filename)
+    with open(filename, "rb") as f:
+        f.seek(0, 2)
+        num_doubles = f.tell() // 8
+        f.seek(0)
+
+        return np.fromfile(f, dtype=np.float64, count=num_doubles)
