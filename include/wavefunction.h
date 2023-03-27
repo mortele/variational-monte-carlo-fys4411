@@ -32,6 +32,8 @@ public:
     virtual double evaluateRatio(std::vector<std::unique_ptr<class Particle>> &particles_numerator,
                                  std::vector<std::unique_ptr<class Particle>> &particles_denominator);
 
+    virtual std::vector<double> computeQuantumForce(std::vector<std::unique_ptr<class Particle>> &particles, size_t particle_index);
+
 protected:
     size_t m_numberOfParameters = 0;
     std::vector<double> m_parameters = std::vector<double>();

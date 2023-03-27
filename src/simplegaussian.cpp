@@ -70,3 +70,15 @@ double SimpleGaussian::evaluateRatio(std::vector<std::unique_ptr<class Particle>
     }
     return ratio;
 }
+
+
+std::vector<double> SimpleGaussian::computeQuantumForce(std::vector<std::unique_ptr<class Particle>> &particles, size_t particle_index)
+{
+     double alpha = m_parameters[0];
+     std::vector<double> quantumForce = std::vector<double>();
+     std::vector<double> position=particles[particle_index]->getPosition();
+     for (int j=0; j < position.size(); j++) {
+         quantumForce.push_back(-4*alpha*position[j]);
+     }
+     return quantumForce;
+}

@@ -27,4 +27,6 @@ public:
     /// @param particles_denominator Vector of particles in the denominator.
     double evaluateRatio(std::vector<std::unique_ptr<class Particle>> &particles_numerator,
                          std::vector<std::unique_ptr<class Particle>> &particles_denominator);
+
+    std::vector<double> computeQuantumForce(std::vector<std::unique_ptr<class Particle>> &particles, size_t particle_index);
 };
